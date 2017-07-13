@@ -23,7 +23,7 @@ composer require travello-gmbh/amazon-alexa-skill-library
 
 To get started with this library please refer to the Amazon Alexs Skill Skeleton:
 
-*soon to come*
+https://github.com/travello-gmbh/amazon-alexa-skill-skeleton
 
 ## Todo
 
