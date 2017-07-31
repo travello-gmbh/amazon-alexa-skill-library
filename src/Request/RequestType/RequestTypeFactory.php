@@ -36,7 +36,7 @@ class RequestTypeFactory
 
         $data = json_decode($data, true);
 
-        $version = $data['version'];
+        $version = $data['version'] ?? AlexaRequest::DEFAULT_VERSION;
 
         $session = new Session(
             $data['session']['new'],
