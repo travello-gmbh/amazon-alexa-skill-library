@@ -130,10 +130,14 @@ class CertificateValidator implements CertificateValidatorInterface
      */
     private function validateRequestTimestamp()
     {
+        if (strtotime($this->alexaRequest->getRequest()->getTimestamp())) {
+            $timestamp = $this->alexaRequest->getRequest()->getTimestamp();
+        } else {
+            $timestamp = '@' . substr($this->alexaRequest->getRequest()->getTimestamp(), 0, 10);
+        }
+
         $currentTime = new DateTime();
-        $requestTime = new DateTime(
-            $this->alexaRequest->getRequest()->getTimestamp()
-        );
+        $requestTime = new DateTime($timestamp);
 
         $diff = $requestTime->getTimestamp() - $currentTime->getTimestamp();
 
