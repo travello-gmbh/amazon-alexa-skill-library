@@ -120,6 +120,49 @@ class RequestTypeFactoryTest extends TestCase
     /**
      *
      */
+    public function testFactoryForIntentRequestTypeWithoutVersion()
+    {
+        $data = [
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'IntentRequest',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+                'intent'    => [
+                    'name' => 'name',
+                ],
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals('1.0', $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            IntentRequestType::class
+        );
+    }
+
+    /**
+     *
+     */
     public function testFactoryForLaunchRequestType()
     {
         $data = [

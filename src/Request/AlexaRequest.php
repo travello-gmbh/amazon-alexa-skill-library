@@ -23,6 +23,7 @@ use TravelloAlexaLibrary\Request\Session\SessionInterface;
 class AlexaRequest implements AlexaRequestInterface
 {
     const NAME = 'AlexaRequest';
+    const DEFAULT_VERSION = '1.0';
 
     /** @todo not implemented yet */
     private $context;
