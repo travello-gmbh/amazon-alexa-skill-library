@@ -49,6 +49,13 @@ class TestApplication extends AbstractAlexaApplication
     }
 
     /**
+     * Reset the session attributes
+     */
+    protected function resetSessionAttributes()
+    {
+    }
+
+    /**
      * @return bool
      */
     protected function handleIntentRequest(): bool

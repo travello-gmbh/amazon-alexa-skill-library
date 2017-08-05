@@ -137,6 +137,11 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     abstract protected function getSessionAttributes(): array;
 
     /**
+     * Reset the session attributes
+     */
+    abstract protected function resetSessionAttributes();
+
+    /**
      * Initialize the alexa response
      *
      * @return bool
