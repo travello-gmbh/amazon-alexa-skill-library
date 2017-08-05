@@ -19,6 +19,13 @@ namespace TravelloAlexaLibrary\Application\Helper;
 interface TextHelperInterface
 {
     /**
+     * Set locale
+     *
+     * @param string $locale
+     */
+    public function setLocale(string $locale);
+
+    /**
      * Get the help message
      *
      * @return string

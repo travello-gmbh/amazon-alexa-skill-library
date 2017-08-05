@@ -87,6 +87,7 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     public function execute(): array
     {
         $this->checkRequest();
+        $this->setLocale();
         $this->initSessionAttributes();
         $this->initResponse();
         $this->handleRequest();
@@ -111,6 +112,14 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     protected function getApplicationId(): string
     {
         return $this->applicationId;
+    }
+
+    /**
+     * Set the locale
+     */
+    protected function setLocale()
+    {
+        $this->textHelper->setLocale($this->alexaRequest->getRequest()->getLocale());
     }
 
     /**

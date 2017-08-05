@@ -18,6 +18,9 @@ namespace TravelloAlexaLibrary\Application\Helper;
  */
 abstract class AbstractTextHelper implements TextHelperInterface
 {
+    /** @var string */
+    protected $locale = 'en-US';
+
     /** @var array */
     protected $commonTexts
         = [
@@ -43,13 +46,23 @@ abstract class AbstractTextHelper implements TextHelperInterface
     }
 
     /**
+     * Set locale
+     *
+     * @param string $locale
+     */
+    public function setLocale(string $locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
      * Get the launch title
      *
      * @return string
      */
     public function getLaunchTitle(): string
     {
-        return $this->commonTexts['alexaLaunchTitle'];
+        return $this->commonTexts[$this->locale]['alexaLaunchTitle'];
     }
 
     /**
@@ -59,7 +72,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getLaunchMessage(): string
     {
-        return $this->commonTexts['alexaLaunchMessage'];
+        return $this->commonTexts[$this->locale]['alexaLaunchMessage'];
     }
 
     /**
@@ -69,7 +82,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getRepromptMessage(): string
     {
-        return $this->commonTexts['alexaRepromptMessage'];
+        return $this->commonTexts[$this->locale]['alexaRepromptMessage'];
     }
 
     /**
@@ -79,7 +92,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getHelpTitle(): string
     {
-        return $this->commonTexts['alexaHelpTitle'];
+        return $this->commonTexts[$this->locale]['alexaHelpTitle'];
     }
 
     /**
@@ -89,7 +102,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getHelpMessage(): string
     {
-        return $this->commonTexts['alexaHelpMessage'];
+        return $this->commonTexts[$this->locale]['alexaHelpMessage'];
     }
 
     /**
@@ -99,7 +112,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getCancelTitle(): string
     {
-        return $this->commonTexts['alexaCancelTitle'];
+        return $this->commonTexts[$this->locale]['alexaCancelTitle'];
     }
 
     /**
@@ -109,7 +122,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getCancelMessage(): string
     {
-        return $this->commonTexts['alexaCancelMessage'];
+        return $this->commonTexts[$this->locale]['alexaCancelMessage'];
     }
 
     /**
@@ -119,7 +132,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getStopTitle(): string
     {
-        return $this->commonTexts['alexaStopTitle'];
+        return $this->commonTexts[$this->locale]['alexaStopTitle'];
     }
 
     /**
@@ -129,6 +142,6 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getStopMessage(): string
     {
-        return $this->commonTexts['alexaStopMessage'];
+        return $this->commonTexts[$this->locale]['alexaStopMessage'];
     }
 }
