@@ -49,7 +49,7 @@ class AlexaApplicationTest extends TestCase
                 'type'      => 'IntentRequest',
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
-                'locale'    => 'de-DE',
+                'locale'    => 'en-US',
                 'intent'    => [
                     'name'  => 'AMAZON.HelpIntent',
                     'slots' => [],
@@ -129,7 +129,7 @@ class AlexaApplicationTest extends TestCase
                 'type'      => 'IntentRequest',
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
-                'locale'    => 'de-DE',
+                'locale'    => 'en-US',
                 'intent'    => [
                     'name' => 'name',
                 ],
@@ -208,7 +208,7 @@ class AlexaApplicationTest extends TestCase
                 'type'      => 'LaunchRequest',
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
-                'locale'    => 'de-DE',
+                'locale'    => 'en-US',
             ],
         ];
 
@@ -257,7 +257,7 @@ class AlexaApplicationTest extends TestCase
                 'type'      => 'LaunchRequest',
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
-                'locale'    => 'de-DE',
+                'locale'    => 'en-US',
             ],
         ];
 
@@ -333,7 +333,7 @@ class AlexaApplicationTest extends TestCase
                 'type'      => 'SessionEndedRequest',
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
-                'locale'    => 'de-DE',
+                'locale'    => 'en-US',
                 'reason'    => 'reason',
             ],
         ];
@@ -410,7 +410,7 @@ class AlexaApplicationTest extends TestCase
                 'type'      => 'IntentRequest',
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
-                'locale'    => 'de-DE',
+                'locale'    => 'en-US',
                 'intent'    => [
                     'name'  => 'AMAZON.StopIntent',
                     'slots' => [],
