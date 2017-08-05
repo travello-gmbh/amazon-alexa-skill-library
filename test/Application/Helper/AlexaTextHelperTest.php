@@ -27,13 +27,15 @@ class AlexaTextHelperTest extends TestCase
     public function testInstantiationWithTexts()
     {
         $texts = [
-            'alexaLaunchTitle'     => 'another launch title',
-            'alexaLaunchMessage'   => 'another launch message',
-            'alexaRepromptMessage' => 'another reprompt message',
-            'alexaHelpTitle'       => 'another help title',
-            'alexaHelpMessage'     => 'another help message',
-            'alexaStopTitle'       => 'another stop title',
-            'alexaStopMessage'     => 'another stop message',
+            'en-US' => [
+                'alexaLaunchTitle'     => 'another launch title',
+                'alexaLaunchMessage'   => 'another launch message',
+                'alexaRepromptMessage' => 'another reprompt message',
+                'alexaHelpTitle'       => 'another help title',
+                'alexaHelpMessage'     => 'another help message',
+                'alexaStopTitle'       => 'another stop title',
+                'alexaStopMessage'     => 'another stop message',
+            ],
         ];
 
         $textHelper = new TestTextHelper($texts);
@@ -64,6 +66,65 @@ class AlexaTextHelperTest extends TestCase
         );
         $this->assertEquals(
             'another stop message',
+            $textHelper->getStopMessage()
+        );
+    }
+
+    /**
+     *
+     */
+    public function testInstantiationWithGermanLocale()
+    {
+        $texts = [
+            'en-US' => [
+                'alexaLaunchTitle'     => 'another launch title',
+                'alexaLaunchMessage'   => 'another launch message',
+                'alexaRepromptMessage' => 'another reprompt message',
+                'alexaHelpTitle'       => 'another help title',
+                'alexaHelpMessage'     => 'another help message',
+                'alexaStopTitle'       => 'another stop title',
+                'alexaStopMessage'     => 'another stop message',
+            ],
+            'de-DE' => [
+                'alexaLaunchTitle'     => 'deutscher Launch Titel',
+                'alexaLaunchMessage'   => 'deutsche Launch Nachricht',
+                'alexaRepromptMessage' => 'deutsche Reprompt Nachricht',
+                'alexaHelpTitle'       => 'deutscher Hilfe Titel',
+                'alexaHelpMessage'     => 'deutsche Hilfe Nachricht',
+                'alexaStopTitle'       => 'deutscher Stop Titel',
+                'alexaStopMessage'     => 'deutsche Stop Nachricht',
+            ],
+        ];
+
+        $textHelper = new TestTextHelper($texts);
+        $textHelper->setLocale('de-DE');
+
+        $this->assertEquals(
+            'deutscher Launch Titel',
+            $textHelper->getLaunchTitle()
+        );
+        $this->assertEquals(
+            'deutsche Launch Nachricht',
+            $textHelper->getLaunchMessage()
+        );
+        $this->assertEquals(
+            'deutsche Reprompt Nachricht',
+            $textHelper->getRepromptMessage()
+        );
+        $this->assertEquals(
+            'deutscher Hilfe Titel',
+            $textHelper->getHelpTitle()
+        );
+        $this->assertEquals(
+            'deutsche Hilfe Nachricht',
+            $textHelper->getHelpMessage()
+        );
+        $this->assertEquals(
+            'deutscher Stop Titel',
+            $textHelper->getStopTitle()
+        );
+        $this->assertEquals(
+            'deutsche Stop Nachricht',
             $textHelper->getStopMessage()
         );
     }

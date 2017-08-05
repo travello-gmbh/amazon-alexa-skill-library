@@ -25,12 +25,14 @@ class TestTextHelper extends AbstractTextHelper
      */
     protected $commonTexts
         = [
-            'alexaLaunchTitle'     => 'launch title',
-            'alexaLaunchMessage'   => 'launch message',
-            'alexaRepromptMessage' => 'reprompt message',
-            'alexaHelpTitle'       => 'help title',
-            'alexaHelpMessage'     => 'help message',
-            'alexaStopTitle'       => 'stop title',
-            'alexaStopMessage'     => 'stop message',
+            'en-US' => [
+                'alexaLaunchTitle'     => 'launch title',
+                'alexaLaunchMessage'   => 'launch message',
+                'alexaRepromptMessage' => 'reprompt message',
+                'alexaHelpTitle'       => 'help title',
+                'alexaHelpMessage'     => 'help message',
+                'alexaStopTitle'       => 'stop title',
+                'alexaStopMessage'     => 'stop message',
+            ]
         ];
 }
