@@ -132,6 +132,83 @@ class AlexaTextHelperTest extends TestCase
     /**
      *
      */
+    public function testInstantiationWithRandomTexts()
+    {
+        $texts = [
+            'de-DE' => [
+                'alexaLaunchTitle'     => [
+                    'Launch Titel 1',
+                    'Launch Titel 2',
+                    'Launch Titel 3',
+                ],
+                'alexaLaunchMessage'   => [
+                    'Launch Nachricht 1',
+                    'Launch Nachricht 2',
+                    'Launch Nachricht 3',
+                ],
+                'alexaRepromptMessage' => [
+                    'Reprompt Nachricht 1',
+                    'Reprompt Nachricht 2',
+                    'Reprompt Nachricht 3',
+                ],
+                'alexaHelpTitle'       => [
+                    'Hilfe Titel 1',
+                    'Hilfe Titel 2',
+                    'Hilfe Titel 3',
+                ],
+                'alexaHelpMessage'     => [
+                    'Hilfe Nachricht 1',
+                    'Hilfe Nachricht 2',
+                    'Hilfe Nachricht 3',
+                ],
+                'alexaStopTitle'       => [
+                    'Stop Titel 1',
+                    'Stop Titel 2',
+                    'Stop Titel 3',
+                ],
+                'alexaStopMessage'     => [
+                    'Stop Nachricht 1',
+                    'Stop Nachricht 2',
+                    'Stop Nachricht 3',
+                ],
+            ],
+        ];
+
+        $textHelper = new TestTextHelper();
+        $textHelper->setLocale('de-DE');
+
+        $this->assertTrue(
+            in_array($textHelper->getLaunchTitle(), $texts['de-DE']['alexaLaunchTitle'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getLaunchMessage(), $texts['de-DE']['alexaLaunchMessage'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getRepromptMessage(), $texts['de-DE']['alexaRepromptMessage'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getHelpTitle(), $texts['de-DE']['alexaHelpTitle'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getHelpMessage(), $texts['de-DE']['alexaHelpMessage'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getStopTitle(), $texts['de-DE']['alexaStopTitle'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getStopMessage(), $texts['de-DE']['alexaStopMessage'])
+        );
+    }
+
+    /**
+     *
+     */
     public function testInstantiationWithoutTexts()
     {
         $textHelper = new TestTextHelper();

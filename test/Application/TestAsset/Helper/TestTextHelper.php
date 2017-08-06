@@ -33,6 +33,43 @@ class TestTextHelper extends AbstractTextHelper
                 'alexaHelpMessage'     => 'help message',
                 'alexaStopTitle'       => 'stop title',
                 'alexaStopMessage'     => 'stop message',
-            ]
+            ],
+            'de-DE' => [
+                'alexaLaunchTitle'     => [
+                    'Launch Titel 1',
+                    'Launch Titel 2',
+                    'Launch Titel 3',
+                ],
+                'alexaLaunchMessage'   => [
+                    'Launch Nachricht 1',
+                    'Launch Nachricht 2',
+                    'Launch Nachricht 3',
+                ],
+                'alexaRepromptMessage' => [
+                    'Reprompt Nachricht 1',
+                    'Reprompt Nachricht 2',
+                    'Reprompt Nachricht 3',
+                ],
+                'alexaHelpTitle'       => [
+                    'Hilfe Titel 1',
+                    'Hilfe Titel 2',
+                    'Hilfe Titel 3',
+                ],
+                'alexaHelpMessage'     => [
+                    'Hilfe Nachricht 1',
+                    'Hilfe Nachricht 2',
+                    'Hilfe Nachricht 3',
+                ],
+                'alexaStopTitle'       => [
+                    'Stop Titel 1',
+                    'Stop Titel 2',
+                    'Stop Titel 3',
+                ],
+                'alexaStopMessage'     => [
+                    'Stop Nachricht 1',
+                    'Stop Nachricht 2',
+                    'Stop Nachricht 3',
+                ],
+            ],
         ];
 }

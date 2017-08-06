@@ -62,7 +62,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getLaunchTitle(): string
     {
-        return $this->commonTexts[$this->locale]['alexaLaunchTitle'];
+        return $this->getText('alexaLaunchTitle');
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getLaunchMessage(): string
     {
-        return $this->commonTexts[$this->locale]['alexaLaunchMessage'];
+        return $this->getText('alexaLaunchMessage');
     }
 
     /**
@@ -82,7 +82,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getRepromptMessage(): string
     {
-        return $this->commonTexts[$this->locale]['alexaRepromptMessage'];
+        return $this->getText('alexaRepromptMessage');
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getHelpTitle(): string
     {
-        return $this->commonTexts[$this->locale]['alexaHelpTitle'];
+        return $this->getText('alexaHelpTitle');
     }
 
     /**
@@ -102,7 +102,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getHelpMessage(): string
     {
-        return $this->commonTexts[$this->locale]['alexaHelpMessage'];
+        return $this->getText('alexaHelpMessage');
     }
 
     /**
@@ -112,7 +112,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getCancelTitle(): string
     {
-        return $this->commonTexts[$this->locale]['alexaCancelTitle'];
+        return $this->getText('alexaCancelTitle');
     }
 
     /**
@@ -122,7 +122,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getCancelMessage(): string
     {
-        return $this->commonTexts[$this->locale]['alexaCancelMessage'];
+        return $this->getText('alexaCancelMessage');
     }
 
     /**
@@ -132,7 +132,7 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getStopTitle(): string
     {
-        return $this->commonTexts[$this->locale]['alexaStopTitle'];
+        return $this->getText('alexaStopTitle');
     }
 
     /**
@@ -142,6 +142,22 @@ abstract class AbstractTextHelper implements TextHelperInterface
      */
     public function getStopMessage(): string
     {
-        return $this->commonTexts[$this->locale]['alexaStopMessage'];
+        return $this->getText('alexaStopMessage');
+    }
+
+    /**
+     * @param $type
+     *
+     * @return mixed
+     */
+    protected function getText($type)
+    {
+        if (is_string($this->commonTexts[$this->locale][$type])) {
+            return $this->commonTexts[$this->locale][$type];
+        }
+
+        $randomKey = array_rand($this->commonTexts[$this->locale][$type]);
+
+        return $this->commonTexts[$this->locale][$type][$randomKey];
     }
 }
