@@ -193,14 +193,16 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     protected function helpIntent(): bool
     {
+        $message = $this->textHelper->getHelpMessage();
+
         $this->alexaResponse->setOutputSpeech(
-            new SSML($this->textHelper->getHelpMessage())
+            new SSML($message)
         );
 
         $this->alexaResponse->setCard(
             new Standard(
                 $this->textHelper->getHelpTitle(),
-                $this->textHelper->getHelpMessage(),
+                $message,
                 $this->smallImageUrl,
                 $this->largeImageUrl
             )
@@ -216,14 +218,16 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     protected function launchIntent(): bool
     {
+        $message = $this->textHelper->getLaunchMessage();
+
         $this->alexaResponse->setOutputSpeech(
-            new SSML($this->textHelper->getLaunchMessage())
+            new SSML($message)
         );
 
         $this->alexaResponse->setCard(
             new Standard(
                 $this->textHelper->getLaunchTitle(),
-                $this->textHelper->getLaunchMessage(),
+                $message,
                 $this->smallImageUrl,
                 $this->largeImageUrl
             )
@@ -239,14 +243,16 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     protected function cancelIntent(): bool
     {
+        $message = $this->textHelper->getCancelMessage();
+
         $this->alexaResponse->setOutputSpeech(
-            new SSML($this->textHelper->getCancelMessage())
+            new SSML($message)
         );
 
         $this->alexaResponse->setCard(
             new Standard(
                 $this->textHelper->getCancelTitle(),
-                $this->textHelper->getCancelMessage(),
+                $message,
                 $this->smallImageUrl,
                 $this->largeImageUrl
             )
@@ -264,14 +270,16 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     protected function stopIntent(): bool
     {
+        $message = $this->textHelper->getStopMessage();
+        
         $this->alexaResponse->setOutputSpeech(
-            new SSML($this->textHelper->getStopMessage())
+            new SSML($message)
         );
 
         $this->alexaResponse->setCard(
             new Standard(
                 $this->textHelper->getStopTitle(),
-                $this->textHelper->getStopMessage(),
+                $message,
                 $this->smallImageUrl,
                 $this->largeImageUrl
             )
