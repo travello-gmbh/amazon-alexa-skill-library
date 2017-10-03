@@ -54,11 +54,13 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     /**
      * AbstractAlexaApplication constructor.
      *
-     * @param TextHelperInterface $textHelper
+     * @param AlexaResponseInterface $alexaResponse
+     * @param TextHelperInterface    $textHelper
      */
-    public function __construct(TextHelperInterface $textHelper)
+    public function __construct(AlexaResponseInterface $alexaResponse, TextHelperInterface $textHelper)
     {
-        $this->textHelper = $textHelper;
+        $this->alexaResponse = $alexaResponse;
+        $this->textHelper    = $textHelper;
     }
 
     /**
@@ -148,7 +150,6 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     protected function initResponse(): bool
     {
-        $this->alexaResponse = new AlexaResponse();
         $this->alexaResponse->addSessionAttributes(
             $this->getSessionAttributes()
         );

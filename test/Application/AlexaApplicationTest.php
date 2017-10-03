@@ -18,6 +18,7 @@ use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
 use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
+use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
 use TravelloAlexaLibraryTest\Application\TestAsset\TestApplication;
 
@@ -68,9 +69,10 @@ class AlexaApplicationTest extends TestCase
         $validateMethod = $certificateValidator->validate();
         $validateMethod->shouldBeCalled()->willReturn(true);
 
-        $textHelper = new TestTextHelper();
+        $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($textHelper);
+        $application = new TestApplication($alexaResponse, $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -147,9 +149,10 @@ class AlexaApplicationTest extends TestCase
         $validateMethod = $certificateValidator->validate();
         $validateMethod->shouldBeCalled()->willReturn(true);
 
-        $textHelper = new TestTextHelper();
+        $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($textHelper);
+        $application = new TestApplication($alexaResponse, $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -223,10 +226,12 @@ class AlexaApplicationTest extends TestCase
         $validateMethod = $certificateValidator->validate();
         $validateMethod->shouldNotBeCalled();
 
+        $alexaResponse = new AlexaResponse();
+
         /** @var TextHelperInterface|ObjectProphecy $textHelper */
         $textHelper = $this->prophesize(TextHelperInterface::class);
 
-        $application = new TestApplication($textHelper->reveal());
+        $application = new TestApplication($alexaResponse, $textHelper->reveal());
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -272,9 +277,10 @@ class AlexaApplicationTest extends TestCase
         $validateMethod = $certificateValidator->validate();
         $validateMethod->shouldBeCalled()->willReturn(true);
 
-        $textHelper = new TestTextHelper();
+        $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($textHelper);
+        $application = new TestApplication($alexaResponse, $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -349,9 +355,10 @@ class AlexaApplicationTest extends TestCase
         $validateMethod = $certificateValidator->validate();
         $validateMethod->shouldBeCalled()->willReturn(true);
 
-        $textHelper = new TestTextHelper();
+        $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($textHelper);
+        $application = new TestApplication($alexaResponse, $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -429,9 +436,10 @@ class AlexaApplicationTest extends TestCase
         $validateMethod = $certificateValidator->validate();
         $validateMethod->shouldBeCalled()->willReturn(true);
 
-        $textHelper = new TestTextHelper();
+        $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($textHelper);
+        $application = new TestApplication($alexaResponse, $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
