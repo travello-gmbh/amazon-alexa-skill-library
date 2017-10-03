@@ -149,14 +149,20 @@ class InjectCertificateValidatorMiddlewareTest extends TestCase
         );
 
         /** @var MethodProphecy|StreamInterface $getHeaderMethod1 */
-        $getHeaderMethod1 = $request->getHeader('signaturecertchainurl');
+        $getHeaderMethod1 = $request->getHeaderLine('signaturecertchainurl');
         $getHeaderMethod1->shouldBeCalled()->willReturn(
             [$this->certificateUrl]
         );
 
         /** @var MethodProphecy|StreamInterface $getHeaderMethod2 */
-        $getHeaderMethod2 = $request->getHeader('signature');
-        $getHeaderMethod2->shouldBeCalled()->willReturn([$this->signature]);
+        $getHeaderMethod2 = $request->getHeader('signaturecertchainurl');
+        $getHeaderMethod2->shouldBeCalled()->willReturn(
+            [$this->certificateUrl]
+        );
+
+        /** @var MethodProphecy|StreamInterface $getHeaderMethod3 */
+        $getHeaderMethod3 = $request->getHeader('signature');
+        $getHeaderMethod3->shouldBeCalled()->willReturn([$this->signature]);
 
         /** @var MethodProphecy|StreamInterface $getAttributeMethod */
         $getAttributeMethod = $request->getAttribute(AlexaRequest::NAME);

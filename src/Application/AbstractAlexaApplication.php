@@ -271,7 +271,7 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     protected function stopIntent(): bool
     {
         $message = $this->textHelper->getStopMessage();
-        
+
         $this->alexaResponse->setOutputSpeech(
             new SSML($message)
         );

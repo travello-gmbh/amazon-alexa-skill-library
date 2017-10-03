@@ -65,8 +65,7 @@ class InjectCertificateValidatorMiddleware implements ServerMiddlewareInterface
      */
     public function process(Request $request, DelegateInterface $delegate)
     {
-        if (
-            $request->getMethod() == RequestMethodInterface::METHOD_POST
+        if ($request->getMethod() == RequestMethodInterface::METHOD_POST
             && $request->getHeaderLine('signaturecertchainurl')
         ) {
             $certificateValidator = $this->certificateValidatorFactory->create(
