@@ -68,6 +68,10 @@ class TestApplication extends AbstractAlexaApplication
                 return $this->stopIntent();
             // no break
 
+            case 'AMAZON.CancelIntent':
+                return $this->cancelIntent();
+            // no break
+
             case 'AMAZON.HelpIntent':
                 return $this->helpIntent();
             // no break

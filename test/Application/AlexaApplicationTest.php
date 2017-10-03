@@ -476,4 +476,85 @@ class AlexaApplicationTest extends TestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     *
+     */
+    public function testCancelRequest()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'amzn1.ask.skill.applicationId',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'IntentRequest',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'en-US',
+                'intent'    => [
+                    'name'  => 'AMAZON.CancelIntent',
+                    'slots' => [],
+                ],
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
+        $certificateValidator = $this->prophesize(
+            CertificateValidatorInterface::class
+        );
+
+        /** @var MethodProphecy $validateMethod */
+        $validateMethod = $certificateValidator->validate();
+        $validateMethod->shouldBeCalled()->willReturn(true);
+
+        $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
+
+        $application = new TestApplication($alexaResponse, $textHelper);
+        $application->setAlexaRequest($alexaRequest);
+        $application->setCertificateValidator($certificateValidator->reveal());
+
+        $result = $application->execute();
+
+        $expected = [
+            'version'           => '1.0',
+            'sessionAttributes' => [
+                'foo' => 'bar',
+            ],
+            'response'          => [
+                'outputSpeech'     => [
+                    'type' => 'SSML',
+                    'ssml' => '<speak>cancel message</speak>',
+                ],
+                'card'             => [
+                    'type'  => 'Standard',
+                    'title' => 'cancel title',
+                    'text'  => 'cancel message',
+                    'image' => [
+                        'smallImageUrl' => 'https://image.server/small.png',
+                        'largeImageUrl' => 'https://image.server/large.png',
+                    ],
+                ],
+//                'reprompt'         => [
+//                    'outputSpeech' => [
+//                        'type' => 'SSML',
+//                        'ssml' => '<speak>reprompt message</speak>',
+//                    ],
+//                ],
+                'shouldEndSession' => true,
+            ],
+        ];
+
+        $this->assertEquals($expected, $result);
+    }
 }
