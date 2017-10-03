@@ -12,6 +12,8 @@
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Intent\AbstractIntent;
+use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\StopIntent;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
@@ -59,8 +61,8 @@ class StopIntentTest extends TestCase
 
         $stopIntent = new StopIntent($alexaRequest, $alexaResponse);
 
-        $this->assertEquals($alexaRequest, $stopIntent->getAlexaRequest());
-        $this->assertEquals($alexaResponse, $stopIntent->getAlexaResponse());
+        $this->assertTrue($stopIntent instanceof AbstractIntent);
+        $this->assertTrue($stopIntent instanceof IntentInterface);
     }
 
     /**

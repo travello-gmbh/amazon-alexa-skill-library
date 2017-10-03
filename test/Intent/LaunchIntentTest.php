@@ -12,6 +12,8 @@
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Intent\AbstractIntent;
+use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\LaunchIntent;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
@@ -55,8 +57,8 @@ class LaunchIntentTest extends TestCase
 
         $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse);
 
-        $this->assertEquals($alexaRequest, $launchIntent->getAlexaRequest());
-        $this->assertEquals($alexaResponse, $launchIntent->getAlexaResponse());
+        $this->assertTrue($launchIntent instanceof AbstractIntent);
+        $this->assertTrue($launchIntent instanceof IntentInterface);
     }
 
     /**

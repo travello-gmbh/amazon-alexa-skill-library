@@ -14,10 +14,17 @@ namespace TravelloAlexaLibraryTest\Application;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
+use Psr\Container\ContainerInterface;
 use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
+use TravelloAlexaLibrary\Intent\CancelIntent;
+use TravelloAlexaLibrary\Intent\HelpIntent;
+use TravelloAlexaLibrary\Intent\LaunchIntent;
+use TravelloAlexaLibrary\Intent\StopIntent;
 use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
+use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
+use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
 use TravelloAlexaLibraryTest\Application\TestAsset\TestApplication;
@@ -61,9 +68,7 @@ class AlexaApplicationTest extends TestCase
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
 
         /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(
-            CertificateValidatorInterface::class
-        );
+        $certificateValidator = $this->prophesize(CertificateValidatorInterface::class);
 
         /** @var MethodProphecy $validateMethod */
         $validateMethod = $certificateValidator->validate();
@@ -72,7 +77,18 @@ class AlexaApplicationTest extends TestCase
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($alexaResponse, $textHelper);
+        /** @var ContainerInterface|ObjectProphecy $intentManager */
+        $intentManager = $this->prophesize(ContainerInterface::class);
+
+        /** @var MethodProphecy $hasMethod */
+        $hasMethod = $intentManager->has(HelpIntent::NAME);
+        $hasMethod->shouldBeCalled()->willReturn(true);
+
+        /** @var MethodProphecy $getMethod */
+        $getMethod = $intentManager->get(HelpIntent::NAME);
+        $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
+
+        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -97,12 +113,12 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-//                'reprompt'         => [
-//                    'outputSpeech' => [
-//                        'type' => 'SSML',
-//                        'ssml' => '<speak>reprompt message</speak>',
-//                    ],
-//                ],
+                'reprompt'         => [
+                    'outputSpeech' => [
+                        'type' => 'SSML',
+                        'ssml' => '<speak>reprompt message</speak>',
+                    ],
+                ],
                 'shouldEndSession' => false,
             ],
         ];
@@ -152,7 +168,18 @@ class AlexaApplicationTest extends TestCase
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($alexaResponse, $textHelper);
+        /** @var ContainerInterface|ObjectProphecy $intentManager */
+        $intentManager = $this->prophesize(ContainerInterface::class);
+
+        /** @var MethodProphecy $hasMethod */
+        $hasMethod = $intentManager->has('name');
+        $hasMethod->shouldBeCalled()->willReturn(false);
+
+        /** @var MethodProphecy $getMethod */
+        $getMethod = $intentManager->get(HelpIntent::NAME);
+        $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
+
+        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -166,23 +193,23 @@ class AlexaApplicationTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>foo text</speak>',
+                    'ssml' => '<speak>help message</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'foo title',
-                    'text'  => 'foo text',
+                    'title' => 'help title',
+                    'text'  => 'help message',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-//                'reprompt'         => [
-//                    'outputSpeech' => [
-//                        'type' => 'SSML',
-//                        'ssml' => '<speak>reprompt message</speak>',
-//                    ],
-//                ],
+                'reprompt'         => [
+                    'outputSpeech' => [
+                        'type' => 'SSML',
+                        'ssml' => '<speak>reprompt message</speak>',
+                    ],
+                ],
                 'shouldEndSession' => false,
             ],
         ];
@@ -228,10 +255,13 @@ class AlexaApplicationTest extends TestCase
 
         $alexaResponse = new AlexaResponse();
 
+        /** @var ContainerInterface|ObjectProphecy $intentManager */
+        $intentManager = $this->prophesize(ContainerInterface::class);
+
         /** @var TextHelperInterface|ObjectProphecy $textHelper */
         $textHelper = $this->prophesize(TextHelperInterface::class);
 
-        $application = new TestApplication($alexaResponse, $textHelper->reveal());
+        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper->reveal());
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -280,7 +310,18 @@ class AlexaApplicationTest extends TestCase
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($alexaResponse, $textHelper);
+        /** @var ContainerInterface|ObjectProphecy $intentManager */
+        $intentManager = $this->prophesize(ContainerInterface::class);
+
+        /** @var MethodProphecy $hasMethod */
+        $hasMethod = $intentManager->has(LaunchRequestType::NAME);
+        $hasMethod->shouldBeCalled()->willReturn(true);
+
+        /** @var MethodProphecy $getMethod */
+        $getMethod = $intentManager->get(LaunchRequestType::NAME);
+        $getMethod->shouldBeCalled()->willReturn(new LaunchIntent($alexaRequest, $alexaResponse));
+
+        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -305,12 +346,12 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-//                'reprompt'         => [
-//                    'outputSpeech' => [
-//                        'type' => 'SSML',
-//                        'ssml' => '<speak>reprompt message</speak>',
-//                    ],
-//                ],
+                'reprompt'         => [
+                    'outputSpeech' => [
+                        'type' => 'SSML',
+                        'ssml' => '<speak>reprompt message</speak>',
+                    ],
+                ],
                 'shouldEndSession' => false,
             ],
         ];
@@ -358,7 +399,18 @@ class AlexaApplicationTest extends TestCase
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($alexaResponse, $textHelper);
+        /** @var ContainerInterface|ObjectProphecy $intentManager */
+        $intentManager = $this->prophesize(ContainerInterface::class);
+
+        /** @var MethodProphecy $hasMethod */
+        $hasMethod = $intentManager->has(SessionEndedRequestType::NAME);
+        $hasMethod->shouldBeCalled()->willReturn(true);
+
+        /** @var MethodProphecy $getMethod */
+        $getMethod = $intentManager->get(SessionEndedRequestType::NAME);
+        $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
+
+        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -383,12 +435,6 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-//                'reprompt'         => [
-//                    'outputSpeech' => [
-//                        'type' => 'SSML',
-//                        'ssml' => '<speak>reprompt message</speak>',
-//                    ],
-//                ],
                 'shouldEndSession' => true,
             ],
         ];
@@ -439,7 +485,18 @@ class AlexaApplicationTest extends TestCase
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($alexaResponse, $textHelper);
+        /** @var ContainerInterface|ObjectProphecy $intentManager */
+        $intentManager = $this->prophesize(ContainerInterface::class);
+
+        /** @var MethodProphecy $hasMethod */
+        $hasMethod = $intentManager->has(StopIntent::NAME);
+        $hasMethod->shouldBeCalled()->willReturn(true);
+
+        /** @var MethodProphecy $getMethod */
+        $getMethod = $intentManager->get(StopIntent::NAME);
+        $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
+
+        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -464,12 +521,6 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-//                'reprompt'         => [
-//                    'outputSpeech' => [
-//                        'type' => 'SSML',
-//                        'ssml' => '<speak>reprompt message</speak>',
-//                    ],
-//                ],
                 'shouldEndSession' => true,
             ],
         ];
@@ -520,7 +571,18 @@ class AlexaApplicationTest extends TestCase
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
-        $application = new TestApplication($alexaResponse, $textHelper);
+        /** @var ContainerInterface|ObjectProphecy $intentManager */
+        $intentManager = $this->prophesize(ContainerInterface::class);
+
+        /** @var MethodProphecy $hasMethod */
+        $hasMethod = $intentManager->has(CancelIntent::NAME);
+        $hasMethod->shouldBeCalled()->willReturn(true);
+
+        /** @var MethodProphecy $getMethod */
+        $getMethod = $intentManager->get(CancelIntent::NAME);
+        $getMethod->shouldBeCalled()->willReturn(new CancelIntent($alexaRequest, $alexaResponse));
+
+        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
         $application->setAlexaRequest($alexaRequest);
         $application->setCertificateValidator($certificateValidator->reveal());
 
@@ -545,12 +607,6 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-//                'reprompt'         => [
-//                    'outputSpeech' => [
-//                        'type' => 'SSML',
-//                        'ssml' => '<speak>reprompt message</speak>',
-//                    ],
-//                ],
                 'shouldEndSession' => true,
             ],
         ];

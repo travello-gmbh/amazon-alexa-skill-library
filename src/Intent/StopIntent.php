@@ -12,7 +12,6 @@
 namespace TravelloAlexaLibrary\Intent;
 
 use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
-use TravelloAlexaLibrary\Request\AlexaRequest;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibrary\Response\Card\Standard;
 use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
@@ -22,43 +21,9 @@ use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
  *
  * @package TravelloAlexaLibrary\Intent
  */
-class StopIntent
+class StopIntent extends AbstractIntent
 {
     const NAME = 'AMAZON.StopIntent';
-
-    /** @var AlexaRequest */
-    private $alexaRequest;
-
-    /** @var AlexaResponse */
-    private $alexaResponse;
-
-    /**
-     * StopIntent constructor.
-     *
-     * @param AlexaRequest  $alexaRequest
-     * @param AlexaResponse $alexaResponse
-     */
-    public function __construct(AlexaRequest $alexaRequest, AlexaResponse $alexaResponse)
-    {
-        $this->alexaRequest  = $alexaRequest;
-        $this->alexaResponse = $alexaResponse;
-    }
-
-    /**
-     * @return AlexaRequest
-     */
-    public function getAlexaRequest(): AlexaRequest
-    {
-        return $this->alexaRequest;
-    }
-
-    /**
-     * @return AlexaResponse
-     */
-    public function getAlexaResponse(): AlexaResponse
-    {
-        return $this->alexaResponse;
-    }
 
     /**
      * @param TextHelperInterface $textHelper
@@ -72,16 +37,16 @@ class StopIntent
         $title   = $textHelper->getStopTitle();
         $message = $textHelper->getStopMessage();
 
-        $this->alexaResponse->setOutputSpeech(
+        $this->getAlexaResponse()->setOutputSpeech(
             new SSML($message)
         );
 
-        $this->alexaResponse->setCard(
+        $this->getAlexaResponse()->setCard(
             new Standard($title, $message, $smallImageUrl, $largeImageUrl)
         );
 
-        $this->alexaResponse->endSession();
+        $this->getAlexaResponse()->endSession();
 
-        return $this->alexaResponse;
+        return $this->getAlexaResponse();
     }
 }

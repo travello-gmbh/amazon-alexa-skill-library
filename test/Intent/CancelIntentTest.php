@@ -12,7 +12,9 @@
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Intent\AbstractIntent;
 use TravelloAlexaLibrary\Intent\CancelIntent;
+use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
@@ -59,8 +61,8 @@ class CancelIntentTest extends TestCase
 
         $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse);
 
-        $this->assertEquals($alexaRequest, $cancelIntent->getAlexaRequest());
-        $this->assertEquals($alexaResponse, $cancelIntent->getAlexaResponse());
+        $this->assertTrue($cancelIntent instanceof AbstractIntent);
+        $this->assertTrue($cancelIntent instanceof IntentInterface);
     }
 
     /**

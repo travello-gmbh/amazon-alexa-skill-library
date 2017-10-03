@@ -22,7 +22,9 @@
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Intent\AbstractIntent;
 use TravelloAlexaLibrary\Intent\HelpIntent;
+use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
@@ -69,8 +71,8 @@ class HelpIntentTest extends TestCase
 
         $helpIntent = new HelpIntent($alexaRequest, $alexaResponse);
 
-        $this->assertEquals($alexaRequest, $helpIntent->getAlexaRequest());
-        $this->assertEquals($alexaResponse, $helpIntent->getAlexaResponse());
+        $this->assertTrue($helpIntent instanceof AbstractIntent);
+        $this->assertTrue($helpIntent instanceof IntentInterface);
     }
 
     /**

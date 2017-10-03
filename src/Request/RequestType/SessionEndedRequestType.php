@@ -20,6 +20,8 @@ use TravelloAlexaLibrary\Request\RequestType\Error\ErrorInterface;
  */
 class SessionEndedRequestType extends AbstractRequestType
 {
+    const NAME = 'SessionEndedRequest';
+
     /** @var ErrorInterface */
     private $error;
 
