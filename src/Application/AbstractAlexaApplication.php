@@ -15,7 +15,6 @@ use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
 use TravelloAlexaLibrary\Request\AlexaRequestInterface;
 use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
-use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibrary\Response\AlexaResponseInterface;
 use TravelloAlexaLibrary\Response\Card\Standard;
 use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
