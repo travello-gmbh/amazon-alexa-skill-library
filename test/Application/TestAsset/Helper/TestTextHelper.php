@@ -33,6 +33,8 @@ class TestTextHelper extends AbstractTextHelper
                 'alexaHelpMessage'     => 'help message',
                 'alexaStopTitle'       => 'stop title',
                 'alexaStopMessage'     => 'stop message',
+                'alexaCancelTitle'     => 'cancel title',
+                'alexaCancelMessage'   => 'cancel message',
             ],
             'de-DE' => [
                 'alexaLaunchTitle'     => [
@@ -69,6 +71,16 @@ class TestTextHelper extends AbstractTextHelper
                     'Stop Nachricht 1',
                     'Stop Nachricht 2',
                     'Stop Nachricht 3',
+                ],
+                'alexaCancelTitle'       => [
+                    'Cancel Titel 1',
+                    'Cancel Titel 2',
+                    'Cancel Titel 3',
+                ],
+                'alexaCancelMessage'     => [
+                    'Cancel Nachricht 1',
+                    'Cancel Nachricht 2',
+                    'Cancel Nachricht 3',
                 ],
             ],
         ];

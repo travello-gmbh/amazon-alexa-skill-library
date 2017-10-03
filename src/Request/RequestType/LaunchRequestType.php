@@ -18,6 +18,8 @@ namespace TravelloAlexaLibrary\Request\RequestType;
  */
 class LaunchRequestType extends AbstractRequestType
 {
+    const NAME = 'LaunchRequest';
+
     /** @var string */
     private $type = 'LaunchRequest';
 

@@ -12,9 +12,6 @@
 namespace TravelloAlexaLibraryTest\Application\TestAsset;
 
 use TravelloAlexaLibrary\Application\AbstractAlexaApplication;
-use TravelloAlexaLibrary\Request\RequestType\IntentRequestType;
-use TravelloAlexaLibrary\Response\Card\Standard;
-use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
 
 /**
  * Class TestApplication
@@ -53,40 +50,5 @@ class TestApplication extends AbstractAlexaApplication
      */
     protected function resetSessionAttributes()
     {
-    }
-
-    /**
-     * @return bool
-     */
-    protected function handleIntentRequest(): bool
-    {
-        /** @var IntentRequestType $intentRequest */
-        $intentRequest = $this->alexaRequest->getRequest();
-
-        switch ($intentRequest->getIntent()->getName()) {
-            case 'AMAZON.StopIntent':
-                return $this->stopIntent();
-            // no break
-
-            case 'AMAZON.HelpIntent':
-                return $this->helpIntent();
-            // no break
-
-            default:
-                $this->alexaResponse->setOutputSpeech(
-                    new SSML('foo text')
-                );
-
-                $this->alexaResponse->setCard(
-                    new Standard(
-                        'foo title',
-                        'foo text',
-                        'https://image.server/small.png',
-                        'https://image.server/large.png'
-                    )
-                );
-        }
-
-        return true;
     }
 }

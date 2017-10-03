@@ -11,14 +11,15 @@
 
 namespace TravelloAlexaLibrary\Application;
 
+use Psr\Container\ContainerInterface;
 use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
+use TravelloAlexaLibrary\Intent\HelpIntent;
+use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\AlexaRequestInterface;
 use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
-use TravelloAlexaLibrary\Response\AlexaResponse;
+use TravelloAlexaLibrary\Request\RequestType\IntentRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponseInterface;
-use TravelloAlexaLibrary\Response\Card\Standard;
-use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
 
 /**
  * Class AbstractAlexaApplication
@@ -42,6 +43,9 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     /** @var CertificateValidatorInterface */
     protected $certificateValidator;
 
+    /** @var ContainerInterface */
+    protected $intentManager;
+
     /** @var TextHelperInterface */
     protected $textHelper;
 
@@ -54,11 +58,18 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     /**
      * AbstractAlexaApplication constructor.
      *
-     * @param TextHelperInterface $textHelper
+     * @param AlexaResponseInterface $alexaResponse
+     * @param ContainerInterface     $intentManager
+     * @param TextHelperInterface    $textHelper
      */
-    public function __construct(TextHelperInterface $textHelper)
-    {
-        $this->textHelper = $textHelper;
+    public function __construct(
+        AlexaResponseInterface $alexaResponse,
+        ContainerInterface $intentManager,
+        TextHelperInterface $textHelper
+    ) {
+        $this->alexaResponse = $alexaResponse;
+        $this->intentManager = $intentManager;
+        $this->textHelper    = $textHelper;
     }
 
     /**
@@ -148,12 +159,8 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     protected function initResponse(): bool
     {
-        $this->alexaResponse = new AlexaResponse();
         $this->alexaResponse->addSessionAttributes(
             $this->getSessionAttributes()
-        );
-        $this->alexaResponse->setReprompt(
-            new SSML($this->textHelper->getRepromptMessage())
         );
 
         return true;
@@ -166,126 +173,24 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     protected function handleRequest(): bool
     {
-        switch ($this->alexaRequest->getRequest()->getType()) {
-            case 'LaunchRequest':
-                return $this->launchIntent();
+        if (get_class($this->alexaRequest->getRequest()) === IntentRequestType::class) {
+            /** @var IntentRequestType $intentRequest */
+            $intentRequest = $this->alexaRequest->getRequest();
 
-            case 'IntentRequest':
-                return $this->handleIntentRequest();
-
-            case 'SessionEndedRequest':
-            default:
-                return $this->stopIntent();
+            $intentName = $intentRequest->getIntent()->getName();
+        } else {
+            $intentName = $this->alexaRequest->getRequest()->getType();
         }
-    }
 
-    /**
-     * Handle custom application intents
-     *
-     * @return bool
-     */
-    abstract protected function handleIntentRequest(): bool;
+        if ($this->intentManager->has($intentName)) {
+            /** @var IntentInterface $intent */
+            $intent = $this->intentManager->get($intentName);
+        } else {
+            /** @var IntentInterface $intent */
+            $intent = $this->intentManager->get(HelpIntent::NAME);
+        }
 
-    /**
-     * Handle the help intent
-     *
-     * @return bool
-     */
-    protected function helpIntent(): bool
-    {
-        $message = $this->textHelper->getHelpMessage();
-
-        $this->alexaResponse->setOutputSpeech(
-            new SSML($message)
-        );
-
-        $this->alexaResponse->setCard(
-            new Standard(
-                $this->textHelper->getHelpTitle(),
-                $message,
-                $this->smallImageUrl,
-                $this->largeImageUrl
-            )
-        );
-
-        return true;
-    }
-
-    /**
-     * Handle the launch intent
-     *
-     * @return bool
-     */
-    protected function launchIntent(): bool
-    {
-        $message = $this->textHelper->getLaunchMessage();
-
-        $this->alexaResponse->setOutputSpeech(
-            new SSML($message)
-        );
-
-        $this->alexaResponse->setCard(
-            new Standard(
-                $this->textHelper->getLaunchTitle(),
-                $message,
-                $this->smallImageUrl,
-                $this->largeImageUrl
-            )
-        );
-
-        return true;
-    }
-
-    /**
-     * Handle the cancel intent
-     *
-     * @return bool
-     */
-    protected function cancelIntent(): bool
-    {
-        $message = $this->textHelper->getCancelMessage();
-
-        $this->alexaResponse->setOutputSpeech(
-            new SSML($message)
-        );
-
-        $this->alexaResponse->setCard(
-            new Standard(
-                $this->textHelper->getCancelTitle(),
-                $message,
-                $this->smallImageUrl,
-                $this->largeImageUrl
-            )
-        );
-
-        $this->alexaResponse->endSession();
-
-        return true;
-    }
-
-    /**
-     * Handle the stop intent
-     *
-     * @return bool
-     */
-    protected function stopIntent(): bool
-    {
-        $message = $this->textHelper->getStopMessage();
-        
-        $this->alexaResponse->setOutputSpeech(
-            new SSML($message)
-        );
-
-        $this->alexaResponse->setCard(
-            new Standard(
-                $this->textHelper->getStopTitle(),
-                $message,
-                $this->smallImageUrl,
-                $this->largeImageUrl
-            )
-        );
-
-        $this->alexaResponse->endSession();
+        $intent->handle($this->textHelper, $this->smallImageUrl, $this->largeImageUrl);
 
         return true;
     }

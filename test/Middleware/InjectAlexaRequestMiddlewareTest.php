@@ -110,6 +110,10 @@ class InjectAlexaRequestMiddlewareTest extends TestCase
             RequestMethodInterface::METHOD_POST
         );
 
+        /** @var MethodProphecy|StreamInterface $getHeaderMethod1 */
+        $getHeaderMethod1 = $request->getHeaderLine('signaturecertchainurl');
+        $getHeaderMethod1->shouldBeCalled()->willReturn(['foo']);
+
         /** @var MethodProphecy|StreamInterface $getBodyMethod */
         $getBodyMethod = $request->getBody();
         $getBodyMethod->shouldBeCalled()->willReturn($stream);
