@@ -24,6 +24,8 @@ use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
  */
 class CancelIntent
 {
+    const NAME = 'AMAZON.CancelIntent';
+
     /** @var AlexaRequest */
     private $alexaRequest;
 

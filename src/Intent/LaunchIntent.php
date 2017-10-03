@@ -24,6 +24,8 @@ use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
  */
 class LaunchIntent
 {
+    const NAME = 'AMAZON.LaunchIntent';
+
     /** @var AlexaRequest */
     private $alexaRequest;
 
