@@ -152,9 +152,6 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
         $this->alexaResponse->addSessionAttributes(
             $this->getSessionAttributes()
         );
-        $this->alexaResponse->setReprompt(
-            new SSML($this->textHelper->getRepromptMessage())
-        );
 
         return true;
     }

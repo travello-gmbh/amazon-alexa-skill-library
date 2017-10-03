@@ -97,12 +97,12 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-                'reprompt'         => [
-                    'outputSpeech' => [
-                        'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
-                    ],
-                ],
+//                'reprompt'         => [
+//                    'outputSpeech' => [
+//                        'type' => 'SSML',
+//                        'ssml' => '<speak>reprompt message</speak>',
+//                    ],
+//                ],
                 'shouldEndSession' => false,
             ],
         ];
@@ -177,12 +177,12 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-                'reprompt'         => [
-                    'outputSpeech' => [
-                        'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
-                    ],
-                ],
+//                'reprompt'         => [
+//                    'outputSpeech' => [
+//                        'type' => 'SSML',
+//                        'ssml' => '<speak>reprompt message</speak>',
+//                    ],
+//                ],
                 'shouldEndSession' => false,
             ],
         ];
@@ -305,12 +305,12 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-                'reprompt'         => [
-                    'outputSpeech' => [
-                        'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
-                    ],
-                ],
+//                'reprompt'         => [
+//                    'outputSpeech' => [
+//                        'type' => 'SSML',
+//                        'ssml' => '<speak>reprompt message</speak>',
+//                    ],
+//                ],
                 'shouldEndSession' => false,
             ],
         ];
@@ -383,12 +383,12 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-                'reprompt'         => [
-                    'outputSpeech' => [
-                        'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
-                    ],
-                ],
+//                'reprompt'         => [
+//                    'outputSpeech' => [
+//                        'type' => 'SSML',
+//                        'ssml' => '<speak>reprompt message</speak>',
+//                    ],
+//                ],
                 'shouldEndSession' => true,
             ],
         ];
@@ -464,12 +464,12 @@ class AlexaApplicationTest extends TestCase
                         'largeImageUrl' => 'https://image.server/large.png',
                     ],
                 ],
-                'reprompt'         => [
-                    'outputSpeech' => [
-                        'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
-                    ],
-                ],
+//                'reprompt'         => [
+//                    'outputSpeech' => [
+//                        'type' => 'SSML',
+//                        'ssml' => '<speak>reprompt message</speak>',
+//                    ],
+//                ],
                 'shouldEndSession' => true,
             ],
         ];
