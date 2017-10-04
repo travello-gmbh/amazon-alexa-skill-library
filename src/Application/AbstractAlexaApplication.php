@@ -12,7 +12,6 @@
 namespace TravelloAlexaLibrary\Application;
 
 use Psr\Container\ContainerInterface;
-use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
 use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\Intent\HelpIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
@@ -40,9 +39,6 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     /** @var ContainerInterface */
     protected $intentManager;
 
-    /** @var TextHelperInterface */
-    protected $textHelper;
-
     /** @var SkillConfigurationInterface */
     protected $skillConfiguration;
 
@@ -52,20 +48,17 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      * @param AlexaRequestInterface       $alexaRequest
      * @param AlexaResponseInterface      $alexaResponse
      * @param ContainerInterface          $intentManager
-     * @param TextHelperInterface         $textHelper
      * @param SkillConfigurationInterface $skillConfiguration
      */
     public function __construct(
         AlexaRequestInterface $alexaRequest,
         AlexaResponseInterface $alexaResponse,
         ContainerInterface $intentManager,
-        TextHelperInterface $textHelper,
         SkillConfigurationInterface $skillConfiguration
     ) {
         $this->alexaRequest       = $alexaRequest;
         $this->alexaResponse      = $alexaResponse;
         $this->intentManager      = $intentManager;
-        $this->textHelper         = $textHelper;
         $this->skillConfiguration = $skillConfiguration;
     }
 
@@ -77,20 +70,11 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     public function execute(): array
     {
-        $this->setLocale();
         $this->initSessionAttributes();
         $this->initResponse();
         $this->handleRequest();
 
         return $this->returnResponse();
-    }
-
-    /**
-     * Set the locale
-     */
-    protected function setLocale()
-    {
-        $this->textHelper->setLocale($this->alexaRequest->getRequest()->getLocale());
     }
 
     /**
@@ -151,7 +135,6 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
         }
 
         $intent->handle(
-            $this->textHelper,
             $this->skillConfiguration->getSmallImageUrl(),
             $this->skillConfiguration->getLargeImageUrl()
         );

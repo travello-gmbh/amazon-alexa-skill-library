@@ -15,13 +15,11 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
-use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
 use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\HelpIntent;
 use TravelloAlexaLibrary\Intent\LaunchIntent;
 use TravelloAlexaLibrary\Intent\StopIntent;
-use TravelloAlexaLibrary\Request\Exception\BadRequest;
 use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
@@ -78,7 +76,7 @@ class AlexaApplicationTest extends TestCase
 
         /** @var MethodProphecy $getMethod */
         $getMethod = $intentManager->get(HelpIntent::NAME);
-        $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
+        $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse, $textHelper));
 
         /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
         $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
@@ -92,7 +90,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -170,7 +168,7 @@ class AlexaApplicationTest extends TestCase
 
         /** @var MethodProphecy $getMethod */
         $getMethod = $intentManager->get(HelpIntent::NAME);
-        $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
+        $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse, $textHelper));
 
         /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
         $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
@@ -184,7 +182,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -259,7 +257,7 @@ class AlexaApplicationTest extends TestCase
 
         /** @var MethodProphecy $getMethod */
         $getMethod = $intentManager->get(LaunchRequestType::NAME);
-        $getMethod->shouldBeCalled()->willReturn(new LaunchIntent($alexaRequest, $alexaResponse));
+        $getMethod->shouldBeCalled()->willReturn(new LaunchIntent($alexaRequest, $alexaResponse, $textHelper));
 
         /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
         $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
@@ -273,7 +271,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -349,7 +347,7 @@ class AlexaApplicationTest extends TestCase
 
         /** @var MethodProphecy $getMethod */
         $getMethod = $intentManager->get(SessionEndedRequestType::NAME);
-        $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
+        $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse, $textHelper));
 
         /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
         $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
@@ -363,7 +361,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -436,7 +434,7 @@ class AlexaApplicationTest extends TestCase
 
         /** @var MethodProphecy $getMethod */
         $getMethod = $intentManager->get(StopIntent::NAME);
-        $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
+        $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse, $textHelper));
 
         /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
         $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
@@ -450,7 +448,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -523,7 +521,7 @@ class AlexaApplicationTest extends TestCase
 
         /** @var MethodProphecy $getMethod */
         $getMethod = $intentManager->get(CancelIntent::NAME);
-        $getMethod->shouldBeCalled()->willReturn(new CancelIntent($alexaRequest, $alexaResponse));
+        $getMethod->shouldBeCalled()->willReturn(new CancelIntent($alexaRequest, $alexaResponse, $textHelper));
 
         /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
         $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
@@ -537,7 +535,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
         $result = $application->execute();

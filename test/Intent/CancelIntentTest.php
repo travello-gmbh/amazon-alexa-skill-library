@@ -55,11 +55,11 @@ class CancelIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse);
+        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper);
 
         $this->assertTrue($cancelIntent instanceof AbstractIntent);
         $this->assertTrue($cancelIntent instanceof IntentInterface);
@@ -95,15 +95,14 @@ class CancelIntentTest extends TestCase
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
         $alexaResponse = new AlexaResponse();
-
         $textHelper    = new TestTextHelper();
+
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
 
-        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse);
-        $cancelIntent->handle($textHelper, $smallImageUrl, $largeImageUrl);
+        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper);
+        $cancelIntent->handle($smallImageUrl, $largeImageUrl);
 
         $expected = [
             'version'           => '1.0',

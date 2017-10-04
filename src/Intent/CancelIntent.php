@@ -11,7 +11,6 @@
 
 namespace TravelloAlexaLibrary\Intent;
 
-use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibrary\Response\Card\Standard;
 use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
@@ -26,16 +25,15 @@ class CancelIntent extends AbstractIntent
     const NAME = 'AMAZON.CancelIntent';
 
     /**
-     * @param TextHelperInterface $textHelper
-     * @param string              $smallImageUrl
-     * @param string              $largeImageUrl
+     * @param string $smallImageUrl
+     * @param string $largeImageUrl
      *
      * @return AlexaResponse
      */
-    public function handle(TextHelperInterface $textHelper, string $smallImageUrl, string $largeImageUrl): AlexaResponse
+    public function handle(string $smallImageUrl, string $largeImageUrl): AlexaResponse
     {
-        $title   = $textHelper->getCancelTitle();
-        $message = $textHelper->getCancelMessage();
+        $title   = $this->getTextHelper()->getCancelTitle();
+        $message = $this->getTextHelper()->getCancelMessage();
 
         $this->getAlexaResponse()->setOutputSpeech(
             new SSML($message)

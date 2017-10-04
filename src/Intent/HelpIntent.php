@@ -11,7 +11,6 @@
 
 namespace TravelloAlexaLibrary\Intent;
 
-use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibrary\Response\Card\Standard;
 use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
@@ -26,16 +25,15 @@ class HelpIntent extends AbstractIntent
     const NAME = 'AMAZON.HelpIntent';
 
     /**
-     * @param TextHelperInterface $textHelper
-     * @param string              $smallImageUrl
-     * @param string              $largeImageUrl
+     * @param string $smallImageUrl
+     * @param string $largeImageUrl
      *
      * @return AlexaResponse
      */
-    public function handle(TextHelperInterface $textHelper, string $smallImageUrl, string $largeImageUrl): AlexaResponse
+    public function handle(string $smallImageUrl, string $largeImageUrl): AlexaResponse
     {
-        $title   = $textHelper->getHelpTitle();
-        $message = $textHelper->getHelpMessage();
+        $title   = $this->getTextHelper()->getHelpTitle();
+        $message = $this->getTextHelper()->getHelpMessage();
 
         $this->getAlexaResponse()->setOutputSpeech(
             new SSML($message)
@@ -46,7 +44,7 @@ class HelpIntent extends AbstractIntent
         );
 
         $this->getAlexaResponse()->setReprompt(
-            new SSML($textHelper->getRepromptMessage())
+            new SSML($this->getTextHelper()->getRepromptMessage())
         );
 
         return $this->getAlexaResponse();

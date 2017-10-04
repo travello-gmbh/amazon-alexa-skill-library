@@ -49,6 +49,16 @@ interface SkillConfigurationInterface
     public function setIntents(array $intents);
 
     /**
+     * @return array
+     */
+    public function getTexts(): array;
+
+    /**
+     * @param array $texts
+     */
+    public function setTexts(array $texts);
+
+    /**
      * @return string
      */
     public function getSmallImageUrl(): string;

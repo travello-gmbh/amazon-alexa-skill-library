@@ -65,11 +65,11 @@ class HelpIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse);
+        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse, $textHelper);
 
         $this->assertTrue($helpIntent instanceof AbstractIntent);
         $this->assertTrue($helpIntent instanceof IntentInterface);
@@ -104,16 +104,15 @@ class HelpIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-
         $textHelper    = new TestTextHelper();
+
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
 
-        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse);
-        $helpIntent->handle($textHelper, $smallImageUrl, $largeImageUrl);
+        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse, $textHelper);
+        $helpIntent->handle($smallImageUrl, $largeImageUrl);
 
         $expected = [
             'version'           => '1.0',

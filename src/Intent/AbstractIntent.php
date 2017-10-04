@@ -11,6 +11,7 @@
 
 namespace TravelloAlexaLibrary\Intent;
 
+use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
 use TravelloAlexaLibrary\Request\AlexaRequest;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 
@@ -27,16 +28,24 @@ abstract class AbstractIntent implements IntentInterface
     /** @var AlexaResponse */
     private $alexaResponse;
 
+    /** @var TextHelperInterface */
+    private $textHelper;
+
     /**
      * AbstractIntent constructor.
      *
-     * @param AlexaRequest  $alexaRequest
-     * @param AlexaResponse $alexaResponse
+     * @param AlexaRequest        $alexaRequest
+     * @param AlexaResponse       $alexaResponse
+     * @param TextHelperInterface $textHelper
      */
-    public function __construct(AlexaRequest $alexaRequest, AlexaResponse $alexaResponse)
-    {
+    public function __construct(
+        AlexaRequest $alexaRequest,
+        AlexaResponse $alexaResponse,
+        TextHelperInterface $textHelper
+    ) {
         $this->setAlexaRequest($alexaRequest);
         $this->setAlexaResponse($alexaResponse);
+        $this->setTextHelper($textHelper);
     }
 
     /**
@@ -69,5 +78,21 @@ abstract class AbstractIntent implements IntentInterface
     protected function getAlexaResponse(): AlexaResponse
     {
         return $this->alexaResponse;
+    }
+
+    /**
+     * @param TextHelperInterface $textHelper
+     */
+    private function setTextHelper(TextHelperInterface $textHelper)
+    {
+        $this->textHelper = $textHelper;
+    }
+
+    /**
+     * @return TextHelperInterface
+     */
+    protected function getTextHelper(): TextHelperInterface
+    {
+        return $this->textHelper;
     }
 }

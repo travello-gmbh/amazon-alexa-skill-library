@@ -55,11 +55,11 @@ class StopIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $stopIntent = new StopIntent($alexaRequest, $alexaResponse);
+        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper);
 
         $this->assertTrue($stopIntent instanceof AbstractIntent);
         $this->assertTrue($stopIntent instanceof IntentInterface);
@@ -94,16 +94,15 @@ class StopIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-
         $textHelper    = new TestTextHelper();
+
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
 
-        $stopIntent = new StopIntent($alexaRequest, $alexaResponse);
-        $stopIntent->handle($textHelper, $smallImageUrl, $largeImageUrl);
+        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper);
+        $stopIntent->handle($smallImageUrl, $largeImageUrl);
 
         $expected = [
             'version'           => '1.0',

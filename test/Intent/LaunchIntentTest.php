@@ -51,11 +51,11 @@ class LaunchIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TestTextHelper();
 
-        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse);
+        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse, $textHelper);
 
         $this->assertTrue($launchIntent instanceof AbstractIntent);
         $this->assertTrue($launchIntent instanceof IntentInterface);
@@ -86,16 +86,15 @@ class LaunchIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-
         $textHelper    = new TestTextHelper();
+
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
 
-        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse);
-        $launchIntent->handle($textHelper, $smallImageUrl, $largeImageUrl);
+        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse, $textHelper);
+        $launchIntent->handle($smallImageUrl, $largeImageUrl);
 
         $expected = [
             'version'           => '1.0',

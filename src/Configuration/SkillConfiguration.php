@@ -27,6 +27,9 @@ class SkillConfiguration implements SkillConfigurationInterface
     /** @var array */
     private $intents = [];
 
+    /** @var array */
+    private $texts = [];
+
     /** @var string */
     private $smallImageUrl;
 
@@ -79,6 +82,22 @@ class SkillConfiguration implements SkillConfigurationInterface
     public function setIntents(array $intents)
     {
         $this->intents = $intents;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTexts(): array
+    {
+        return $this->texts;
+    }
+
+    /**
+     * @param array $texts
+     */
+    public function setTexts(array $texts)
+    {
+        $this->texts = $texts;
     }
 
     /**
