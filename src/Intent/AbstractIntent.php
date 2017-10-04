@@ -11,7 +11,7 @@
 
 namespace TravelloAlexaLibrary\Intent;
 
-use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
+use TravelloAlexaLibrary\TextHelper\TextHelperInterface;
 use TravelloAlexaLibrary\Request\AlexaRequest;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 

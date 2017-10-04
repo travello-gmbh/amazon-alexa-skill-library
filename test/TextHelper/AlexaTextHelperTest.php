@@ -9,15 +9,15 @@
  *
  */
 
-namespace TravelloAlexaLibraryTest\Application\Helper;
+namespace TravelloAlexaLibraryTest\TextHelper;
 
 use PHPUnit\Framework\TestCase;
-use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
+use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
 
 /**
  * Class AlexaTextHelperTest
  *
- * @package TravelloAlexaLibraryTest\Application\Helper
+ * @package TravelloAlexaLibraryTest\TextHelper
  */
 class AlexaTextHelperTest extends TestCase
 {

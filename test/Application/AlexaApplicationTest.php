@@ -24,7 +24,7 @@ use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
+use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
 use TravelloAlexaLibraryTest\Application\TestAsset\TestApplication;
 
 /**

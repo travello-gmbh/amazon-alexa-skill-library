@@ -9,12 +9,22 @@
  *
  */
 
-namespace TravelloAlexaLibrary\Application\Helper;
+/**
+ * PHP Library for Amazon Alexa Skills
+ *
+ * @author     Ralf Eggert <ralf@travello.audio>
+ * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link       https://github.com/travello-gmbh/amazon-alexa-skill-library
+ * @link       https://www.travello.audio/
+ *
+ */
+
+namespace TravelloAlexaLibrary\TextHelper;
 
 /**
  * Interface AbstractTextHelper
  *
- * @package TravelloAlexaLibrary\Application\Helper
+ * @package TravelloAlexaLibrary\TextHelper
  */
 interface TextHelperInterface
 {

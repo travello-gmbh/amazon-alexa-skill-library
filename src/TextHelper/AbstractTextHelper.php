@@ -9,12 +9,12 @@
  *
  */
 
-namespace TravelloAlexaLibrary\Application\Helper;
+namespace TravelloAlexaLibrary\TextHelper;
 
 /**
  * Abstract class AbstractTextHelper
  *
- * @package TravelloAlexaLibrary\Application\Helper
+ * @package TravelloAlexaLibrary\TextHelper
  */
 abstract class AbstractTextHelper implements TextHelperInterface
 {

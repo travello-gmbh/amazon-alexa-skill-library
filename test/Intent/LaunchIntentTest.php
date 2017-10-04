@@ -17,7 +17,7 @@ use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\LaunchIntent;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
+use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
 
 /**
  * Class LaunchIntentTest
