@@ -37,17 +37,17 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     /** @var AlexaResponseInterface */
     protected $alexaResponse;
 
-    /** @var string */
-    protected $applicationId;
+    /** @var ContainerInterface */
+    protected $intentManager;
 
     /** @var CertificateValidatorInterface */
     protected $certificateValidator;
 
-    /** @var ContainerInterface */
-    protected $intentManager;
-
     /** @var TextHelperInterface */
     protected $textHelper;
+
+    /** @var string */
+    protected $applicationId;
 
     /** @var string */
     protected $smallImageUrl;
@@ -58,35 +58,24 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     /**
      * AbstractAlexaApplication constructor.
      *
-     * @param AlexaResponseInterface $alexaResponse
-     * @param ContainerInterface     $intentManager
-     * @param TextHelperInterface    $textHelper
+     * @param AlexaRequestInterface         $alexaRequest
+     * @param AlexaResponseInterface        $alexaResponse
+     * @param ContainerInterface            $intentManager
+     * @param CertificateValidatorInterface $certificateValidator
+     * @param TextHelperInterface           $textHelper
      */
     public function __construct(
+        AlexaRequestInterface $alexaRequest,
         AlexaResponseInterface $alexaResponse,
         ContainerInterface $intentManager,
+        CertificateValidatorInterface $certificateValidator,
         TextHelperInterface $textHelper
     ) {
-        $this->alexaResponse = $alexaResponse;
-        $this->intentManager = $intentManager;
-        $this->textHelper    = $textHelper;
-    }
-
-    /**
-     * @param AlexaRequestInterface $alexaRequest
-     */
-    public function setAlexaRequest(AlexaRequestInterface $alexaRequest)
-    {
-        $this->alexaRequest = $alexaRequest;
-    }
-
-    /**
-     * @param CertificateValidatorInterface $certificateValidator
-     */
-    public function setCertificateValidator(
-        CertificateValidatorInterface $certificateValidator
-    ) {
+        $this->alexaRequest         = $alexaRequest;
+        $this->alexaResponse        = $alexaResponse;
+        $this->intentManager        = $intentManager;
         $this->certificateValidator = $certificateValidator;
+        $this->textHelper           = $textHelper;
     }
 
     /**

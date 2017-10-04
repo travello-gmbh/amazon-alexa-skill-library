@@ -88,9 +88,9 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(HelpIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
 
-        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
-        $application->setAlexaRequest($alexaRequest);
-        $application->setCertificateValidator($certificateValidator->reveal());
+        $application = new TestApplication(
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+        );
 
         $result = $application->execute();
 
@@ -179,9 +179,9 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(HelpIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
 
-        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
-        $application->setAlexaRequest($alexaRequest);
-        $application->setCertificateValidator($certificateValidator->reveal());
+        $application = new TestApplication(
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+        );
 
         $result = $application->execute();
 
@@ -261,9 +261,10 @@ class AlexaApplicationTest extends TestCase
         /** @var TextHelperInterface|ObjectProphecy $textHelper */
         $textHelper = $this->prophesize(TextHelperInterface::class);
 
-        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper->reveal());
-        $application->setAlexaRequest($alexaRequest);
-        $application->setCertificateValidator($certificateValidator->reveal());
+        $application = new TestApplication(
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(),
+            $textHelper->reveal()
+        );
 
         $this->expectException(BadRequest::class);
         $this->expectExceptionMessage('Application Id invalid');
@@ -321,9 +322,9 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(LaunchRequestType::NAME);
         $getMethod->shouldBeCalled()->willReturn(new LaunchIntent($alexaRequest, $alexaResponse));
 
-        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
-        $application->setAlexaRequest($alexaRequest);
-        $application->setCertificateValidator($certificateValidator->reveal());
+        $application = new TestApplication(
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+        );
 
         $result = $application->execute();
 
@@ -410,9 +411,9 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(SessionEndedRequestType::NAME);
         $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
 
-        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
-        $application->setAlexaRequest($alexaRequest);
-        $application->setCertificateValidator($certificateValidator->reveal());
+        $application = new TestApplication(
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+        );
 
         $result = $application->execute();
 
@@ -496,9 +497,9 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(StopIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
 
-        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
-        $application->setAlexaRequest($alexaRequest);
-        $application->setCertificateValidator($certificateValidator->reveal());
+        $application = new TestApplication(
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+        );
 
         $result = $application->execute();
 
@@ -582,9 +583,9 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(CancelIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new CancelIntent($alexaRequest, $alexaResponse));
 
-        $application = new TestApplication($alexaResponse, $intentManager->reveal(), $textHelper);
-        $application->setAlexaRequest($alexaRequest);
-        $application->setCertificateValidator($certificateValidator->reveal());
+        $application = new TestApplication(
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+        );
 
         $result = $application->execute();
 

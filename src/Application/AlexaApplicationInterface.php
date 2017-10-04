@@ -11,8 +11,6 @@
 
 namespace TravelloAlexaLibrary\Application;
 
-use TravelloAlexaLibrary\Request\AlexaRequestInterface;
-use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
 
 /**
@@ -29,16 +27,4 @@ interface AlexaApplicationInterface
      * @throws BadRequest
      */
     public function execute(): array;
-
-    /**
-     * @param AlexaRequestInterface $alexaRequest
-     */
-    public function setAlexaRequest(AlexaRequestInterface $alexaRequest);
-
-    /**
-     * @param CertificateValidatorInterface $certificateValidator
-     */
-    public function setCertificateValidator(
-        CertificateValidatorInterface $certificateValidator
-    );
 }
