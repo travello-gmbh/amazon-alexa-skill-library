@@ -16,11 +16,11 @@ use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
 use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
+use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\HelpIntent;
 use TravelloAlexaLibrary\Intent\LaunchIntent;
 use TravelloAlexaLibrary\Intent\StopIntent;
-use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
 use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
@@ -65,15 +65,7 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
-        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(CertificateValidatorInterface::class);
-
-        /** @var MethodProphecy $validateMethod */
-        $validateMethod = $certificateValidator->validate();
-        $validateMethod->shouldBeCalled()->willReturn(true);
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
@@ -88,8 +80,19 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(HelpIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
 
+        /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
+        $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
+
+        /** @var MethodProphecy $getSmallImageUrlMethod */
+        $getSmallImageUrlMethod = $skillConfiguration->getSmallImageUrl();
+        $getSmallImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/small.png');
+
+        /** @var MethodProphecy $getLargeImageUrlMethod */
+        $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
+        $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
+
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -154,17 +157,7 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
-        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(
-            CertificateValidatorInterface::class
-        );
-
-        /** @var MethodProphecy $validateMethod */
-        $validateMethod = $certificateValidator->validate();
-        $validateMethod->shouldBeCalled()->willReturn(true);
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
@@ -179,8 +172,19 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(HelpIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new HelpIntent($alexaRequest, $alexaResponse));
 
+        /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
+        $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
+
+        /** @var MethodProphecy $getSmallImageUrlMethod */
+        $getSmallImageUrlMethod = $skillConfiguration->getSmallImageUrl();
+        $getSmallImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/small.png');
+
+        /** @var MethodProphecy $getLargeImageUrlMethod */
+        $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
+        $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
+
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -220,61 +224,6 @@ class AlexaApplicationTest extends TestCase
     /**
      *
      */
-    public function testInvalidRequest()
-    {
-        $data = [
-            'version' => '1.0',
-            'session' => [
-                'new'         => true,
-                'sessionId'   => 'sessionId',
-                'application' => [
-                    'applicationId' => 'applicationId',
-                ],
-                'user'        => [
-                    'userId' => 'userId',
-                ],
-            ],
-            'request' => [
-                'type'      => 'LaunchRequest',
-                'requestId' => 'requestId',
-                'timestamp' => '2017-01-27T20:29:59Z',
-                'locale'    => 'en-US',
-            ],
-        ];
-
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
-        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(
-            CertificateValidatorInterface::class
-        );
-
-        /** @var MethodProphecy $validateMethod */
-        $validateMethod = $certificateValidator->validate();
-        $validateMethod->shouldNotBeCalled();
-
-        $alexaResponse = new AlexaResponse();
-
-        /** @var ContainerInterface|ObjectProphecy $intentManager */
-        $intentManager = $this->prophesize(ContainerInterface::class);
-
-        /** @var TextHelperInterface|ObjectProphecy $textHelper */
-        $textHelper = $this->prophesize(TextHelperInterface::class);
-
-        $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(),
-            $textHelper->reveal()
-        );
-
-        $this->expectException(BadRequest::class);
-        $this->expectExceptionMessage('Application Id invalid');
-
-        $application->execute();
-    }
-
-    /**
-     *
-     */
     public function testLaunchRequest()
     {
         $data = [
@@ -297,17 +246,7 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
-        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(
-            CertificateValidatorInterface::class
-        );
-
-        /** @var MethodProphecy $validateMethod */
-        $validateMethod = $certificateValidator->validate();
-        $validateMethod->shouldBeCalled()->willReturn(true);
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
@@ -322,8 +261,19 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(LaunchRequestType::NAME);
         $getMethod->shouldBeCalled()->willReturn(new LaunchIntent($alexaRequest, $alexaResponse));
 
+        /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
+        $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
+
+        /** @var MethodProphecy $getSmallImageUrlMethod */
+        $getSmallImageUrlMethod = $skillConfiguration->getSmallImageUrl();
+        $getSmallImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/small.png');
+
+        /** @var MethodProphecy $getLargeImageUrlMethod */
+        $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
+        $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
+
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -386,17 +336,7 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
-        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(
-            CertificateValidatorInterface::class
-        );
-
-        /** @var MethodProphecy $validateMethod */
-        $validateMethod = $certificateValidator->validate();
-        $validateMethod->shouldBeCalled()->willReturn(true);
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
@@ -411,8 +351,19 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(SessionEndedRequestType::NAME);
         $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
 
+        /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
+        $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
+
+        /** @var MethodProphecy $getSmallImageUrlMethod */
+        $getSmallImageUrlMethod = $skillConfiguration->getSmallImageUrl();
+        $getSmallImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/small.png');
+
+        /** @var MethodProphecy $getLargeImageUrlMethod */
+        $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
+        $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
+
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -472,17 +423,7 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
-        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(
-            CertificateValidatorInterface::class
-        );
-
-        /** @var MethodProphecy $validateMethod */
-        $validateMethod = $certificateValidator->validate();
-        $validateMethod->shouldBeCalled()->willReturn(true);
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
@@ -497,8 +438,19 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(StopIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new StopIntent($alexaRequest, $alexaResponse));
 
+        /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
+        $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
+
+        /** @var MethodProphecy $getSmallImageUrlMethod */
+        $getSmallImageUrlMethod = $skillConfiguration->getSmallImageUrl();
+        $getSmallImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/small.png');
+
+        /** @var MethodProphecy $getLargeImageUrlMethod */
+        $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
+        $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
+
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
         );
 
         $result = $application->execute();
@@ -558,17 +510,7 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
-        /** @var CertificateValidatorInterface|ObjectProphecy $certificateValidator */
-        $certificateValidator = $this->prophesize(
-            CertificateValidatorInterface::class
-        );
-
-        /** @var MethodProphecy $validateMethod */
-        $validateMethod = $certificateValidator->validate();
-        $validateMethod->shouldBeCalled()->willReturn(true);
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
         $textHelper    = new TestTextHelper();
 
@@ -583,8 +525,19 @@ class AlexaApplicationTest extends TestCase
         $getMethod = $intentManager->get(CancelIntent::NAME);
         $getMethod->shouldBeCalled()->willReturn(new CancelIntent($alexaRequest, $alexaResponse));
 
+        /** @var SkillConfigurationInterface|ObjectProphecy $skillConfiguration */
+        $skillConfiguration = $this->prophesize(SkillConfigurationInterface::class);
+
+        /** @var MethodProphecy $getSmallImageUrlMethod */
+        $getSmallImageUrlMethod = $skillConfiguration->getSmallImageUrl();
+        $getSmallImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/small.png');
+
+        /** @var MethodProphecy $getLargeImageUrlMethod */
+        $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
+        $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
+
         $application = new TestApplication(
-            $alexaRequest, $alexaResponse, $intentManager->reveal(), $certificateValidator->reveal(), $textHelper
+            $alexaRequest, $alexaResponse, $intentManager->reveal(), $textHelper, $skillConfiguration->reveal()
         );
 
         $result = $application->execute();

@@ -13,10 +13,10 @@ namespace TravelloAlexaLibrary\Application;
 
 use Psr\Container\ContainerInterface;
 use TravelloAlexaLibrary\Application\Helper\TextHelperInterface;
+use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\Intent\HelpIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\AlexaRequestInterface;
-use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
 use TravelloAlexaLibrary\Request\RequestType\IntentRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponseInterface;
@@ -40,42 +40,33 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     /** @var ContainerInterface */
     protected $intentManager;
 
-    /** @var CertificateValidatorInterface */
-    protected $certificateValidator;
-
     /** @var TextHelperInterface */
     protected $textHelper;
 
-    /** @var string */
-    protected $applicationId;
-
-    /** @var string */
-    protected $smallImageUrl;
-
-    /** @var string */
-    protected $largeImageUrl;
+    /** @var SkillConfigurationInterface */
+    protected $skillConfiguration;
 
     /**
      * AbstractAlexaApplication constructor.
      *
-     * @param AlexaRequestInterface         $alexaRequest
-     * @param AlexaResponseInterface        $alexaResponse
-     * @param ContainerInterface            $intentManager
-     * @param CertificateValidatorInterface $certificateValidator
-     * @param TextHelperInterface           $textHelper
+     * @param AlexaRequestInterface       $alexaRequest
+     * @param AlexaResponseInterface      $alexaResponse
+     * @param ContainerInterface          $intentManager
+     * @param TextHelperInterface         $textHelper
+     * @param SkillConfigurationInterface $skillConfiguration
      */
     public function __construct(
         AlexaRequestInterface $alexaRequest,
         AlexaResponseInterface $alexaResponse,
         ContainerInterface $intentManager,
-        CertificateValidatorInterface $certificateValidator,
-        TextHelperInterface $textHelper
+        TextHelperInterface $textHelper,
+        SkillConfigurationInterface $skillConfiguration
     ) {
-        $this->alexaRequest         = $alexaRequest;
-        $this->alexaResponse        = $alexaResponse;
-        $this->intentManager        = $intentManager;
-        $this->certificateValidator = $certificateValidator;
-        $this->textHelper           = $textHelper;
+        $this->alexaRequest       = $alexaRequest;
+        $this->alexaResponse      = $alexaResponse;
+        $this->intentManager      = $intentManager;
+        $this->textHelper         = $textHelper;
+        $this->skillConfiguration = $skillConfiguration;
     }
 
     /**
@@ -86,32 +77,12 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     public function execute(): array
     {
-        $this->checkRequest();
         $this->setLocale();
         $this->initSessionAttributes();
         $this->initResponse();
         $this->handleRequest();
 
         return $this->returnResponse();
-    }
-
-    /**
-     * @throws BadRequest
-     */
-    protected function checkRequest()
-    {
-        $this->alexaRequest->checkApplication($this->getApplicationId());
-        $this->certificateValidator->validate();
-    }
-
-    /**
-     * Get the application id
-     *
-     * @return string
-     */
-    protected function getApplicationId(): string
-    {
-        return $this->applicationId;
     }
 
     /**
@@ -179,7 +150,11 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
             $intent = $this->intentManager->get(HelpIntent::NAME);
         }
 
-        $intent->handle($this->textHelper, $this->smallImageUrl, $this->largeImageUrl);
+        $intent->handle(
+            $this->textHelper,
+            $this->skillConfiguration->getSmallImageUrl(),
+            $this->skillConfiguration->getLargeImageUrl()
+        );
 
         return true;
     }

@@ -20,15 +20,6 @@ use TravelloAlexaLibrary\Application\AbstractAlexaApplication;
  */
 class TestApplication extends AbstractAlexaApplication
 {
-    /** @var string */
-    protected $applicationId = 'amzn1.ask.skill.applicationId';
-
-    /** @var string */
-    protected $smallImageUrl = 'https://image.server/small.png';
-
-    /** @var string */
-    protected $largeImageUrl = 'https://image.server/large.png';
-
     /**
      * @return bool
      */
