@@ -17,7 +17,7 @@ use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\StopIntent;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
  * Class StopIntentTest
@@ -55,11 +55,11 @@ class StopIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TextHelper();
 
-        $stopIntent = new StopIntent($alexaRequest, $alexaResponse);
+        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper);
 
         $this->assertTrue($stopIntent instanceof AbstractIntent);
         $this->assertTrue($stopIntent instanceof IntentInterface);
@@ -94,16 +94,15 @@ class StopIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TextHelper();
 
-        $textHelper    = new TestTextHelper();
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
 
-        $stopIntent = new StopIntent($alexaRequest, $alexaResponse);
-        $stopIntent->handle($textHelper, $smallImageUrl, $largeImageUrl);
+        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper);
+        $stopIntent->handle($smallImageUrl, $largeImageUrl);
 
         $expected = [
             'version'           => '1.0',
@@ -111,12 +110,12 @@ class StopIntentTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>stop message</speak>',
+                    'ssml' => '<speak>stopMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'stop title',
-                    'text'  => 'stop message',
+                    'title' => 'stopTitle',
+                    'text'  => 'stopMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',

@@ -17,7 +17,7 @@ use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
  * Class CancelIntentTest
@@ -55,11 +55,11 @@ class CancelIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TextHelper();
 
-        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse);
+        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper);
 
         $this->assertTrue($cancelIntent instanceof AbstractIntent);
         $this->assertTrue($cancelIntent instanceof IntentInterface);
@@ -95,15 +95,14 @@ class CancelIntentTest extends TestCase
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TextHelper();
 
-        $textHelper    = new TestTextHelper();
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
 
-        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse);
-        $cancelIntent->handle($textHelper, $smallImageUrl, $largeImageUrl);
+        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper);
+        $cancelIntent->handle($smallImageUrl, $largeImageUrl);
 
         $expected = [
             'version'           => '1.0',
@@ -111,12 +110,12 @@ class CancelIntentTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>cancel message</speak>',
+                    'ssml' => '<speak>cancelMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'cancel title',
-                    'text'  => 'cancel message',
+                    'title' => 'cancelTitle',
+                    'text'  => 'cancelMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',

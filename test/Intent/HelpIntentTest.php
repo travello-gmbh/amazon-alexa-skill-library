@@ -9,16 +9,6 @@
  *
  */
 
-/**
- * PHP Library for Amazon Alexa Skills
- *
- * @author     Ralf Eggert <ralf@travello.audio>
- * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
- * @link       https://github.com/travello-gmbh/amazon-alexa-skill-library
- * @link       https://www.travello.audio/
- *
- */
-
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
@@ -27,7 +17,7 @@ use TravelloAlexaLibrary\Intent\HelpIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\Application\TestAsset\Helper\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
  * Class HelpIntentTest
@@ -65,11 +55,11 @@ class HelpIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TextHelper();
 
-        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse);
+        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse, $textHelper);
 
         $this->assertTrue($helpIntent instanceof AbstractIntent);
         $this->assertTrue($helpIntent instanceof IntentInterface);
@@ -104,16 +94,15 @@ class HelpIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
+        $textHelper    = new TextHelper();
 
-        $textHelper    = new TestTextHelper();
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
 
-        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse);
-        $helpIntent->handle($textHelper, $smallImageUrl, $largeImageUrl);
+        $helpIntent = new HelpIntent($alexaRequest, $alexaResponse, $textHelper);
+        $helpIntent->handle($smallImageUrl, $largeImageUrl);
 
         $expected = [
             'version'           => '1.0',
@@ -121,12 +110,12 @@ class HelpIntentTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>help message</speak>',
+                    'ssml' => '<speak>helpMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'help title',
-                    'text'  => 'help message',
+                    'title' => 'helpTitle',
+                    'text'  => 'helpMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
@@ -135,7 +124,7 @@ class HelpIntentTest extends TestCase
                 'reprompt'         => [
                     'outputSpeech' => [
                         'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
+                        'ssml' => '<speak>repromptMessage</speak>',
                     ],
                 ],
                 'shouldEndSession' => false,
