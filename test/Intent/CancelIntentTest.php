@@ -17,7 +17,7 @@ use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
  * Class CancelIntentTest
@@ -57,7 +57,7 @@ class CancelIntentTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper);
 
@@ -96,7 +96,7 @@ class CancelIntentTest extends TestCase
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
@@ -110,12 +110,12 @@ class CancelIntentTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>cancel message</speak>',
+                    'ssml' => '<speak>cancelMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'cancel title',
-                    'text'  => 'cancel message',
+                    'title' => 'cancelTitle',
+                    'text'  => 'cancelMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',

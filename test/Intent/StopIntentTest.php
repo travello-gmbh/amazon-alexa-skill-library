@@ -17,7 +17,7 @@ use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\StopIntent;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
  * Class StopIntentTest
@@ -57,7 +57,7 @@ class StopIntentTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper);
 
@@ -96,7 +96,7 @@ class StopIntentTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
@@ -110,12 +110,12 @@ class StopIntentTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>stop message</speak>',
+                    'ssml' => '<speak>stopMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'stop title',
-                    'text'  => 'stop message',
+                    'title' => 'stopTitle',
+                    'text'  => 'stopMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',

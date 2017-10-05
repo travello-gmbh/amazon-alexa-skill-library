@@ -12,7 +12,7 @@
 namespace TravelloAlexaLibraryTest\TextHelper;
 
 use PHPUnit\Framework\TestCase;
-use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
  * Class AlexaTextHelperTest
@@ -28,17 +28,19 @@ class AlexaTextHelperTest extends TestCase
     {
         $texts = [
             'en-US' => [
-                'alexaLaunchTitle'     => 'another launch title',
-                'alexaLaunchMessage'   => 'another launch message',
-                'alexaRepromptMessage' => 'another reprompt message',
-                'alexaHelpTitle'       => 'another help title',
-                'alexaHelpMessage'     => 'another help message',
-                'alexaStopTitle'       => 'another stop title',
-                'alexaStopMessage'     => 'another stop message',
+                'launchTitle'     => 'another launch title',
+                'launchMessage'   => 'another launch message',
+                'repromptMessage' => 'another reprompt message',
+                'helpTitle'       => 'another help title',
+                'helpMessage'     => 'another help message',
+                'stopTitle'       => 'another stop title',
+                'stopMessage'     => 'another stop message',
+                'cancelTitle'     => 'another cancel title',
+                'cancelMessage'   => 'another cancel message',
             ],
         ];
 
-        $textHelper = new TestTextHelper($texts);
+        $textHelper = new TextHelper($texts);
 
         $this->assertEquals(
             'another launch title',
@@ -68,6 +70,14 @@ class AlexaTextHelperTest extends TestCase
             'another stop message',
             $textHelper->getStopMessage()
         );
+        $this->assertEquals(
+            'another cancel title',
+            $textHelper->getCancelTitle()
+        );
+        $this->assertEquals(
+            'another cancel message',
+            $textHelper->getCancelMessage()
+        );
     }
 
     /**
@@ -77,26 +87,30 @@ class AlexaTextHelperTest extends TestCase
     {
         $texts = [
             'en-US' => [
-                'alexaLaunchTitle'     => 'another launch title',
-                'alexaLaunchMessage'   => 'another launch message',
-                'alexaRepromptMessage' => 'another reprompt message',
-                'alexaHelpTitle'       => 'another help title',
-                'alexaHelpMessage'     => 'another help message',
-                'alexaStopTitle'       => 'another stop title',
-                'alexaStopMessage'     => 'another stop message',
+                'launchTitle'     => 'another launch title',
+                'launchMessage'   => 'another launch message',
+                'repromptMessage' => 'another reprompt message',
+                'helpTitle'       => 'another help title',
+                'helpMessage'     => 'another help message',
+                'stopTitle'       => 'another stop title',
+                'stopMessage'     => 'another stop message',
+                'cancelTitle'     => 'another cancel title',
+                'cancelMessage'   => 'another cancel message',
             ],
             'de-DE' => [
-                'alexaLaunchTitle'     => 'deutscher Launch Titel',
-                'alexaLaunchMessage'   => 'deutsche Launch Nachricht',
-                'alexaRepromptMessage' => 'deutsche Reprompt Nachricht',
-                'alexaHelpTitle'       => 'deutscher Hilfe Titel',
-                'alexaHelpMessage'     => 'deutsche Hilfe Nachricht',
-                'alexaStopTitle'       => 'deutscher Stop Titel',
-                'alexaStopMessage'     => 'deutsche Stop Nachricht',
+                'launchTitle'     => 'deutscher Launch Titel',
+                'launchMessage'   => 'deutsche Launch Nachricht',
+                'repromptMessage' => 'deutsche Reprompt Nachricht',
+                'helpTitle'       => 'deutscher Hilfe Titel',
+                'helpMessage'     => 'deutsche Hilfe Nachricht',
+                'stopTitle'       => 'deutscher Stop Titel',
+                'stopMessage'     => 'deutsche Stop Nachricht',
+                'cancelTitle'     => 'deutscher Abbrechen Titel',
+                'cancelMessage'   => 'deutsche Abbrechen Nachricht',
             ],
         ];
 
-        $textHelper = new TestTextHelper($texts);
+        $textHelper = new TextHelper($texts);
         $textHelper->setLocale('de-DE');
 
         $this->assertEquals(
@@ -127,6 +141,14 @@ class AlexaTextHelperTest extends TestCase
             'deutsche Stop Nachricht',
             $textHelper->getStopMessage()
         );
+        $this->assertEquals(
+            'deutscher Abbrechen Titel',
+            $textHelper->getCancelTitle()
+        );
+        $this->assertEquals(
+            'deutsche Abbrechen Nachricht',
+            $textHelper->getCancelMessage()
+        );
     }
 
     /**
@@ -136,73 +158,91 @@ class AlexaTextHelperTest extends TestCase
     {
         $texts = [
             'de-DE' => [
-                'alexaLaunchTitle'     => [
+                'launchTitle'     => [
                     'Launch Titel 1',
                     'Launch Titel 2',
                     'Launch Titel 3',
                 ],
-                'alexaLaunchMessage'   => [
+                'launchMessage'   => [
                     'Launch Nachricht 1',
                     'Launch Nachricht 2',
                     'Launch Nachricht 3',
                 ],
-                'alexaRepromptMessage' => [
+                'repromptMessage' => [
                     'Reprompt Nachricht 1',
                     'Reprompt Nachricht 2',
                     'Reprompt Nachricht 3',
                 ],
-                'alexaHelpTitle'       => [
+                'helpTitle'       => [
                     'Hilfe Titel 1',
                     'Hilfe Titel 2',
                     'Hilfe Titel 3',
                 ],
-                'alexaHelpMessage'     => [
+                'helpMessage'     => [
                     'Hilfe Nachricht 1',
                     'Hilfe Nachricht 2',
                     'Hilfe Nachricht 3',
                 ],
-                'alexaStopTitle'       => [
+                'stopTitle'       => [
                     'Stop Titel 1',
                     'Stop Titel 2',
                     'Stop Titel 3',
                 ],
-                'alexaStopMessage'     => [
+                'stopMessage'     => [
                     'Stop Nachricht 1',
                     'Stop Nachricht 2',
                     'Stop Nachricht 3',
                 ],
+                'cancelTitle'     => [
+                    'Abbrechen Titel 1',
+                    'Abbrechen Titel 2',
+                    'Abbrechen Titel 3',
+                ],
+                'cancelMessage'   => [
+                    'Abbrechen Nachricht 1',
+                    'Abbrechen Nachricht 2',
+                    'Abbrechen Nachricht 3',
+                ],
             ],
         ];
 
-        $textHelper = new TestTextHelper();
+        $textHelper = new TextHelper($texts);
         $textHelper->setLocale('de-DE');
 
         $this->assertTrue(
-            in_array($textHelper->getLaunchTitle(), $texts['de-DE']['alexaLaunchTitle'])
+            in_array($textHelper->getLaunchTitle(), $texts['de-DE']['launchTitle'])
         );
 
         $this->assertTrue(
-            in_array($textHelper->getLaunchMessage(), $texts['de-DE']['alexaLaunchMessage'])
+            in_array($textHelper->getLaunchMessage(), $texts['de-DE']['launchMessage'])
         );
 
         $this->assertTrue(
-            in_array($textHelper->getRepromptMessage(), $texts['de-DE']['alexaRepromptMessage'])
+            in_array($textHelper->getRepromptMessage(), $texts['de-DE']['repromptMessage'])
         );
 
         $this->assertTrue(
-            in_array($textHelper->getHelpTitle(), $texts['de-DE']['alexaHelpTitle'])
+            in_array($textHelper->getHelpTitle(), $texts['de-DE']['helpTitle'])
         );
 
         $this->assertTrue(
-            in_array($textHelper->getHelpMessage(), $texts['de-DE']['alexaHelpMessage'])
+            in_array($textHelper->getHelpMessage(), $texts['de-DE']['helpMessage'])
         );
 
         $this->assertTrue(
-            in_array($textHelper->getStopTitle(), $texts['de-DE']['alexaStopTitle'])
+            in_array($textHelper->getStopTitle(), $texts['de-DE']['stopTitle'])
         );
 
         $this->assertTrue(
-            in_array($textHelper->getStopMessage(), $texts['de-DE']['alexaStopMessage'])
+            in_array($textHelper->getStopMessage(), $texts['de-DE']['stopMessage'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getCancelTitle(), $texts['de-DE']['cancelTitle'])
+        );
+
+        $this->assertTrue(
+            in_array($textHelper->getCancelMessage(), $texts['de-DE']['cancelMessage'])
         );
     }
 
@@ -211,17 +251,26 @@ class AlexaTextHelperTest extends TestCase
      */
     public function testInstantiationWithoutTexts()
     {
-        $textHelper = new TestTextHelper();
+        $textHelper = new TextHelper();
 
-        $this->assertEquals('launch title', $textHelper->getLaunchTitle());
-        $this->assertEquals('launch message', $textHelper->getLaunchMessage());
-        $this->assertEquals(
-            'reprompt message',
-            $textHelper->getRepromptMessage()
-        );
-        $this->assertEquals('help title', $textHelper->getHelpTitle());
-        $this->assertEquals('help message', $textHelper->getHelpMessage());
-        $this->assertEquals('stop title', $textHelper->getStopTitle());
-        $this->assertEquals('stop message', $textHelper->getStopMessage());
+        $this->assertEquals('launchTitle', $textHelper->getLaunchTitle());
+        $this->assertEquals('launchMessage', $textHelper->getLaunchMessage());
+        $this->assertEquals('repromptMessage', $textHelper->getRepromptMessage());
+        $this->assertEquals('helpTitle', $textHelper->getHelpTitle());
+        $this->assertEquals('helpMessage', $textHelper->getHelpMessage());
+        $this->assertEquals('stopTitle', $textHelper->getStopTitle());
+        $this->assertEquals('stopMessage', $textHelper->getStopMessage());
+        $this->assertEquals('cancelTitle', $textHelper->getCancelTitle());
+        $this->assertEquals('cancelMessage', $textHelper->getCancelMessage());
+    }
+
+    /**
+     *
+     */
+    public function testUnknownTexts()
+    {
+        $textHelper = new TextHelper();
+
+        $this->assertEquals('unknownTitle', $textHelper->getUnknownTitle());
     }
 }

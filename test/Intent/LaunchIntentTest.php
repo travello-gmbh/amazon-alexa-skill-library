@@ -17,7 +17,7 @@ use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\LaunchIntent;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
  * Class LaunchIntentTest
@@ -53,7 +53,7 @@ class LaunchIntentTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse, $textHelper);
 
@@ -88,7 +88,7 @@ class LaunchIntentTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
@@ -102,12 +102,12 @@ class LaunchIntentTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>launch message</speak>',
+                    'ssml' => '<speak>launchMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'launch title',
-                    'text'  => 'launch message',
+                    'title' => 'launchTitle',
+                    'text'  => 'launchMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
@@ -116,7 +116,7 @@ class LaunchIntentTest extends TestCase
                 'reprompt'         => [
                     'outputSpeech' => [
                         'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
+                        'ssml' => '<speak>repromptMessage</speak>',
                     ],
                 ],
                 'shouldEndSession' => false,

@@ -24,7 +24,7 @@ use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponse;
-use TravelloAlexaLibraryTest\TextHelper\TestAsset\TestTextHelper;
+use TravelloAlexaLibrary\TextHelper\TextHelper;
 use TravelloAlexaLibraryTest\Application\TestAsset\TestApplication;
 
 /**
@@ -65,7 +65,7 @@ class AlexaApplicationTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -103,12 +103,12 @@ class AlexaApplicationTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>help message</speak>',
+                    'ssml' => '<speak>helpMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'help title',
-                    'text'  => 'help message',
+                    'title' => 'helpTitle',
+                    'text'  => 'helpMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
@@ -117,7 +117,7 @@ class AlexaApplicationTest extends TestCase
                 'reprompt'         => [
                     'outputSpeech' => [
                         'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
+                        'ssml' => '<speak>repromptMessage</speak>',
                     ],
                 ],
                 'shouldEndSession' => false,
@@ -157,7 +157,7 @@ class AlexaApplicationTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -195,12 +195,12 @@ class AlexaApplicationTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>help message</speak>',
+                    'ssml' => '<speak>helpMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'help title',
-                    'text'  => 'help message',
+                    'title' => 'helpTitle',
+                    'text'  => 'helpMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
@@ -209,7 +209,7 @@ class AlexaApplicationTest extends TestCase
                 'reprompt'         => [
                     'outputSpeech' => [
                         'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
+                        'ssml' => '<speak>repromptMessage</speak>',
                     ],
                 ],
                 'shouldEndSession' => false,
@@ -246,7 +246,7 @@ class AlexaApplicationTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -284,12 +284,12 @@ class AlexaApplicationTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>launch message</speak>',
+                    'ssml' => '<speak>launchMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'launch title',
-                    'text'  => 'launch message',
+                    'title' => 'launchTitle',
+                    'text'  => 'launchMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
@@ -298,7 +298,7 @@ class AlexaApplicationTest extends TestCase
                 'reprompt'         => [
                     'outputSpeech' => [
                         'type' => 'SSML',
-                        'ssml' => '<speak>reprompt message</speak>',
+                        'ssml' => '<speak>repromptMessage</speak>',
                     ],
                 ],
                 'shouldEndSession' => false,
@@ -336,7 +336,7 @@ class AlexaApplicationTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -374,12 +374,12 @@ class AlexaApplicationTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>stop message</speak>',
+                    'ssml' => '<speak>stopMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'stop title',
-                    'text'  => 'stop message',
+                    'title' => 'stopTitle',
+                    'text'  => 'stopMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
@@ -423,7 +423,7 @@ class AlexaApplicationTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -461,12 +461,12 @@ class AlexaApplicationTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>stop message</speak>',
+                    'ssml' => '<speak>stopMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'stop title',
-                    'text'  => 'stop message',
+                    'title' => 'stopTitle',
+                    'text'  => 'stopMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
@@ -510,7 +510,7 @@ class AlexaApplicationTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $alexaResponse = new AlexaResponse();
-        $textHelper    = new TestTextHelper();
+        $textHelper    = new TextHelper();
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -548,12 +548,12 @@ class AlexaApplicationTest extends TestCase
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
-                    'ssml' => '<speak>cancel message</speak>',
+                    'ssml' => '<speak>cancelMessage</speak>',
                 ],
                 'card'             => [
                     'type'  => 'Standard',
-                    'title' => 'cancel title',
-                    'text'  => 'cancel message',
+                    'title' => 'cancelTitle',
+                    'text'  => 'cancelMessage',
                     'image' => [
                         'smallImageUrl' => 'https://image.server/small.png',
                         'largeImageUrl' => 'https://image.server/large.png',
