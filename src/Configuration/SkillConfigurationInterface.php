@@ -46,6 +46,16 @@ interface SkillConfigurationInterface
     public function setApplicationId(string $applicationId);
 
     /**
+     * @return string
+     */
+    public function getApplicationClass(): string;
+
+    /**
+     * @param string $applicationClass
+     */
+    public function setApplicationClass(string $applicationClass);
+
+    /**
      * @return array
      */
     public function getIntents(): array;

@@ -24,6 +24,9 @@ class SkillConfiguration implements SkillConfigurationInterface
     /** @var string */
     private $applicationId;
 
+    /** @var string */
+    private $applicationClass;
+
     /** @var array */
     private $intents = [];
 
@@ -82,6 +85,22 @@ class SkillConfiguration implements SkillConfigurationInterface
     public function setApplicationId(string $applicationId)
     {
         $this->applicationId = $applicationId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApplicationClass(): string
+    {
+        return $this->applicationClass;
+    }
+
+    /**
+     * @param string $applicationClass
+     */
+    public function setApplicationClass(string $applicationClass)
+    {
+        $this->applicationClass = $applicationClass;
     }
 
     /**
