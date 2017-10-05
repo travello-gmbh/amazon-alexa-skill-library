@@ -37,6 +37,22 @@ class SkillConfiguration implements SkillConfigurationInterface
     private $largeImageUrl;
 
     /**
+     * @param array $config
+     *
+     * @return void
+     */
+    public function setConfig(array $config)
+    {
+        foreach ($config as $key => $value) {
+            $setMethod = 'set' . ucfirst($key);
+
+            if (method_exists($this, $setMethod)) {
+                $this->$setMethod($value);
+            }
+        }
+    }
+
+    /**
      * @return string
      */
     public function getName(): string

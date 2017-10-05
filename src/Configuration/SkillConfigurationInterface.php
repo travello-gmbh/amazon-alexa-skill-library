@@ -19,6 +19,13 @@ namespace TravelloAlexaLibrary\Configuration;
 interface SkillConfigurationInterface
 {
     /**
+     * @param array $config
+     *
+     * @return void
+     */
+    public function setConfig(array $config);
+
+    /**
      * @return string
      */
     public function getName(): string;
