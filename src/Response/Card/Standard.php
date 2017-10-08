@@ -24,6 +24,9 @@ class Standard implements CardInterface
     /** Maximum length of text attribute */
     const MAX_TEXT_LENGTH = 6000;
 
+    /** Line break for cards */
+    const BREAK_CARD = "\n \n";
+
     /** @var string */
     private $text;
 

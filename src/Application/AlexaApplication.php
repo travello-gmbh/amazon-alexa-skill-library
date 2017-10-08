@@ -21,15 +21,12 @@ use TravelloAlexaLibrary\Request\RequestType\IntentRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponseInterface;
 
 /**
- * Class AbstractAlexaApplication
+ * Class AlexaApplication
  *
  * @package TravelloAlexaLibrary\Application
  */
-abstract class AbstractAlexaApplication implements AlexaApplicationInterface
+class AlexaApplication implements AlexaApplicationInterface
 {
-    const BREAK_OUTPUT = '<break time="1s"/>';
-    const BREAK_CARD = "\n \n";
-
     /** @var AlexaRequestInterface */
     protected $alexaRequest;
 
@@ -43,7 +40,7 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     protected $skillConfiguration;
 
     /**
-     * AbstractAlexaApplication constructor.
+     * AlexaApplication constructor.
      *
      * @param AlexaRequestInterface       $alexaRequest
      * @param AlexaResponseInterface      $alexaResponse

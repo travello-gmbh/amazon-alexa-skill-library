@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
+use TravelloAlexaLibrary\Application\AlexaApplication;
 use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\HelpIntent;
@@ -26,7 +27,6 @@ use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibrary\Session\SessionContainer;
 use TravelloAlexaLibrary\TextHelper\TextHelper;
-use TravelloAlexaLibraryTest\Application\TestAsset\TestApplication;
 
 /**
  * Class AlexaApplicationTest
@@ -93,7 +93,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -188,7 +188,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -280,7 +280,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -373,7 +373,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -461,7 +461,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -549,7 +549,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
