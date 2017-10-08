@@ -69,6 +69,19 @@ class SessionContainerTest extends TestCase
         $this->assertEquals($defaults, $sessionContainer->getAttributes());
     }
 
+    public function testClearing()
+    {
+        $defaults = [
+            'foo' => 'bar',
+            'bar' => [],
+        ];
+
+        $sessionContainer = new SessionContainer($defaults);
+        $sessionContainer->clearAttributes();
+
+        $this->assertEquals([], $sessionContainer->getAttributes());
+    }
+
     public function testAppending()
     {
         $defaults = [

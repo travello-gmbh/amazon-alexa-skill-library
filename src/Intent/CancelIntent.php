@@ -45,6 +45,8 @@ class CancelIntent extends AbstractIntent
 
         $this->getAlexaResponse()->endSession();
 
+        $this->getAlexaResponse()->getSessionContainer()->clearAttributes();
+
         return $this->getAlexaResponse();
     }
 }

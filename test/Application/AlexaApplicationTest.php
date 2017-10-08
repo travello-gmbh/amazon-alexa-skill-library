@@ -24,6 +24,7 @@ use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponse;
+use TravelloAlexaLibrary\Session\SessionContainer;
 use TravelloAlexaLibrary\TextHelper\TextHelper;
 use TravelloAlexaLibraryTest\Application\TestAsset\TestApplication;
 
@@ -63,9 +64,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -155,9 +159,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -244,9 +251,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -334,9 +344,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -368,9 +381,7 @@ class AlexaApplicationTest extends TestCase
 
         $expected = [
             'version'           => '1.0',
-            'sessionAttributes' => [
-                'foo' => 'bar',
-            ],
+            'sessionAttributes' => [],
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
@@ -421,9 +432,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -455,9 +469,7 @@ class AlexaApplicationTest extends TestCase
 
         $expected = [
             'version'           => '1.0',
-            'sessionAttributes' => [
-                'foo' => 'bar',
-            ],
+            'sessionAttributes' => [],
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
@@ -508,9 +520,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -542,9 +557,7 @@ class AlexaApplicationTest extends TestCase
 
         $expected = [
             'version'           => '1.0',
-            'sessionAttributes' => [
-                'foo' => 'bar',
-            ],
+            'sessionAttributes' => [],
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',

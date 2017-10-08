@@ -33,6 +33,11 @@ interface SessionContainerInterface
     public function resetAttributes();
 
     /**
+     * Clear the attributes
+     */
+    public function clearAttributes();
+
+    /**
      * Set session attribute
      *
      * @param string       $attributeKey

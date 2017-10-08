@@ -13,6 +13,7 @@ namespace TravelloAlexaLibrary\Response;
 
 use TravelloAlexaLibrary\Response\Card\CardInterface;
 use TravelloAlexaLibrary\Response\OutputSpeech\OutputSpeechInterface;
+use TravelloAlexaLibrary\Session\SessionContainer;
 
 /**
  * Interface AlexaResponseInterface
@@ -22,45 +23,9 @@ use TravelloAlexaLibrary\Response\OutputSpeech\OutputSpeechInterface;
 interface AlexaResponseInterface
 {
     /**
-     * Add session attribute
-     *
-     * @param string       $attributeKey
-     * @param string|array $attributeValue
-     */
-    public function addSessionAttribute(
-        string $attributeKey,
-        $attributeValue
-    );
-
-    /**
-     * Add session attributes
-     *
-     * @param array $attributes
-     */
-    public function addSessionAttributes(array $attributes = []);
-
-    /**
-     * Append session attribute
-     *
-     * @param string $attributeKey
-     * @param string $attributeValue
-     */
-    public function appendSessionAttribute(
-        string $attributeKey,
-        string $attributeValue
-    );
-
-    /**
      * End the current session
      */
     public function endSession();
-
-    /**
-     * Remove session attribute
-     *
-     * @param string $attributeKey
-     */
-    public function removeSessionAttribute(string $attributeKey);
 
     /**
      * Set the card
@@ -82,6 +47,16 @@ interface AlexaResponseInterface
      * @param OutputSpeechInterface $reprompt
      */
     public function setReprompt(OutputSpeechInterface $reprompt);
+
+    /**
+     * @param SessionContainer $sessionContainer
+     */
+    public function setSessionContainer(SessionContainer $sessionContainer);
+
+    /**
+     * @return SessionContainer
+     */
+    public function getSessionContainer(): SessionContainer;
 
     /**
      * Render the response object to an array

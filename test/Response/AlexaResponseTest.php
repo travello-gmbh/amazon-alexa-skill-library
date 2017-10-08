@@ -17,6 +17,7 @@ use TravelloAlexaLibrary\Response\Card\Simple;
 use TravelloAlexaLibrary\Response\Card\Standard;
 use TravelloAlexaLibrary\Response\OutputSpeech\PlainText;
 use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
+use TravelloAlexaLibrary\Session\SessionContainer;
 
 /**
  * Class AlexaResponseTest
@@ -28,18 +29,17 @@ class AlexaResponseTest extends TestCase
     /**
      *
      */
-    public function testInstantiationWithAddingSessionVariables()
+    public function testInstantiationWithAddingSessionContainer()
     {
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
 
         $alexaResponse = new AlexaResponse();
-        $alexaResponse->addSessionAttribute('foo', 'bar');
-        $alexaResponse->addSessionAttributes(['bar' => 'foo']);
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         $expected = [
             'version'           => '1.0',
             'sessionAttributes' => [
                 'foo' => 'bar',
-                'bar' => 'foo',
             ],
             'response'          => [
                 'shouldEndSession' => false,
@@ -47,6 +47,7 @@ class AlexaResponseTest extends TestCase
         ];
 
         $this->assertEquals($expected, $alexaResponse->toArray());
+        $this->assertEquals($sessionContainer, $alexaResponse->getSessionContainer());
     }
 
     /**
@@ -54,27 +55,22 @@ class AlexaResponseTest extends TestCase
      */
     public function testInstantiationWithAll()
     {
-        $plainText = new PlainText('text');
-        $simple    = new Simple('title', 'content');
-        $reprompt  = new PlainText('text');
+        $plainText        = new PlainText('text');
+        $simple           = new Simple('title', 'content');
+        $reprompt         = new PlainText('text');
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
 
         $alexaResponse = new AlexaResponse();
         $alexaResponse->setOutputSpeech($plainText);
         $alexaResponse->setCard($simple);
         $alexaResponse->setReprompt($reprompt);
+        $alexaResponse->setSessionContainer($sessionContainer);
         $alexaResponse->endSession();
-        $alexaResponse->addSessionAttributes(
-            [
-                'foo' => 'bar',
-                'bar' => 'foo',
-            ]
-        );
 
         $expected = [
             'version'           => '1.0',
             'sessionAttributes' => [
                 'foo' => 'bar',
-                'bar' => 'foo',
             ],
             'response'          => [
                 'outputSpeech'     => [
@@ -104,27 +100,24 @@ class AlexaResponseTest extends TestCase
      */
     public function testInstantiationWithSSMLAndStandardCard()
     {
-        $ssml     = new SSML('ssml');
-        $standard = new Standard('title', 'text', 'https://image.server/small.png', 'https://image.server/large.png');
-        $reprompt = new SSML('ssml');
+        $ssml             = new SSML('ssml');
+        $standard         = new Standard(
+            'title', 'text', 'https://image.server/small.png', 'https://image.server/large.png'
+        );
+        $reprompt         = new SSML('ssml');
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
 
         $alexaResponse = new AlexaResponse();
         $alexaResponse->setOutputSpeech($ssml);
         $alexaResponse->setCard($standard);
         $alexaResponse->setReprompt($reprompt);
         $alexaResponse->endSession();
-        $alexaResponse->addSessionAttributes(
-            [
-                'foo' => 'bar',
-                'bar' => 'foo',
-            ]
-        );
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         $expected = [
             'version'           => '1.0',
             'sessionAttributes' => [
                 'foo' => 'bar',
-                'bar' => 'foo',
             ],
             'response'          => [
                 'outputSpeech'     => [
@@ -147,32 +140,6 @@ class AlexaResponseTest extends TestCase
                     ],
                 ],
                 'shouldEndSession' => true,
-            ],
-        ];
-
-        $this->assertEquals($expected, $alexaResponse->toArray());
-    }
-
-    /**
-     *
-     */
-    public function testInstantiationWithAppendingSessionVariables()
-    {
-
-        $alexaResponse = new AlexaResponse();
-        $alexaResponse->addSessionAttribute('foo', 'bar');
-        $alexaResponse->appendSessionAttribute('foo', 'bar');
-
-        $expected = [
-            'version'           => '1.0',
-            'sessionAttributes' => [
-                'foo' => [
-                    'bar',
-                    'bar',
-                ],
-            ],
-            'response'          => [
-                'shouldEndSession' => false,
             ],
         ];
 
@@ -260,34 +227,6 @@ class AlexaResponseTest extends TestCase
                     'type' => 'PlainText',
                     'text' => 'text',
                 ],
-                'shouldEndSession' => false,
-            ],
-        ];
-
-        $this->assertEquals($expected, $alexaResponse->toArray());
-    }
-
-    /**
-     *
-     */
-    public function testInstantiationWithRemovingSessionVariables()
-    {
-
-        $alexaResponse = new AlexaResponse();
-        $alexaResponse->addSessionAttributes(
-            [
-                'foo' => 'bar',
-                'bar' => 'foo',
-            ]
-        );
-        $alexaResponse->removeSessionAttribute('foo');
-
-        $expected = [
-            'version'           => '1.0',
-            'sessionAttributes' => [
-                'bar' => 'foo',
-            ],
-            'response'          => [
                 'shouldEndSession' => false,
             ],
         ];

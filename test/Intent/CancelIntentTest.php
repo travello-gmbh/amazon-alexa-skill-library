@@ -17,6 +17,7 @@ use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
+use TravelloAlexaLibrary\Session\SessionContainer;
 use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
@@ -94,9 +95,12 @@ class CancelIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
+        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';

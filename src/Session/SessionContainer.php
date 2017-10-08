@@ -63,6 +63,14 @@ class SessionContainer implements SessionContainerInterface
     }
 
     /**
+     * Clear the attributes
+     */
+    public function clearAttributes()
+    {
+        $this->attributes = [];
+    }
+
+    /**
      * Set session attribute
      *
      * @param string       $attributeKey
