@@ -28,6 +28,9 @@ class SkillConfiguration implements SkillConfigurationInterface
     private $applicationClass;
 
     /** @var array */
+    private $sessionDefaults = [];
+
+    /** @var array */
     private $intents = [];
 
     /** @var array */
@@ -101,6 +104,22 @@ class SkillConfiguration implements SkillConfigurationInterface
     public function setApplicationClass(string $applicationClass)
     {
         $this->applicationClass = $applicationClass;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSessionDefaults(): array
+    {
+        return $this->sessionDefaults;
+    }
+
+    /**
+     * @param array $sessionDefaults
+     */
+    public function setSessionDefaults(array $sessionDefaults)
+    {
+        $this->sessionDefaults = $sessionDefaults;
     }
 
     /**

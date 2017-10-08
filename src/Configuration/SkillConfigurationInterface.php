@@ -58,6 +58,16 @@ interface SkillConfigurationInterface
     /**
      * @return array
      */
+    public function getSessionDefaults(): array;
+
+    /**
+     * @param array $sessionDefaults
+     */
+    public function setSessionDefaults(array $sessionDefaults);
+
+    /**
+     * @return array
+     */
     public function getIntents(): array;
 
     /**
