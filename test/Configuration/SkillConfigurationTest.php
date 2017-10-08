@@ -44,6 +44,10 @@ class SkillConfigurationTest extends TestCase
             'applicationClass' => 'ApplicationClass',
             'smallImageUrl'    => 'https://www.travello.audio/cards/hello-480x480.png',
             'largeImageUrl'    => 'https://www.travello.audio/cards/hello-800x800.png',
+            'sessionDefaults'  => [
+                'foo' => 'bar',
+                'bar' => 'foo',
+            ],
             'intents'          => [
                 'aliases' => [
                     'foo' => 'bar',
@@ -71,6 +75,7 @@ class SkillConfigurationTest extends TestCase
 
         $this->assertEquals($config['applicationId'], $skillConfiguration->getApplicationId());
         $this->assertEquals($config['applicationClass'], $skillConfiguration->getApplicationClass());
+        $this->assertEquals($config['sessionDefaults'], $skillConfiguration->getSessionDefaults());
         $this->assertEquals($config['smallImageUrl'], $skillConfiguration->getSmallImageUrl());
         $this->assertEquals($config['largeImageUrl'], $skillConfiguration->getLargeImageUrl());
         $this->assertEquals($config['intents'], $skillConfiguration->getIntents());
