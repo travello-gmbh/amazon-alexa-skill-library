@@ -37,11 +37,7 @@ class CertificateValidatorFactory
         bool $validateSignatureFlag = true
     ) {
         return new CertificateValidator(
-            $certificateUrl,
-            $signature,
-            $alexaRequest,
-            $certificateLoader,
-            $validateSignatureFlag
+            $certificateUrl, $signature, $alexaRequest, $certificateLoader, $validateSignatureFlag
         );
     }
 }

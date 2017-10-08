@@ -24,13 +24,27 @@ class SkillConfigurationTest extends TestCase
     /**
      *
      */
+    public function testSetName()
+    {
+        $name = 'foo';
+
+        $skillConfiguration = new SkillConfiguration();
+        $skillConfiguration->setName($name);
+
+        $this->assertEquals($name, $skillConfiguration->getName());
+    }
+
+    /**
+     *
+     */
     public function testSetConfig()
     {
         $config = [
-            'applicationId' => 'amzn1.ask.skill.place-your-skill-id-here',
-            'smallImageUrl' => 'https://www.travello.audio/cards/hello-480x480.png',
-            'largeImageUrl' => 'https://www.travello.audio/cards/hello-800x800.png',
-            'intents'       => [
+            'applicationId'    => 'amzn1.ask.skill.place-your-skill-id-here',
+            'applicationClass' => 'ApplicationClass',
+            'smallImageUrl'    => 'https://www.travello.audio/cards/hello-480x480.png',
+            'largeImageUrl'    => 'https://www.travello.audio/cards/hello-800x800.png',
+            'intents'          => [
                 'aliases' => [
                     'foo' => 'bar',
                 ],
@@ -39,7 +53,7 @@ class SkillConfigurationTest extends TestCase
                     'foo' => 'bar',
                 ],
             ],
-            'texts'         => [
+            'texts'            => [
                 'de-DE' => [
                     'foo' => 'bar'
                 ],
@@ -56,6 +70,7 @@ class SkillConfigurationTest extends TestCase
         $skillConfiguration->setConfig($config);
 
         $this->assertEquals($config['applicationId'], $skillConfiguration->getApplicationId());
+        $this->assertEquals($config['applicationClass'], $skillConfiguration->getApplicationClass());
         $this->assertEquals($config['smallImageUrl'], $skillConfiguration->getSmallImageUrl());
         $this->assertEquals($config['largeImageUrl'], $skillConfiguration->getLargeImageUrl());
         $this->assertEquals($config['intents'], $skillConfiguration->getIntents());
