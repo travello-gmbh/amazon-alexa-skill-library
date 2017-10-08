@@ -57,6 +57,14 @@ abstract class AbstractIntent implements IntentInterface
     }
 
     /**
+     * @return AlexaRequest
+     */
+    protected function getAlexaRequest(): AlexaRequest
+    {
+        return $this->alexaRequest;
+    }
+
+    /**
      * @param AlexaResponse $alexaResponse
      */
     private function setAlexaResponse(AlexaResponse $alexaResponse)
