@@ -110,6 +110,6 @@ class CertificateLoader implements CertificateLoaderInterface
      */
     private function getCacheFileName(string $certificateUrl)
     {
-        return $this->cacheDir . basename($certificateUrl);
+        return $this->cacheDir . '/' . basename($certificateUrl);
     }
 }

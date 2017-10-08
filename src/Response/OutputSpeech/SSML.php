@@ -21,6 +21,9 @@ class SSML implements OutputSpeechInterface
     /** Maximum length of ssml attribute */
     const MAX_SSML_LENGTH = 6000;
 
+    /** Speech break */
+    const BREAK_OUTPUT = '<break time="1s"/>';
+
     /** @var string */
     private $ssml;
 

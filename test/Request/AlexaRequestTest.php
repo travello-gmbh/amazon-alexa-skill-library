@@ -19,6 +19,11 @@ use TravelloAlexaLibrary\Request\Session\Application;
 use TravelloAlexaLibrary\Request\Session\Session;
 use TravelloAlexaLibrary\Request\Session\User;
 
+/**
+ * Class AlexaRequestTest
+ *
+ * @package TravelloAlexaLibraryTest\Request
+ */
 class AlexaRequestTest extends TestCase
 {
     /**

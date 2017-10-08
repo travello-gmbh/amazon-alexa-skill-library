@@ -40,4 +40,48 @@ class CertificateLoaderTest extends TestCase
 
         $this->assertEquals($expected, $loader->load($this->certificateUrl));
     }
+
+    /**
+     *
+     */
+    public function testLoadCertificateWithInvalidCache()
+    {
+        if (file_exists('/tmp/echo-api-cert-4.pem')) {
+            unlink('/tmp/echo-api-cert-4.pem');
+        }
+
+        $loader = new CertificateLoader(true, '/tmp');
+
+        $expected = implode(
+            file(__DIR__ . '/TestAssets/echo-api-cert-4.pem'),
+            ''
+        );
+
+        $this->assertEquals($expected, $loader->load($this->certificateUrl));
+    }
+
+    /**
+     *
+     */
+    public function testLoadCertificateWithValidCache()
+    {
+        if (file_exists('/tmp/echo-api-cert-4.pem')) {
+            unlink('/tmp/echo-api-cert-4.pem');
+        }
+
+        copy(__DIR__ . '/TestAssets/echo-api-cert-4.pem', '/tmp/echo-api-cert-4.pem');
+
+        $loader = new CertificateLoader(true, '/tmp');
+
+        $expected = implode(
+            file(__DIR__ . '/TestAssets/echo-api-cert-4.pem'),
+            ''
+        );
+
+        $this->assertEquals($expected, $loader->load($this->certificateUrl));
+
+        if (file_exists('/tmp/echo-api-cert-4.pem')) {
+            unlink('/tmp/echo-api-cert-4.pem');
+        }
+    }
 }

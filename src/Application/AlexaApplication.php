@@ -21,15 +21,12 @@ use TravelloAlexaLibrary\Request\RequestType\IntentRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponseInterface;
 
 /**
- * Class AbstractAlexaApplication
+ * Class AlexaApplication
  *
  * @package TravelloAlexaLibrary\Application
  */
-abstract class AbstractAlexaApplication implements AlexaApplicationInterface
+class AlexaApplication implements AlexaApplicationInterface
 {
-    const BREAK_OUTPUT = '<break time="1s"/>';
-    const BREAK_CARD = "\n \n";
-
     /** @var AlexaRequestInterface */
     protected $alexaRequest;
 
@@ -43,7 +40,7 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
     protected $skillConfiguration;
 
     /**
-     * AbstractAlexaApplication constructor.
+     * AlexaApplication constructor.
      *
      * @param AlexaRequestInterface       $alexaRequest
      * @param AlexaResponseInterface      $alexaResponse
@@ -70,44 +67,9 @@ abstract class AbstractAlexaApplication implements AlexaApplicationInterface
      */
     public function execute(): array
     {
-        $this->initSessionAttributes();
-        $this->initResponse();
         $this->handleRequest();
 
         return $this->returnResponse();
-    }
-
-    /**
-     * Initialize the session attributes
-     *
-     * @return bool
-     */
-    abstract protected function initSessionAttributes(): bool;
-
-    /**
-     * Get the session attributes
-     *
-     * @return array
-     */
-    abstract protected function getSessionAttributes(): array;
-
-    /**
-     * Reset the session attributes
-     */
-    abstract protected function resetSessionAttributes();
-
-    /**
-     * Initialize the alexa response
-     *
-     * @return bool
-     */
-    protected function initResponse(): bool
-    {
-        $this->alexaResponse->addSessionAttributes(
-            $this->getSessionAttributes()
-        );
-
-        return true;
     }
 
     /**

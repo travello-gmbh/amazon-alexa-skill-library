@@ -13,6 +13,7 @@ namespace TravelloAlexaLibrary\Response;
 
 use TravelloAlexaLibrary\Response\Card\CardInterface;
 use TravelloAlexaLibrary\Response\OutputSpeech\OutputSpeechInterface;
+use TravelloAlexaLibrary\Session\SessionContainer;
 
 /**
  * Class AlexaResponse
@@ -33,8 +34,8 @@ class AlexaResponse implements AlexaResponseInterface
     /** @var OutputSpeechInterface */
     private $reprompt;
 
-    /** @var array */
-    private $sessionAttributes = [];
+    /** @var SessionContainer */
+    private $sessionContainer;
 
     /** @var bool */
     private $shouldEndSession = false;
@@ -73,58 +74,11 @@ class AlexaResponse implements AlexaResponseInterface
     }
 
     /**
-     * Add session attributes
-     *
-     * @param array $attributes
+     * @param SessionContainer $sessionContainer
      */
-    public function addSessionAttributes(array $attributes = [])
+    public function setSessionContainer(SessionContainer $sessionContainer)
     {
-        foreach ($attributes as $attributeKey => $attributeValue) {
-            $this->addSessionAttribute($attributeKey, $attributeValue);
-        }
-    }
-
-    /**
-     * Add session attribute
-     *
-     * @param string       $attributeKey
-     * @param string|array $attributeValue
-     */
-    public function addSessionAttribute(
-        string $attributeKey,
-        $attributeValue
-    ) {
-        $this->sessionAttributes[$attributeKey] = $attributeValue;
-    }
-
-    /**
-     * Append session attribute
-     *
-     * @param string $attributeKey
-     * @param string $attributeValue
-     */
-    public function appendSessionAttribute(
-        string $attributeKey,
-        string $attributeValue
-    ) {
-        if (!is_array($this->sessionAttributes[$attributeKey])) {
-            $this->sessionAttributes[$attributeKey]
-                = [$this->sessionAttributes[$attributeKey]];
-        }
-
-        $this->sessionAttributes[$attributeKey][] = $attributeValue;
-    }
-
-    /**
-     * Remove session attribute
-     *
-     * @param string $attributeKey
-     */
-    public function removeSessionAttribute(string $attributeKey)
-    {
-        if (isset($this->sessionAttributes[$attributeKey])) {
-            unset($this->sessionAttributes[$attributeKey]);
-        }
+        $this->sessionContainer = $sessionContainer;
     }
 
     /**
@@ -133,6 +87,14 @@ class AlexaResponse implements AlexaResponseInterface
     public function endSession()
     {
         $this->shouldEndSession = true;
+    }
+
+    /**
+     * @return SessionContainer
+     */
+    public function getSessionContainer(): SessionContainer
+    {
+        return $this->sessionContainer;
     }
 
     /**
@@ -162,7 +124,7 @@ class AlexaResponse implements AlexaResponseInterface
 
         return [
             'version'           => $this->version,
-            'sessionAttributes' => $this->sessionAttributes,
+            'sessionAttributes' => $this->sessionContainer ? $this->sessionContainer->getAttributes() : [],
             'response'          => $response,
         ];
     }

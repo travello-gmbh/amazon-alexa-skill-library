@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\MethodProphecy;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Container\ContainerInterface;
+use TravelloAlexaLibrary\Application\AlexaApplication;
 use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\HelpIntent;
@@ -24,8 +25,8 @@ use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
 use TravelloAlexaLibrary\Response\AlexaResponse;
+use TravelloAlexaLibrary\Session\SessionContainer;
 use TravelloAlexaLibrary\TextHelper\TextHelper;
-use TravelloAlexaLibraryTest\Application\TestAsset\TestApplication;
 
 /**
  * Class AlexaApplicationTest
@@ -63,9 +64,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -89,7 +93,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -155,9 +159,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -181,7 +188,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -244,9 +251,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -270,7 +280,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -334,9 +344,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -360,7 +373,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -368,9 +381,7 @@ class AlexaApplicationTest extends TestCase
 
         $expected = [
             'version'           => '1.0',
-            'sessionAttributes' => [
-                'foo' => 'bar',
-            ],
+            'sessionAttributes' => [],
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
@@ -421,9 +432,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -447,7 +461,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -455,9 +469,7 @@ class AlexaApplicationTest extends TestCase
 
         $expected = [
             'version'           => '1.0',
-            'sessionAttributes' => [
-                'foo' => 'bar',
-            ],
+            'sessionAttributes' => [],
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
@@ -508,9 +520,12 @@ class AlexaApplicationTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         /** @var ContainerInterface|ObjectProphecy $intentManager */
         $intentManager = $this->prophesize(ContainerInterface::class);
@@ -534,7 +549,7 @@ class AlexaApplicationTest extends TestCase
         $getLargeImageUrlMethod = $skillConfiguration->getLargeImageUrl();
         $getLargeImageUrlMethod->shouldBeCalled()->willReturn('https://image.server/large.png');
 
-        $application = new TestApplication(
+        $application = new AlexaApplication(
             $alexaRequest, $alexaResponse, $intentManager->reveal(), $skillConfiguration->reveal()
         );
 
@@ -542,9 +557,7 @@ class AlexaApplicationTest extends TestCase
 
         $expected = [
             'version'           => '1.0',
-            'sessionAttributes' => [
-                'foo' => 'bar',
-            ],
+            'sessionAttributes' => [],
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',

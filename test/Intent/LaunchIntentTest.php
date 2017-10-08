@@ -17,6 +17,7 @@ use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\LaunchIntent;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Response\AlexaResponse;
+use TravelloAlexaLibrary\Session\SessionContainer;
 use TravelloAlexaLibrary\TextHelper\TextHelper;
 
 /**
@@ -86,9 +87,12 @@ class LaunchIntentTest extends TestCase
             ],
         ];
 
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
         $textHelper    = new TextHelper();
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setSessionContainer($sessionContainer);
 
         $smallImageUrl = 'https://image.server/small.png';
         $largeImageUrl = 'https://image.server/large.png';
@@ -98,7 +102,9 @@ class LaunchIntentTest extends TestCase
 
         $expected = [
             'version'           => '1.0',
-            'sessionAttributes' => [],
+            'sessionAttributes' => [
+                'foo' => 'bar',
+            ],
             'response'          => [
                 'outputSpeech'     => [
                     'type' => 'SSML',
