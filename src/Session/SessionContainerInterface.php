@@ -64,4 +64,11 @@ interface SessionContainerInterface
      * @return array
      */
     public function getAttributes(): array;
+
+    /**
+     * @param string $attributeKey
+     *
+     * @return mixed
+     */
+    public function getAttribute(string $attributeKey);
 }

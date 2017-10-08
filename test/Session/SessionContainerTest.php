@@ -38,6 +38,18 @@ class SessionContainerTest extends TestCase
         $this->assertEquals($defaults, $sessionContainer->getAttributes());
     }
 
+    public function testAttributes()
+    {
+        $defaults = [
+            'foo' => 'bar',
+        ];
+
+        $sessionContainer = new SessionContainer($defaults);
+
+        $this->assertEquals('bar', $sessionContainer->getAttribute('foo'));
+        $this->assertEquals(null, $sessionContainer->getAttribute('bar'));
+    }
+
     public function testInitialization()
     {
         $defaults = [

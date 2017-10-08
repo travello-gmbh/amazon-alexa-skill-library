@@ -115,4 +115,18 @@ class SessionContainer implements SessionContainerInterface
     {
         return $this->attributes;
     }
+
+    /**
+     * @param string $attributeKey
+     *
+     * @return mixed
+     */
+    public function getAttribute(string $attributeKey)
+    {
+        if (!isset($this->attributes[$attributeKey])) {
+            return null;
+        }
+
+        return $this->attributes[$attributeKey];
+    }
 }
