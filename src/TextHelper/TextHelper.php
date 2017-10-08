@@ -12,7 +12,7 @@
 namespace TravelloAlexaLibrary\TextHelper;
 
 /**
- * Abstract class TextHelper
+ * Class TextHelper
  *
  * @package TravelloAlexaLibrary\TextHelper
  *
@@ -69,32 +69,35 @@ class TextHelper implements TextHelperInterface
      * @param $name
      * @param $arguments
      *
-     * @return mixed
+     * @return string
      */
     public function __call($name, $arguments)
     {
         $type = lcfirst(str_replace('get', '', $name));
 
-        return $this->getText($type);
+        return $this->getText($type, $arguments);
     }
 
     /**
-     * @param $type
+     * @param string $type
+     * @param array  $arguments
      *
-     * @return mixed
+     * @return string
      */
-    protected function getText($type)
+    protected function getText(string $type, array $arguments = [])
     {
         if (!isset($this->commonTexts[$this->locale][$type])) {
             return $type;
         }
 
         if (is_string($this->commonTexts[$this->locale][$type])) {
-            return $this->commonTexts[$this->locale][$type];
+            $text = $this->commonTexts[$this->locale][$type];
+        } else {
+            $randomKey = array_rand($this->commonTexts[$this->locale][$type]);
+
+            $text = $this->commonTexts[$this->locale][$type][$randomKey];
         }
 
-        $randomKey = array_rand($this->commonTexts[$this->locale][$type]);
-
-        return $this->commonTexts[$this->locale][$type][$randomKey];
+        return vsprintf($text, $arguments);
     }
 }
