@@ -27,6 +27,9 @@ class SkillConfiguration implements SkillConfigurationInterface
     /** @var string */
     private $applicationClass;
 
+    /** @var string */
+    private $textHelperClass;
+
     /** @var array */
     private $sessionDefaults = [];
 
@@ -104,6 +107,22 @@ class SkillConfiguration implements SkillConfigurationInterface
     public function setApplicationClass(string $applicationClass)
     {
         $this->applicationClass = $applicationClass;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTextHelperClass(): string
+    {
+        return $this->textHelperClass;
+    }
+
+    /**
+     * @param string $textHelperClass
+     */
+    public function setTextHelperClass(string $textHelperClass)
+    {
+        $this->textHelperClass = $textHelperClass;
     }
 
     /**

@@ -56,6 +56,16 @@ interface SkillConfigurationInterface
     public function setApplicationClass(string $applicationClass);
 
     /**
+     * @return string
+     */
+    public function getTextHelperClass(): string;
+
+    /**
+     * @param string $textHelperClass
+     */
+    public function setTextHelperClass(string $textHelperClass);
+
+    /**
      * @return array
      */
     public function getSessionDefaults(): array;

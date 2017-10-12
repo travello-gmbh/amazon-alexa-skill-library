@@ -42,6 +42,7 @@ class SkillConfigurationTest extends TestCase
         $config = [
             'applicationId'    => 'amzn1.ask.skill.place-your-skill-id-here',
             'applicationClass' => 'ApplicationClass',
+            'textHelperClass'  => 'TextHelperClass',
             'smallImageUrl'    => 'https://www.travello.audio/cards/hello-480x480.png',
             'largeImageUrl'    => 'https://www.travello.audio/cards/hello-800x800.png',
             'sessionDefaults'  => [
@@ -75,6 +76,7 @@ class SkillConfigurationTest extends TestCase
 
         $this->assertEquals($config['applicationId'], $skillConfiguration->getApplicationId());
         $this->assertEquals($config['applicationClass'], $skillConfiguration->getApplicationClass());
+        $this->assertEquals($config['textHelperClass'], $skillConfiguration->getTextHelperClass());
         $this->assertEquals($config['sessionDefaults'], $skillConfiguration->getSessionDefaults());
         $this->assertEquals($config['smallImageUrl'], $skillConfiguration->getSmallImageUrl());
         $this->assertEquals($config['largeImageUrl'], $skillConfiguration->getLargeImageUrl());
