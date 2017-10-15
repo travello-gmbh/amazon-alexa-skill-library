@@ -32,18 +32,7 @@ class TextHelper implements TextHelperInterface
     protected $locale = 'en-US';
 
     /** @var array */
-    protected $commonTexts
-        = [
-            'launchTitle'     => '',
-            'launchMessage'   => '',
-            'repromptMessage' => '',
-            'helpTitle'       => '',
-            'helpMessage'     => '',
-            'cancelTitle'     => '',
-            'cancelMessage'   => '',
-            'stopTitle'       => '',
-            'stopMessage'     => '',
-        ];
+    protected $commonTexts = [];
 
     /**
      * TextHelper constructor.
