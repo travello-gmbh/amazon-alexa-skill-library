@@ -21,6 +21,10 @@ use TravelloAlexaLibrary\Request\RequestType\AudioPlayerPlaybackStartedType;
 use TravelloAlexaLibrary\Request\RequestType\AudioPlayerPlaybackStoppedType;
 use TravelloAlexaLibrary\Request\RequestType\IntentRequestType;
 use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
+use TravelloAlexaLibrary\Request\RequestType\PlaybackControllerNextCommandIssuedType;
+use TravelloAlexaLibrary\Request\RequestType\PlaybackControllerPauseCommandIssuedType;
+use TravelloAlexaLibrary\Request\RequestType\PlaybackControllerPlayCommandIssuedType;
+use TravelloAlexaLibrary\Request\RequestType\PlaybackControllerPreviousCommandIssuedType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeInterface;
 use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
@@ -554,6 +558,170 @@ class RequestTypeFactoryTest extends TestCase
             $alexaRequest->getRequest(),
             $data,
             AudioPlayerPlaybackFailedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForPlaybackControllerNextCommandIssuedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'PlaybackController.NextCommandIssued',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            PlaybackControllerNextCommandIssuedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForPlaybackControllerPauseCommandIssuedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'PlaybackController.PauseCommandIssued',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            PlaybackControllerPauseCommandIssuedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForPlaybackControllerPlayCommandIssuedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'PlaybackController.PlayCommandIssued',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            PlaybackControllerPlayCommandIssuedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForPlaybackControllerPreviousCommandIssuedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'PlaybackController.PreviousCommandIssued',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            PlaybackControllerPreviousCommandIssuedType::class
         );
     }
 

@@ -151,6 +151,38 @@ class RequestTypeFactory
 
                 break;
 
+            case 'PlaybackController.NextCommandIssued':
+                $request = new PlaybackControllerNextCommandIssuedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale']
+                );
+                break;
+
+            case 'PlaybackController.PauseCommandIssued':
+                $request = new PlaybackControllerPauseCommandIssuedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale']
+                );
+                break;
+
+            case 'PlaybackController.PlayCommandIssued':
+                $request = new PlaybackControllerPlayCommandIssuedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale']
+                );
+                break;
+
+            case 'PlaybackController.PreviousCommandIssued':
+                $request = new PlaybackControllerPreviousCommandIssuedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale']
+                );
+                break;
+
             case 'IntentRequest':
             default:
                 $intent = new Intent(

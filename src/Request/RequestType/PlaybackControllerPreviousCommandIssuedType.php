@@ -12,38 +12,32 @@
 namespace TravelloAlexaLibrary\Request\RequestType;
 
 /**
- * Class AudioPlayerPlaybackFinishedType
+ * Class PlaybackControllerPreviousCommandIssuedType
  *
  * @package TravelloAlexaLibrary\Request\RequestType
  */
-class AudioPlayerPlaybackFinishedType extends AbstractAudioPlayerRequestType
+class PlaybackControllerPreviousCommandIssuedType extends AbstractRequestType
 {
-    const NAME = 'AudioPlayer.PlaybackFinished';
+    const NAME = 'PlaybackController.PreviousCommandIssued';
 
     /** @var string */
-    private $type = 'AudioPlayer.PlaybackFinished';
+    private $type = 'PlaybackController.PreviousCommandIssued';
 
     /**
-     * AudioPlayerPlaybackFinishedType constructor.
+     * PlaybackControllerPreviousCommandIssuedType constructor.
      *
      * @param string $requestId
      * @param string $timestamp
      * @param string $locale
-     * @param string $token
-     * @param int    $offsetInMilliseconds
      */
     public function __construct(
         string $requestId,
         string $timestamp,
-        string $locale,
-        string $token,
-        int $offsetInMilliseconds
+        string $locale
     ) {
-        $this->requestId            = $requestId;
-        $this->timestamp            = $timestamp;
-        $this->locale               = $locale;
-        $this->token                = $token;
-        $this->offsetInMilliseconds = $offsetInMilliseconds;
+        $this->requestId = $requestId;
+        $this->timestamp = $timestamp;
+        $this->locale    = $locale;
     }
 
     /**
