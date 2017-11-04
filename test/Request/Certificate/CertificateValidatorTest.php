@@ -43,7 +43,7 @@ class CertificateValidatorTest extends TestCase
     /**
      * @var string
      */
-    private $certificateUrl = 'https://s3.amazonaws.com/echo.api/echo-api-cert-4.pem';
+    private $certificateUrl = 'https://s3.amazonaws.com/echo.api/echo-api-cert-5.pem';
 
     /**
      * @var string
@@ -63,7 +63,7 @@ class CertificateValidatorTest extends TestCase
     {
         return [
             [
-                'https://s3.amazonaws.com/echo.api/echo-api-cert-4.pem',
+                'https://s3.amazonaws.com/echo.api/echo-api-cert-5.pem',
                 false,
                 '',
             ],
@@ -342,6 +342,6 @@ class CertificateValidatorTest extends TestCase
      */
     private function getCertificateAsset()
     {
-        return implode(file(__DIR__ . '/TestAssets/echo-api-cert-4.pem'), '');
+        return implode(file(__DIR__ . '/TestAssets/echo-api-cert-5.pem'), '');
     }
 }

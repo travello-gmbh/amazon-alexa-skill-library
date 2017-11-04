@@ -34,7 +34,7 @@ class CertificateValidatorFactoryTest extends TestCase
     /**
      * @var string
      */
-    private $certificateUrl = 'https://s3.amazonaws.com/echo.api/echo-api-cert-4.pem';
+    private $certificateUrl = 'https://s3.amazonaws.com/echo.api/echo-api-cert-5.pem';
 
     /**
      * @var string
