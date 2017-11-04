@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibrary\Request\RequestType;
 
 use TravelloAlexaLibrary\Request\AlexaRequest;
+use TravelloAlexaLibrary\Request\RequestType\AudioPlayer\CurrentPlaybackState;
 use TravelloAlexaLibrary\Request\RequestType\Error\Error;
 use TravelloAlexaLibrary\Request\RequestType\Intent\Intent;
 use TravelloAlexaLibrary\Request\Session\Application;
@@ -71,6 +72,81 @@ class RequestTypeFactory
                     $data['request']['locale'],
                     $data['request']['reason'],
                     $error
+                );
+
+                break;
+
+            case 'AudioPlayer.PlaybackStarted':
+                $request = new AudioPlayerPlaybackStartedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale'],
+                    $data['request']['token'],
+                    $data['request']['offsetInMilliseconds']
+                );
+
+                break;
+
+            case 'AudioPlayer.PlaybackStopped':
+                $request = new AudioPlayerPlaybackStoppedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale'],
+                    $data['request']['token'],
+                    $data['request']['offsetInMilliseconds']
+                );
+
+                break;
+
+            case 'AudioPlayer.PlaybackFinished':
+                $request = new AudioPlayerPlaybackFinishedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale'],
+                    $data['request']['token'],
+                    $data['request']['offsetInMilliseconds']
+                );
+
+                break;
+
+            case 'AudioPlayer.PlaybackNearlyFinished':
+                $request = new AudioPlayerPlaybackNearlyFinishedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale'],
+                    $data['request']['token'],
+                    $data['request']['offsetInMilliseconds']
+                );
+
+                break;
+
+            case 'AudioPlayer.PlaybackFailed':
+                if (isset($data['request']['error'])) {
+                    $error = new Error(
+                        $data['request']['error']['type'],
+                        $data['request']['error']['message']
+                    );
+                } else {
+                    $error = null;
+                }
+
+                if (isset($data['request']['currentPlaybackState'])) {
+                    $currentPlaybackState = new CurrentPlaybackState(
+                        $data['request']['currentPlaybackState']['playerActivity'],
+                        $data['request']['currentPlaybackState']['offsetInMilliseconds'],
+                        $data['request']['currentPlaybackState']['token']
+                    );
+                } else {
+                    $currentPlaybackState = null;
+                }
+
+                $request = new AudioPlayerPlaybackFailedType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale'],
+                    $data['request']['token'],
+                    $error,
+                    $currentPlaybackState
                 );
 
                 break;

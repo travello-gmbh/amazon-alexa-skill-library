@@ -13,6 +13,12 @@ namespace TravelloAlexaLibraryTest\Request\RequestType;
 
 use PHPUnit\Framework\TestCase;
 use TravelloAlexaLibrary\Request\AlexaRequest;
+use TravelloAlexaLibrary\Request\RequestType\AbstractAudioPlayerRequestType;
+use TravelloAlexaLibrary\Request\RequestType\AudioPlayerPlaybackFailedType;
+use TravelloAlexaLibrary\Request\RequestType\AudioPlayerPlaybackFinishedType;
+use TravelloAlexaLibrary\Request\RequestType\AudioPlayerPlaybackNearlyFinishedType;
+use TravelloAlexaLibrary\Request\RequestType\AudioPlayerPlaybackStartedType;
+use TravelloAlexaLibrary\Request\RequestType\AudioPlayerPlaybackStoppedType;
 use TravelloAlexaLibrary\Request\RequestType\IntentRequestType;
 use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
@@ -287,6 +293,271 @@ class RequestTypeFactoryTest extends TestCase
     }
 
     /**
+     *
+     */
+    public function testFactoryForAudioPlayerPlaybackStartedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'                 => 'AudioPlayer.PlaybackStarted',
+                'requestId'            => 'requestId',
+                'timestamp'            => '2017-01-27T20:29:59Z',
+                'locale'               => 'de-DE',
+                'token'                => '123456',
+                'offsetInMilliseconds' => 1000,
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            AudioPlayerPlaybackStartedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForAudioPlayerPlaybackStoppedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'                 => 'AudioPlayer.PlaybackStopped',
+                'requestId'            => 'requestId',
+                'timestamp'            => '2017-01-27T20:29:59Z',
+                'locale'               => 'de-DE',
+                'token'                => '123456',
+                'offsetInMilliseconds' => 1000,
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            AudioPlayerPlaybackStoppedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForAudioPlayerPlaybackFinishedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'                 => 'AudioPlayer.PlaybackFinished',
+                'requestId'            => 'requestId',
+                'timestamp'            => '2017-01-27T20:29:59Z',
+                'locale'               => 'de-DE',
+                'token'                => '123456',
+                'offsetInMilliseconds' => 1000,
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            AudioPlayerPlaybackFinishedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForAudioPlayerPlaybackNearlyFinishedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'                 => 'AudioPlayer.PlaybackNearlyFinished',
+                'requestId'            => 'requestId',
+                'timestamp'            => '2017-01-27T20:29:59Z',
+                'locale'               => 'de-DE',
+                'token'                => '123456',
+                'offsetInMilliseconds' => 1000,
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            AudioPlayerPlaybackNearlyFinishedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForAudioPlayerPlaybackFailedRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'                 => 'AudioPlayer.PlaybackFailed',
+                'requestId'            => 'requestId',
+                'timestamp'            => '2017-01-27T20:29:59Z',
+                'locale'               => 'de-DE',
+                'token'                => '123456',
+                'error'                => [
+                    'type'    => 'type',
+                    'message' => 'message',
+                ],
+                'currentPlaybackState' => [
+                    'token'                => 'token',
+                    'offsetInMilliseconds' => 1000,
+                    'playerActivity'       => 'PLAYING',
+                ],
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            AudioPlayerPlaybackFailedType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForAudioPlayerPlaybackFailedRequestTypeWithOutError()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'AudioPlayer.PlaybackFailed',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+                'token'     => '123456',
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            AudioPlayerPlaybackFailedType::class
+        );
+    }
+
+    /**
      * @param AlexaRequest $alexaRequest
      * @param array        $data
      */
@@ -321,9 +592,9 @@ class RequestTypeFactoryTest extends TestCase
     }
 
     /**
-     * @param RequestTypeInterface|LaunchRequestType|SessionEndedRequestType|IntentRequestType $requestType
-     * @param array                                                                            $data
-     * @param string                                                                           $requestTypeClass
+     * @param RequestTypeInterface $requestType
+     * @param array                $data
+     * @param string               $requestTypeClass
      */
     private function assertRequestData(
         RequestTypeInterface $requestType,
@@ -357,6 +628,7 @@ class RequestTypeFactoryTest extends TestCase
 
         switch ($requestTypeClass) {
             case SessionEndedRequestType::class:
+                /** @var SessionEndedRequestType $requestType */
                 $this->assertEquals(
                     $data['request']['reason'],
                     $requestType->getReason()
@@ -380,6 +652,7 @@ class RequestTypeFactoryTest extends TestCase
                 break;
 
             case IntentRequestType::class:
+                /** @var IntentRequestType $requestType */
                 $this->assertEquals(
                     $data['request']['intent']['name'],
                     $requestType->getIntent()->getName()
@@ -391,6 +664,71 @@ class RequestTypeFactoryTest extends TestCase
                         $requestType->getIntent()->getSlots()
                     );
                 }
+
+                break;
+
+            case AudioPlayerPlaybackStartedType::class:
+            case AudioPlayerPlaybackStoppedType::class:
+            case AudioPlayerPlaybackFinishedType::class:
+            case AudioPlayerPlaybackNearlyFinishedType::class:
+                /** @var AbstractAudioPlayerRequestType $requestType */
+                $this->assertEquals(
+                    $data['request']['token'],
+                    $requestType->getToken()
+                );
+
+                $this->assertEquals(
+                    $data['request']['offsetInMilliseconds'],
+                    $requestType->getOffsetInMilliseconds()
+                );
+
+                break;
+
+            case AudioPlayerPlaybackFailedType::class:
+                /** @var AudioPlayerPlaybackFailedType $requestType */
+                $this->assertEquals(
+                    $data['request']['token'],
+                    $requestType->getToken()
+                );
+
+                if (isset($data['request']['error'])) {
+                    $this->assertEquals(
+                        $data['request']['error']['type'],
+                        $requestType->getError()->getType()
+                    );
+
+                    $this->assertEquals(
+                        $data['request']['error']['message'],
+                        $requestType->getError()->getMessage()
+                    );
+                } else {
+                    $this->assertNull(
+                        $requestType->getError()
+                    );
+                }
+
+                if (isset($data['request']['currentPlaybackState'])) {
+                    $this->assertEquals(
+                        $data['request']['currentPlaybackState']['token'],
+                        $requestType->getCurrentPlaybackState()->getToken()
+                    );
+
+                    $this->assertEquals(
+                        $data['request']['currentPlaybackState']['offsetInMilliseconds'],
+                        $requestType->getCurrentPlaybackState()->getOffsetInMilliseconds()
+                    );
+
+                    $this->assertEquals(
+                        $data['request']['currentPlaybackState']['playerActivity'],
+                        $requestType->getCurrentPlaybackState()->getPlayerActivity()
+                    );
+                } else {
+                    $this->assertNull(
+                        $requestType->getCurrentPlaybackState()
+                    );
+                }
+
+                break;
         }
     }
 }
