@@ -40,18 +40,21 @@ class System implements SystemInterface
      * @param ApplicationInterface $application
      * @param UserInterface        $user
      * @param DeviceInterface      $device
-     * @param string               $apiEndpoint
+     * @param string|null          $apiEndpoint
      */
     public function __construct(
         ApplicationInterface $application,
         UserInterface $user,
         DeviceInterface $device,
-        string $apiEndpoint
+        string $apiEndpoint = null
     ) {
         $this->application = $application;
         $this->user        = $user;
         $this->device      = $device;
-        $this->apiEndpoint = $apiEndpoint;
+
+        if ($apiEndpoint) {
+            $this->apiEndpoint = $apiEndpoint;
+        }
     }
 
     /**
@@ -81,7 +84,7 @@ class System implements SystemInterface
     /**
      * @return string
      */
-    public function getApiEndpoint(): string
+    public function getApiEndpoint()
     {
         return $this->apiEndpoint;
     }

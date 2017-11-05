@@ -94,7 +94,7 @@ class RequestTypeFactory
                     new ContextApplication($data['context']['System']['application']['applicationId']),
                     $contextUser,
                     $device,
-                    $data['context']['System']['apiEndpoint']
+                    $data['context']['System']['apiEndpoint'] ?? null
                 );
 
                 $context->setSystem($system);

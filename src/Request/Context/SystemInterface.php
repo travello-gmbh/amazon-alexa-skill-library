@@ -40,5 +40,5 @@ interface SystemInterface
     /**
      * @return string
      */
-    public function getApiEndpoint(): string;
+    public function getApiEndpoint();
 }
