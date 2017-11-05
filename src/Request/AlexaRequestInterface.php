@@ -36,14 +36,14 @@ interface AlexaRequestInterface
     public function getVersion(): string;
 
     /**
-     * @return SessionInterface
-     */
-    public function getSession(): SessionInterface;
-
-    /**
      * @return RequestTypeInterface
      */
     public function getRequest(): RequestTypeInterface;
+
+    /**
+     * @return SessionInterface
+     */
+    public function getSession();
 
     /**
      * @return ContextInterface|null

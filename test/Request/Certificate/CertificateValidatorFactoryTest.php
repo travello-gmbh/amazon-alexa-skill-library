@@ -128,8 +128,8 @@ class CertificateValidatorFactoryTest extends TestCase
 
         return new AlexaRequest(
             'version',
-            $session,
             $launchRequest,
+            $session,
             $context,
             json_encode($data)
         );

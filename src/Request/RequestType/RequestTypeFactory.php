@@ -45,13 +45,17 @@ class RequestTypeFactory
 
         $version = $data['version'] ?? AlexaRequest::DEFAULT_VERSION;
 
-        $session = new Session(
-            $data['session']['new'],
-            $data['session']['sessionId'],
-            new SessionApplication($data['session']['application']['applicationId']),
-            $data['session']['attributes'] ?? [],
-            new SessionUser($data['session']['user']['userId'])
-        );
+        if (isset($data['session'])) {
+            $session = new Session(
+                $data['session']['new'],
+                $data['session']['sessionId'],
+                new SessionApplication($data['session']['application']['applicationId']),
+                $data['session']['attributes'] ?? [],
+                new SessionUser($data['session']['user']['userId'])
+            );
+        } else {
+            $session = null;
+        }
 
         if (isset($data['context'])) {
             $audioPlayer = new AudioPlayer(
@@ -255,6 +259,6 @@ class RequestTypeFactory
                 break;
         }
 
-        return new AlexaRequest($version, $session, $request, $context, $rawRequestData);
+        return new AlexaRequest($version, $request, $session, $context, $rawRequestData);
     }
 }

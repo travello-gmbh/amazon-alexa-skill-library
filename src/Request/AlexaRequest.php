@@ -44,22 +44,22 @@ class AlexaRequest implements AlexaRequestInterface
     /**
      * AlexaRequest constructor.
      *
-     * @param string               $version
-     * @param SessionInterface     $session
-     * @param RequestTypeInterface $request
-     * @param ContextInterface     $context
-     * @param string               $rawRequestData
+     * @param string                $version
+     * @param RequestTypeInterface  $request
+     * @param SessionInterface|null $session
+     * @param ContextInterface|null $context
+     * @param string                $rawRequestData
      */
     public function __construct(
         string $version,
-        SessionInterface $session,
         RequestTypeInterface $request,
+        SessionInterface $session = null,
         ContextInterface $context = null,
         string $rawRequestData
     ) {
         $this->version        = $version;
-        $this->session        = $session;
         $this->request        = $request;
+        $this->session        = $session;
         $this->context        = $context;
         $this->rawRequestData = $rawRequestData;
     }
@@ -73,19 +73,19 @@ class AlexaRequest implements AlexaRequestInterface
     }
 
     /**
-     * @return SessionInterface
-     */
-    public function getSession(): SessionInterface
-    {
-        return $this->session;
-    }
-
-    /**
      * @return RequestTypeInterface
      */
     public function getRequest(): RequestTypeInterface
     {
         return $this->request;
+    }
+
+    /**
+     * @return SessionInterface
+     */
+    public function getSession()
+    {
+        return $this->session;
     }
 
     /**

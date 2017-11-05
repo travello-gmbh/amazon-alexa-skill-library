@@ -182,8 +182,8 @@ class SessionContainerTest extends TestCase
 
         $alexaRequest = new AlexaRequest(
             'version',
-            $session,
             $launchRequest,
+            $session,
             $context,
             $rawRequestData
         );

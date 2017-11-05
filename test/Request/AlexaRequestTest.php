@@ -59,8 +59,8 @@ class AlexaRequestTest extends TestCase
 
         $alexaRequest = new AlexaRequest(
             'version',
-            $session,
             $launchRequest,
+            $session,
             $context,
             $rawRequestData
         );
