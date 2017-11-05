@@ -11,6 +11,7 @@
 
 namespace TravelloAlexaLibrary\Request;
 
+use TravelloAlexaLibrary\Request\Context\ContextInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeInterface;
 use TravelloAlexaLibrary\Request\Session\SessionInterface;
@@ -25,20 +26,20 @@ class AlexaRequest implements AlexaRequestInterface
     const NAME = 'AlexaRequest';
     const DEFAULT_VERSION = '1.0';
 
-    /** @todo not implemented yet */
-    private $context;
-
     /** @var string */
-    private $rawRequestData;
-
-    /** @var RequestTypeInterface */
-    private $request;
+    private $version = '1.0';
 
     /** @var SessionInterface */
     private $session;
 
+    /** @var RequestTypeInterface */
+    private $request;
+
+    /** @var ContextInterface */
+    private $context;
+
     /** @var string */
-    private $version = '1.0';
+    private $rawRequestData;
 
     /**
      * AlexaRequest constructor.
@@ -46,17 +47,20 @@ class AlexaRequest implements AlexaRequestInterface
      * @param string               $version
      * @param SessionInterface     $session
      * @param RequestTypeInterface $request
+     * @param ContextInterface     $context
      * @param string               $rawRequestData
      */
     public function __construct(
         string $version,
         SessionInterface $session,
         RequestTypeInterface $request,
+        ContextInterface $context = null,
         string $rawRequestData
     ) {
         $this->version        = $version;
         $this->session        = $session;
         $this->request        = $request;
+        $this->context        = $context;
         $this->rawRequestData = $rawRequestData;
     }
 
@@ -82,6 +86,14 @@ class AlexaRequest implements AlexaRequestInterface
     public function getRequest(): RequestTypeInterface
     {
         return $this->request;
+    }
+
+    /**
+     * @return ContextInterface|null
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 
     /**

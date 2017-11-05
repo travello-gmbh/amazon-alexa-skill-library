@@ -68,6 +68,11 @@ class RequestTypeFactoryTest extends TestCase
                     ],
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -75,6 +80,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -112,6 +119,11 @@ class RequestTypeFactoryTest extends TestCase
                     'name' => 'name',
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -119,6 +131,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -155,6 +169,11 @@ class RequestTypeFactoryTest extends TestCase
                     'name' => 'name',
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -162,6 +181,126 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals('1.0', $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            IntentRequestType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForIntentRequestTypeWithFullContext()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'IntentRequest',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+                'intent'    => [
+                    'name' => 'name',
+                ],
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity'       => 'PLAYING',
+                    'token'                => '123456',
+                    'offsetInMilliseconds' => 1000,
+                ],
+                'System'      => [
+                    'application' => [
+                        'applicationId' => 'applicationId',
+                    ],
+                    'user'        => [
+                        'userId'      => 'userId',
+                        'accessToken' => 'accessToken',
+                        'permissions' => [
+                            'consentToken' => 'consentToken',
+                        ],
+                    ],
+                    'device'      => [
+                        'deviceId'            => 'deviceId',
+                        'supportedInterfaces' => [
+                            'AudioPlayer' => [],
+                        ],
+                    ],
+                    'apiEndpoint' => 'https://api.amazonalexa.com',
+                ],
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals('1.0', $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            IntentRequestType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForIntentRequestTypeWithNoContext()
+    {
+        $data = [
+            'version' => '1.0',
+            'session' => [
+                'new'         => true,
+                'sessionId'   => 'sessionId',
+                'application' => [
+                    'applicationId' => 'applicationId',
+                ],
+                'attributes'  => [
+                    'foo' => 'bar',
+                ],
+                'user'        => [
+                    'userId' => 'userId',
+                ],
+            ],
+            'request' => [
+                'type'      => 'IntentRequest',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+                'intent'    => [
+                    'name' => 'name',
+                ],
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals('1.0', $alexaRequest->getVersion());
+
+        $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertNull($alexaRequest->getContext());
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -193,6 +332,11 @@ class RequestTypeFactoryTest extends TestCase
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'de-DE',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -200,6 +344,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -239,6 +385,11 @@ class RequestTypeFactoryTest extends TestCase
                     'message' => 'message',
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -246,6 +397,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -281,6 +434,11 @@ class RequestTypeFactoryTest extends TestCase
                 'locale'    => 'de-DE',
                 'reason'    => 'reason',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -288,6 +446,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -324,6 +484,11 @@ class RequestTypeFactoryTest extends TestCase
                 'token'                => '123456',
                 'offsetInMilliseconds' => 1000,
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -331,6 +496,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -367,6 +534,11 @@ class RequestTypeFactoryTest extends TestCase
                 'token'                => '123456',
                 'offsetInMilliseconds' => 1000,
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -374,6 +546,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -410,6 +584,11 @@ class RequestTypeFactoryTest extends TestCase
                 'token'                => '123456',
                 'offsetInMilliseconds' => 1000,
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -417,6 +596,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -453,6 +634,11 @@ class RequestTypeFactoryTest extends TestCase
                 'token'                => '123456',
                 'offsetInMilliseconds' => 1000,
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -460,6 +646,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -504,6 +692,11 @@ class RequestTypeFactoryTest extends TestCase
                     'playerActivity'       => 'PLAYING',
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -511,6 +704,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -546,6 +741,11 @@ class RequestTypeFactoryTest extends TestCase
                 'locale'    => 'de-DE',
                 'token'     => '123456',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -553,6 +753,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -587,6 +789,11 @@ class RequestTypeFactoryTest extends TestCase
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'de-DE',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -594,6 +801,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -628,6 +837,11 @@ class RequestTypeFactoryTest extends TestCase
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'de-DE',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -635,6 +849,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -669,6 +885,11 @@ class RequestTypeFactoryTest extends TestCase
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'de-DE',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -676,6 +897,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -710,6 +933,11 @@ class RequestTypeFactoryTest extends TestCase
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'de-DE',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
@@ -717,6 +945,8 @@ class RequestTypeFactoryTest extends TestCase
         $this->assertEquals($data['version'], $alexaRequest->getVersion());
 
         $this->assertSessionData($alexaRequest, $data);
+
+        $this->assertContextData($alexaRequest, $data);
 
         $this->assertRequestData(
             $alexaRequest->getRequest(),
@@ -757,6 +987,71 @@ class RequestTypeFactoryTest extends TestCase
             $data['session']['user']['userId'],
             $session->getUser()->getUserId()
         );
+    }
+
+    /**
+     * @param AlexaRequest $alexaRequest
+     * @param array        $data
+     */
+    private function assertContextData(AlexaRequest $alexaRequest, array $data)
+    {
+        $context = $alexaRequest->getContext();
+
+        $this->assertEquals(
+            $data['context']['AudioPlayer']['playerActivity'],
+            $context->getAudioPlayer()->getPlayerActivity()
+        );
+
+        if (isset($data['context']['AudioPlayer']['token'])) {
+            $this->assertEquals(
+                $data['context']['AudioPlayer']['token'],
+                $context->getAudioPlayer()->getToken()
+            );
+        }
+
+        if (isset($data['context']['AudioPlayer']['offsetInMilliseconds'])) {
+            $this->assertEquals(
+                $data['context']['AudioPlayer']['offsetInMilliseconds'],
+                $context->getAudioPlayer()->getOffsetInMilliseconds()
+            );
+        }
+
+        if (isset($data['context']['System'])) {
+            $this->assertEquals(
+                $data['context']['System']['application']['applicationId'],
+                $context->getSystem()->getApplication()->getApplicationId()
+            );
+
+            $this->assertEquals(
+                $data['context']['System']['user']['userId'],
+                $context->getSystem()->getUser()->getUserId()
+            );
+
+            $this->assertEquals(
+                $data['context']['System']['user']['accessToken'],
+                $context->getSystem()->getUser()->getAccessToken()
+            );
+
+            $this->assertEquals(
+                $data['context']['System']['user']['permissions']['consentToken'],
+                $context->getSystem()->getUser()->getConsentToken()
+            );
+
+            $this->assertEquals(
+                $data['context']['System']['device']['deviceId'],
+                $context->getSystem()->getDevice()->getDeviceId()
+            );
+
+            $this->assertEquals(
+                $data['context']['System']['device']['supportedInterfaces'],
+                $context->getSystem()->getDevice()->getSupportedInterfaces()
+            );
+
+            $this->assertEquals(
+                $data['context']['System']['apiEndpoint'],
+                $context->getSystem()->getApiEndpoint()
+            );
+        }
     }
 
     /**

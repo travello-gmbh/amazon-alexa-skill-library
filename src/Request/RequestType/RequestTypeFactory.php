@@ -12,12 +12,18 @@
 namespace TravelloAlexaLibrary\Request\RequestType;
 
 use TravelloAlexaLibrary\Request\AlexaRequest;
+use TravelloAlexaLibrary\Request\Context\AudioPlayer;
+use TravelloAlexaLibrary\Request\Context\Context;
+use TravelloAlexaLibrary\Request\Context\System;
+use TravelloAlexaLibrary\Request\Context\System\Application as ContextApplication;
+use TravelloAlexaLibrary\Request\Context\System\Device;
+use TravelloAlexaLibrary\Request\Context\System\User as ContextUser;
 use TravelloAlexaLibrary\Request\RequestType\AudioPlayer\CurrentPlaybackState;
 use TravelloAlexaLibrary\Request\RequestType\Error\Error;
 use TravelloAlexaLibrary\Request\RequestType\Intent\Intent;
-use TravelloAlexaLibrary\Request\Session\Application;
+use TravelloAlexaLibrary\Request\Session\Application as SessionApplication;
 use TravelloAlexaLibrary\Request\Session\Session;
-use TravelloAlexaLibrary\Request\Session\User;
+use TravelloAlexaLibrary\Request\Session\User as SessionUser;
 
 /**
  * Class RequestTypeFactory
@@ -42,10 +48,56 @@ class RequestTypeFactory
         $session = new Session(
             $data['session']['new'],
             $data['session']['sessionId'],
-            new Application($data['session']['application']['applicationId']),
+            new SessionApplication($data['session']['application']['applicationId']),
             $data['session']['attributes'] ?? [],
-            new User($data['session']['user']['userId'])
+            new SessionUser($data['session']['user']['userId'])
         );
+
+        if (isset($data['context'])) {
+            $audioPlayer = new AudioPlayer(
+                $data['context']['AudioPlayer']['playerActivity']
+            );
+
+            if (isset($data['context']['AudioPlayer']['token'])) {
+                $audioPlayer->setToken($data['context']['AudioPlayer']['token']);
+            }
+
+            if (isset($data['context']['AudioPlayer']['offsetInMilliseconds'])) {
+                $audioPlayer->setOffsetInMilliseconds($data['context']['AudioPlayer']['offsetInMilliseconds']);
+            }
+
+            $context = new Context($audioPlayer);
+
+            if (isset($data['context']['System'])) {
+                $contextUser = new ContextUser($data['context']['System']['user']['userId']);
+
+                if (isset($data['context']['System']['user']['accessToken'])) {
+                    $contextUser->setAccessToken($data['context']['System']['user']['accessToken']);
+                }
+
+                if (isset($data['context']['System']['user']['permissions'])
+                    && isset($data['context']['System']['user']['permissions']['consentToken'])) {
+                    $contextUser->setConsentToken($data['context']['System']['user']['permissions']['consentToken']);
+                }
+
+                $device = new Device($data['context']['System']['device']['deviceId']);
+
+                if (isset($data['context']['System']['device']['supportedInterfaces'])) {
+                    $device->setSupportedInterfaces($data['context']['System']['device']['supportedInterfaces']);
+                }
+
+                $system = new System(
+                    new ContextApplication($data['context']['System']['application']['applicationId']),
+                    $contextUser,
+                    $device,
+                    $data['context']['System']['apiEndpoint']
+                );
+
+                $context->setSystem($system);
+            }
+        } else {
+            $context = null;
+        }
 
         switch ($data['request']['type']) {
             case 'LaunchRequest':
@@ -199,6 +251,6 @@ class RequestTypeFactory
                 break;
         }
 
-        return new AlexaRequest($version, $session, $request, $rawRequestData);
+        return new AlexaRequest($version, $session, $request, $context, $rawRequestData);
     }
 }

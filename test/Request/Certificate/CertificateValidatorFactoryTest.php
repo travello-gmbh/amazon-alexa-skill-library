@@ -17,6 +17,8 @@ use TravelloAlexaLibrary\Request\AlexaRequest;
 use TravelloAlexaLibrary\Request\Certificate\CertificateLoader;
 use TravelloAlexaLibrary\Request\Certificate\CertificateValidator;
 use TravelloAlexaLibrary\Request\Certificate\CertificateValidatorFactory;
+use TravelloAlexaLibrary\Request\Context\AudioPlayer;
+use TravelloAlexaLibrary\Request\Context\Context;
 use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\Session\Application;
 use TravelloAlexaLibrary\Request\Session\Session;
@@ -97,6 +99,10 @@ class CertificateValidatorFactoryTest extends TestCase
             'de-DE'
         );
 
+        $context = new Context(
+            new AudioPlayer('IDLE')
+        );
+
         $data = [
             'version' => '1.0',
             'session' => [
@@ -124,6 +130,7 @@ class CertificateValidatorFactoryTest extends TestCase
             'version',
             $session,
             $launchRequest,
+            $context,
             json_encode($data)
         );
     }

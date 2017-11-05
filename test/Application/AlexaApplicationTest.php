@@ -62,6 +62,11 @@ class AlexaApplicationTest extends TestCase
                     'slots' => [],
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $sessionContainer = new SessionContainer(['foo' => 'bar']);
@@ -157,6 +162,11 @@ class AlexaApplicationTest extends TestCase
                     'name' => 'name',
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $sessionContainer = new SessionContainer(['foo' => 'bar']);
@@ -248,6 +258,11 @@ class AlexaApplicationTest extends TestCase
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'en-US',
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
             ],
         ];
 
@@ -342,6 +357,11 @@ class AlexaApplicationTest extends TestCase
                 'locale'    => 'en-US',
                 'reason'    => 'reason',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $sessionContainer = new SessionContainer(['foo' => 'bar']);
@@ -430,6 +450,11 @@ class AlexaApplicationTest extends TestCase
                     'slots' => [],
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $sessionContainer = new SessionContainer(['foo' => 'bar']);
@@ -517,6 +542,11 @@ class AlexaApplicationTest extends TestCase
                     'name'  => 'AMAZON.CancelIntent',
                     'slots' => [],
                 ],
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
             ],
         ];
 

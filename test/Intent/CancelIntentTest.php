@@ -54,6 +54,11 @@ class CancelIntentTest extends TestCase
                     'slots' => [],
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
@@ -92,6 +97,11 @@ class CancelIntentTest extends TestCase
                     'name'  => 'AMAZON.CancelIntent',
                     'slots' => [],
                 ],
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
             ],
         ];
 
