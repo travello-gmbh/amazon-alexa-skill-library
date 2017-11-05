@@ -25,11 +25,9 @@ class Device implements DeviceInterface
     private $supportedInterfaces;
 
     /**
-     * Device constructor.
-     *
      * @param string $deviceId
      */
-    public function __construct(string $deviceId)
+    public function setDeviceId(string $deviceId)
     {
         $this->deviceId = $deviceId;
     }
@@ -37,7 +35,7 @@ class Device implements DeviceInterface
     /**
      * @return string
      */
-    public function getDeviceId(): string
+    public function getDeviceId()
     {
         return $this->deviceId;
     }

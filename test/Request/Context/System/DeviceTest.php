@@ -26,7 +26,19 @@ class DeviceTest extends TestCase
      */
     public function testInstantiation()
     {
-        $device = new Device('deviceId');
+        $device = new Device();
+
+        $this->assertNull($device->getDeviceId());
+        $this->assertNull($device->getSupportedInterfaces());
+    }
+
+    /**
+     *
+     */
+    public function testDeviceId()
+    {
+        $device = new Device();
+        $device->setDeviceId('deviceId');
 
         $expected = 'deviceId';
 
@@ -39,11 +51,12 @@ class DeviceTest extends TestCase
      */
     public function testAccessToken()
     {
-        $device = new Device('deviceId');
+        $device = new Device();
         $device->setSupportedInterfaces(['AudioPlayer' => []]);
 
         $expected = ['AudioPlayer' => []];
 
+        $this->assertNull($device->getDeviceId());
         $this->assertEquals($expected, $device->getSupportedInterfaces());
     }
 }

@@ -80,7 +80,11 @@ class RequestTypeFactory
                     $contextUser->setConsentToken($data['context']['System']['user']['permissions']['consentToken']);
                 }
 
-                $device = new Device($data['context']['System']['device']['deviceId']);
+                $device = new Device();
+
+                if (isset($data['context']['System']['device']['deviceId'])) {
+                    $device->setDeviceId($data['context']['System']['device']['deviceId']);
+                }
 
                 if (isset($data['context']['System']['device']['supportedInterfaces'])) {
                     $device->setSupportedInterfaces($data['context']['System']['device']['supportedInterfaces']);

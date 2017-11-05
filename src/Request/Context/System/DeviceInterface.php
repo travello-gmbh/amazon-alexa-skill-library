@@ -19,9 +19,14 @@ namespace TravelloAlexaLibrary\Request\Context\System;
 interface DeviceInterface
 {
     /**
+     * @param string $deviceId
+     */
+    public function setDeviceId(string $deviceId);
+
+    /**
      * @return string
      */
-    public function getDeviceId(): string;
+    public function getDeviceId();
 
     /**
      * @param array $supportedInterfaces
