@@ -13,6 +13,8 @@ namespace Session;
 
 use PHPUnit\Framework\TestCase;
 use TravelloAlexaLibrary\Request\AlexaRequest;
+use TravelloAlexaLibrary\Request\Context\AudioPlayer;
+use TravelloAlexaLibrary\Request\Context\Context;
 use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\Session\Application;
 use TravelloAlexaLibrary\Request\Session\Session;
@@ -172,12 +174,17 @@ class SessionContainerTest extends TestCase
             'de-DE'
         );
 
+        $context = new Context(
+            new AudioPlayer('IDLE')
+        );
+
         $rawRequestData = json_encode(['foo' => 'bar']);
 
         $alexaRequest = new AlexaRequest(
             'version',
             $session,
             $launchRequest,
+            $context,
             $rawRequestData
         );
 

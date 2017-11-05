@@ -54,6 +54,11 @@ class StopIntentTest extends TestCase
                     'slots' => [],
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
@@ -92,6 +97,11 @@ class StopIntentTest extends TestCase
                     'name'  => 'AMAZON.StopIntent',
                     'slots' => [],
                 ],
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
             ],
         ];
 

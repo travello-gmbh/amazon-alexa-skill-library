@@ -25,6 +25,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 use TravelloAlexaLibrary\Request\AlexaRequest;
 use TravelloAlexaLibrary\Request\Certificate\CertificateLoader;
 use TravelloAlexaLibrary\Request\Certificate\CertificateValidator;
+use TravelloAlexaLibrary\Request\Context\AudioPlayer;
+use TravelloAlexaLibrary\Request\Context\Context;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
 use TravelloAlexaLibrary\Request\RequestType\LaunchRequestType;
 use TravelloAlexaLibrary\Request\Session\Application;
@@ -43,7 +45,7 @@ class CertificateValidatorTest extends TestCase
     /**
      * @var string
      */
-    private $certificateUrl = 'https://s3.amazonaws.com/echo.api/echo-api-cert-4.pem';
+    private $certificateUrl = 'https://s3.amazonaws.com/echo.api/echo-api-cert-5.pem';
 
     /**
      * @var string
@@ -63,7 +65,7 @@ class CertificateValidatorTest extends TestCase
     {
         return [
             [
-                'https://s3.amazonaws.com/echo.api/echo-api-cert-4.pem',
+                'https://s3.amazonaws.com/echo.api/echo-api-cert-5.pem',
                 false,
                 '',
             ],
@@ -306,6 +308,10 @@ class CertificateValidatorTest extends TestCase
             'de-DE'
         );
 
+        $context = new Context(
+            new AudioPlayer('IDLE')
+        );
+
         $data = [
             'version' => '1.0',
             'session' => [
@@ -327,12 +333,18 @@ class CertificateValidatorTest extends TestCase
                 'timestamp' => $timestamp,
                 'locale'    => 'de-DE',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         return new AlexaRequest(
             'version',
             $session,
             $launchRequest,
+            $context,
             json_encode($data)
         );
     }
@@ -342,6 +354,6 @@ class CertificateValidatorTest extends TestCase
      */
     private function getCertificateAsset()
     {
-        return implode(file(__DIR__ . '/TestAssets/echo-api-cert-4.pem'), '');
+        return implode(file(__DIR__ . '/TestAssets/echo-api-cert-5.pem'), '');
     }
 }

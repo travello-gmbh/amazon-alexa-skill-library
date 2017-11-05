@@ -1,0 +1,102 @@
+<?php
+/**
+ * PHP Library for Amazon Alexa Skills
+ *
+ * @author     Ralf Eggert <ralf@travello.audio>
+ * @license    http://opensource.org/licenses/MIT The MIT License (MIT)
+ * @link       https://github.com/travello-gmbh/amazon-alexa-skill-library
+ * @link       https://www.travello.audio/
+ *
+ */
+
+namespace TravelloAlexaLibrary\Response\Directives\VideoApp;
+
+use TravelloAlexaLibrary\Response\Directives\DirectivesInterface;
+
+/**
+ * Class Launch
+ *
+ * @package TravelloAlexaLibrary\Response\Directives\VideoApp
+ */
+class Launch implements DirectivesInterface
+{
+    /** @var string */
+    protected $source;
+
+    /** @var string */
+    protected $title;
+
+    /** @var string */
+    protected $subtitle;
+
+    /**
+     * Launch constructor.
+     *
+     * @param string $source
+     * @param string $title
+     * @param string $subtitle
+     */
+    public function __construct(string $source, string $title = null, string $subtitle = null)
+    {
+        $this->setSource($source);
+
+        if ($title) {
+            $this->setTitle($title);
+        }
+
+        if ($subtitle) {
+            $this->setSubtitle($subtitle);
+        }
+    }
+
+    /**
+     * Render the directives object to an array
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        $data = [
+            'type'      => 'VideoApp.Launch',
+            'videoItem' => [
+                'source' => $this->source,
+            ],
+        ];
+
+        if (!empty($this->title)) {
+            $data['videoItem']['metadata'] = [
+                'title' => $this->title,
+            ];
+
+            if (!empty($this->subtitle)) {
+                $data['videoItem']['metadata']['subtitle'] = $this->subtitle;
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param string $source
+     */
+    private function setSource(string $source)
+    {
+        $this->source = $source;
+    }
+
+    /**
+     * @param string $title
+     */
+    private function setTitle(string $title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string $subtitle
+     */
+    private function setSubtitle(string $subtitle)
+    {
+        $this->subtitle = $subtitle;
+    }
+}

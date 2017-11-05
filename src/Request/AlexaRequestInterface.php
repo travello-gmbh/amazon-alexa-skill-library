@@ -11,6 +11,7 @@
 
 namespace TravelloAlexaLibrary\Request;
 
+use TravelloAlexaLibrary\Request\Context\ContextInterface;
 use TravelloAlexaLibrary\Request\Exception\BadRequest;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeInterface;
 use TravelloAlexaLibrary\Request\Session\SessionInterface;
@@ -32,12 +33,7 @@ interface AlexaRequestInterface
     /**
      * @return string
      */
-    public function getRawRequestData(): string;
-
-    /**
-     * @return RequestTypeInterface
-     */
-    public function getRequest(): RequestTypeInterface;
+    public function getVersion(): string;
 
     /**
      * @return SessionInterface
@@ -45,7 +41,17 @@ interface AlexaRequestInterface
     public function getSession(): SessionInterface;
 
     /**
+     * @return RequestTypeInterface
+     */
+    public function getRequest(): RequestTypeInterface;
+
+    /**
+     * @return ContextInterface|null
+     */
+    public function getContext();
+
+    /**
      * @return string
      */
-    public function getVersion(): string;
+    public function getRawRequestData(): string;
 }

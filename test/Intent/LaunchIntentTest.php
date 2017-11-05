@@ -50,6 +50,11 @@ class LaunchIntentTest extends TestCase
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'en-US',
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
@@ -84,6 +89,11 @@ class LaunchIntentTest extends TestCase
                 'requestId' => 'requestId',
                 'timestamp' => '2017-01-27T20:29:59Z',
                 'locale'    => 'en-US',
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
             ],
         ];
 

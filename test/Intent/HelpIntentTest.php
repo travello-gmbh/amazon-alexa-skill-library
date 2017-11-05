@@ -54,6 +54,11 @@ class HelpIntentTest extends TestCase
                     'slots' => [],
                 ],
             ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
         ];
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
@@ -92,6 +97,11 @@ class HelpIntentTest extends TestCase
                     'name'  => 'AMAZON.HelpIntent',
                     'slots' => [],
                 ],
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
             ],
         ];
 
