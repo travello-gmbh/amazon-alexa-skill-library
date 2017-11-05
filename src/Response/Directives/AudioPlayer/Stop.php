@@ -20,6 +20,19 @@ use TravelloAlexaLibrary\Response\Directives\DirectivesInterface;
  */
 class Stop implements DirectivesInterface
 {
+    /** @var string */
+    private $type = 'AudioPlayer.Stop';
+
+    /**
+     * Get the directive type
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
     /**
      * Render the directives object to an array
      *
@@ -28,7 +41,7 @@ class Stop implements DirectivesInterface
     public function toArray(): array
     {
         return [
-            'type' => 'AudioPlayer.Stop',
+            'type' => $this->type,
         ];
     }
 }

@@ -33,5 +33,6 @@ class StopTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.Stop', $directive->getType());
     }
 }

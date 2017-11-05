@@ -19,6 +19,13 @@ namespace TravelloAlexaLibrary\Response\Directives;
 interface DirectivesInterface
 {
     /**
+     * Get the directive type
+     *
+     * @return string
+     */
+    public function getType(): string;
+
+    /**
      * Render the directives object to an array
      *
      * @return array

@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibrary\Response;
 
 use TravelloAlexaLibrary\Response\Card\CardInterface;
+use TravelloAlexaLibrary\Response\Directives\DirectivesInterface;
 use TravelloAlexaLibrary\Response\OutputSpeech\OutputSpeechInterface;
 use TravelloAlexaLibrary\Session\SessionContainer;
 
@@ -23,16 +24,11 @@ use TravelloAlexaLibrary\Session\SessionContainer;
 interface AlexaResponseInterface
 {
     /**
-     * End the current session
-     */
-    public function endSession();
-
-    /**
-     * Set the card
+     * Add a directive
      *
-     * @param CardInterface $card
+     * @param DirectivesInterface $directive
      */
-    public function setCard(CardInterface $card);
+    public function addDirective(DirectivesInterface $directive);
 
     /**
      * Set the output speech
@@ -40,6 +36,13 @@ interface AlexaResponseInterface
      * @param OutputSpeechInterface $outputSpeech
      */
     public function setOutputSpeech(OutputSpeechInterface $outputSpeech);
+
+    /**
+     * Set the card
+     *
+     * @param CardInterface $card
+     */
+    public function setCard(CardInterface $card);
 
     /**
      * Set the reprompt
@@ -52,6 +55,11 @@ interface AlexaResponseInterface
      * @param SessionContainer $sessionContainer
      */
     public function setSessionContainer(SessionContainer $sessionContainer);
+
+    /**
+     * End the current session
+     */
+    public function endSession();
 
     /**
      * @return SessionContainer

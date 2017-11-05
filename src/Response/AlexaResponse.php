@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibrary\Response;
 
 use TravelloAlexaLibrary\Response\Card\CardInterface;
+use TravelloAlexaLibrary\Response\Directives\DirectivesInterface;
 use TravelloAlexaLibrary\Response\OutputSpeech\OutputSpeechInterface;
 use TravelloAlexaLibrary\Session\SessionContainer;
 
@@ -25,8 +26,8 @@ class AlexaResponse implements AlexaResponseInterface
     /** @var CardInterface */
     private $card;
 
-    /** @todo not implemented yet */
-    private $directives;
+    /** @var DirectivesInterface[] */
+    private $directives = [];
 
     /** @var OutputSpeechInterface */
     private $outputSpeech;
@@ -42,6 +43,16 @@ class AlexaResponse implements AlexaResponseInterface
 
     /** @var string */
     private $version = '1.0';
+
+    /**
+     * Add a directive
+     *
+     * @param DirectivesInterface $directive
+     */
+    public function addDirective(DirectivesInterface $directive)
+    {
+        $this->directives[$directive->getType()] = $directive;
+    }
 
     /**
      * Set the output speech
@@ -118,6 +129,14 @@ class AlexaResponse implements AlexaResponseInterface
             $response['reprompt'] = [
                 'outputSpeech' => $this->reprompt->toArray()
             ];
+        }
+
+        if (count($this->directives) > 0) {
+            $response['directives'] = [];
+
+            foreach ($this->directives as $directive) {
+                $response['directives'][] = $directive->toArray();
+            }
         }
 
         $response['shouldEndSession'] = $this->shouldEndSession;

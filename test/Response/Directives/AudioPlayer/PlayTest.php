@@ -44,6 +44,7 @@ class PlayTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.Play', $directive->getType());
     }
 
     /**
@@ -69,6 +70,7 @@ class PlayTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.Play', $directive->getType());
     }
 
     /**
@@ -94,6 +96,7 @@ class PlayTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.Play', $directive->getType());
     }
 
     /**
@@ -119,5 +122,6 @@ class PlayTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.Play', $directive->getType());
     }
 }

@@ -21,6 +21,9 @@ use TravelloAlexaLibrary\Response\Directives\DirectivesInterface;
 class Launch implements DirectivesInterface
 {
     /** @var string */
+    private $type = 'VideoApp.Launch';
+
+    /** @var string */
     protected $source;
 
     /** @var string */
@@ -50,6 +53,16 @@ class Launch implements DirectivesInterface
     }
 
     /**
+     * Get the directive type
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
      * Render the directives object to an array
      *
      * @return array
@@ -57,7 +70,7 @@ class Launch implements DirectivesInterface
     public function toArray(): array
     {
         $data = [
-            'type'      => 'VideoApp.Launch',
+            'type'      => $this->type,
             'videoItem' => [
                 'source' => $this->source,
             ],

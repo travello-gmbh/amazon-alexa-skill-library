@@ -42,6 +42,7 @@ class LaunchTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('VideoApp.Launch', $directive->getType());
     }
 
     /**
@@ -61,6 +62,7 @@ class LaunchTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('VideoApp.Launch', $directive->getType());
     }
 
     /**
@@ -83,5 +85,6 @@ class LaunchTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('VideoApp.Launch', $directive->getType());
     }
 }

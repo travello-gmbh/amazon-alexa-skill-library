@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use TravelloAlexaLibrary\Response\AlexaResponse;
 use TravelloAlexaLibrary\Response\Card\Simple;
 use TravelloAlexaLibrary\Response\Card\Standard;
+use TravelloAlexaLibrary\Response\Directives\AudioPlayer\Play;
 use TravelloAlexaLibrary\Response\OutputSpeech\PlainText;
 use TravelloAlexaLibrary\Response\OutputSpeech\SSML;
 use TravelloAlexaLibrary\Session\SessionContainer;
@@ -260,4 +261,83 @@ class AlexaResponseTest extends TestCase
 
         $this->assertEquals($expected, $alexaResponse->toArray());
     }
+
+    /**
+     *
+     */
+    public function testInstantiationWithOneDirective()
+    {
+        $directive = new Play(
+            'REPLACE_ALL', 'https:/www.test.de/music.mp3', '12345678', '98765432', 1000
+        );
+
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->addDirective($directive);
+
+        $expected = [
+            'version'           => '1.0',
+            'sessionAttributes' => [],
+            'response'          => [
+                'shouldEndSession' => false,
+                'directives' => [
+                    [
+                        'type'         => 'AudioPlayer.Play',
+                        'playBehavior' => 'REPLACE_ALL',
+                        'audioItem'    => [
+                            'stream' => [
+                                'url'                   => 'https:/www.test.de/music.mp3',
+                                'token'                 => '12345678',
+                                'expectedPreviousToken' => '98765432',
+                                'offsetInMilliseconds'  => 1000,
+                            ],
+                        ],
+                    ]
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expected, $alexaResponse->toArray());
+    }
+
+    /**
+     *
+     */
+    public function testInstantiationWithOverwritingDirective()
+    {
+        $directive1 = new Play(
+            'REPLACE_ALL', 'https:/www.test.de/music.mp3', '12345678', '98765432', 1000
+        );
+        $directive2 = new Play(
+            'REPLACE_ENQUEUED', 'https:/www.test.de/music2.mp3', 'ABCDEFGH', 'HGFEDCBA', 0
+        );
+
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->addDirective($directive1);
+        $alexaResponse->addDirective($directive2);
+
+        $expected = [
+            'version'           => '1.0',
+            'sessionAttributes' => [],
+            'response'          => [
+                'shouldEndSession' => false,
+                'directives' => [
+                    [
+                        'type'         => 'AudioPlayer.Play',
+                        'playBehavior' => 'REPLACE_ENQUEUED',
+                        'audioItem'    => [
+                            'stream' => [
+                                'url'                   => 'https:/www.test.de/music2.mp3',
+                                'token'                 => 'ABCDEFGH',
+                                'expectedPreviousToken' => 'HGFEDCBA',
+                                'offsetInMilliseconds'  => 0,
+                            ],
+                        ],
+                    ]
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expected, $alexaResponse->toArray());
+    }
+
 }

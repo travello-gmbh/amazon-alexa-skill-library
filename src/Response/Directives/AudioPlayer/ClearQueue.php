@@ -24,6 +24,9 @@ class ClearQueue implements DirectivesInterface
     const CLEAR_BEHAVIOR_CLEAR_ALL = 'CLEAR_ALL';
 
     /** @var string */
+    private $type = 'AudioPlayer.ClearQueue';
+
+    /** @var string */
     protected $clearBehavior;
 
     /**
@@ -37,6 +40,16 @@ class ClearQueue implements DirectivesInterface
     }
 
     /**
+     * Get the directive type
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
      * Render the directives object to an array
      *
      * @return array
@@ -44,7 +57,7 @@ class ClearQueue implements DirectivesInterface
     public function toArray(): array
     {
         return [
-            'type'          => 'AudioPlayer.ClearQueue',
+            'type'          => $this->type,
             'clearBehavior' => $this->clearBehavior,
         ];
     }

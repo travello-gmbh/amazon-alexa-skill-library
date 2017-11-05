@@ -34,6 +34,7 @@ class ClearQueueTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.ClearQueue', $directive->getType());
     }
 
     /**
@@ -49,6 +50,7 @@ class ClearQueueTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.ClearQueue', $directive->getType());
     }
 
     /**
@@ -64,5 +66,6 @@ class ClearQueueTest extends TestCase
         ];
 
         $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.ClearQueue', $directive->getType());
     }
 }

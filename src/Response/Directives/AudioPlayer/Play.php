@@ -25,6 +25,9 @@ class Play implements DirectivesInterface
     const PLAY_BEHAVIOR_REPLACE_ENQUEUED = 'REPLACE_ENQUEUED';
 
     /** @var string */
+    private $type = 'AudioPlayer.Play';
+
+    /** @var string */
     protected $playBehavior;
 
     /** @var string */
@@ -63,6 +66,16 @@ class Play implements DirectivesInterface
     }
 
     /**
+     * Get the directive type
+     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
      * Render the directives object to an array
      *
      * @return array
@@ -70,7 +83,7 @@ class Play implements DirectivesInterface
     public function toArray(): array
     {
         return [
-            'type'         => 'AudioPlayer.Play',
+            'type'         => $this->type,
             'playBehavior' => $this->playBehavior,
             'audioItem'    => [
                 'stream' => [
