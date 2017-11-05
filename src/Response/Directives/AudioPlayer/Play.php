@@ -40,7 +40,7 @@ class Play implements DirectivesInterface
     protected $expectedPreviousToken;
 
     /** @var int */
-    protected $offsetInMilliseconds;
+    protected $offsetInMilliseconds = 0;
 
     /**
      * Play constructor.
@@ -56,13 +56,19 @@ class Play implements DirectivesInterface
         string $url,
         string $token,
         string $expectedPreviousToken = null,
-        int $offsetInMilliseconds = 0
+        int $offsetInMilliseconds = null
     ) {
         $this->setPlayBehavior($playBehavior);
         $this->setUrl($url);
         $this->setToken($token);
-        $this->setExpectedPreviousToken($expectedPreviousToken);
-        $this->setOffsetInMilliseconds($offsetInMilliseconds);
+
+        if ($expectedPreviousToken) {
+            $this->setExpectedPreviousToken($expectedPreviousToken);
+        }
+
+        if ($offsetInMilliseconds) {
+            $this->setOffsetInMilliseconds($offsetInMilliseconds);
+        }
     }
 
     /**

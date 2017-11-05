@@ -124,4 +124,31 @@ class PlayTest extends TestCase
         $this->assertEquals($expected, $directive->toArray());
         $this->assertEquals('AudioPlayer.Play', $directive->getType());
     }
+
+    /**
+     *
+     */
+    public function testInstantiationPlayBehaviourWithoutOptionalParams()
+    {
+        $directive = new Play(
+            'REPLACE_ALL', 'https:/www.test.de/music.mp3', '12345678'
+        );
+
+        $expected = [
+            'type'         => 'AudioPlayer.Play',
+            'playBehavior' => 'REPLACE_ALL',
+            'audioItem'    => [
+                'stream' => [
+                    'url'                   => 'https:/www.test.de/music.mp3',
+                    'token'                 => '12345678',
+                    'expectedPreviousToken' => null,
+                    'offsetInMilliseconds'  => 0,
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expected, $directive->toArray());
+        $this->assertEquals('AudioPlayer.Play', $directive->getType());
+    }
+
 }
