@@ -47,8 +47,10 @@ class SessionContainer implements SessionContainerInterface
      */
     public function initAttributes(AlexaRequest $alexaRequest)
     {
-        foreach ($alexaRequest->getSession()->getAttributes() as $attributeKey => $attributeValue) {
-            $this->setAttribute($attributeKey, $attributeValue);
+        if ($alexaRequest->getSession()) {
+            foreach ($alexaRequest->getSession()->getAttributes() as $attributeKey => $attributeValue) {
+                $this->setAttribute($attributeKey, $attributeValue);
+            }
         }
     }
 

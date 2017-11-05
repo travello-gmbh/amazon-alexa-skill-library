@@ -111,9 +111,15 @@ class AlexaRequest implements AlexaRequestInterface
      */
     public function checkApplication(string $applicationId)
     {
-        if ($this->getSession()->getApplication()->getApplicationId()
-            != $applicationId
-        ) {
+        if ($this->getSession()) {
+            $requestApplicationId = $this->getSession()->getApplication()->getApplicationId();
+        } elseif ($this->getContext()) {
+            $requestApplicationId = $this->getContext()->getSystem()->getApplication()->getApplicationId();
+        } else {
+            throw new BadRequest('Application Id invalid');
+        }
+
+        if ($requestApplicationId != $applicationId) {
             throw new BadRequest('Application Id invalid');
         }
     }
