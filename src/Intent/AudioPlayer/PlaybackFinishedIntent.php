@@ -31,7 +31,7 @@ class PlaybackFinishedIntent extends AbstractIntent
      */
     public function handle(string $smallImageUrl, string $largeImageUrl): AlexaResponse
     {
-        $this->getAlexaResponse()->setIsEmpty(true);
+        $this->getAlexaResponse()->endSession();
 
         return $this->getAlexaResponse();
     }
