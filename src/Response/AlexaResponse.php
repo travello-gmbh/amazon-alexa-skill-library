@@ -41,6 +41,9 @@ class AlexaResponse implements AlexaResponseInterface
     /** @var bool */
     private $shouldEndSession = false;
 
+    /** @var bool */
+    private $isEmpty = false;
+
     /** @var string */
     private $version = '1.0';
 
@@ -101,6 +104,22 @@ class AlexaResponse implements AlexaResponseInterface
     }
 
     /**
+     * @param bool $isEmpty
+     */
+    public function setIsEmpty(bool $isEmpty)
+    {
+        $this->isEmpty = $isEmpty;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return $this->isEmpty;
+    }
+
+    /**
      * @return SessionContainer
      */
     public function getSessionContainer(): SessionContainer
@@ -115,6 +134,10 @@ class AlexaResponse implements AlexaResponseInterface
      */
     public function toArray(): array
     {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
         $response = [];
 
         if ($this->outputSpeech) {

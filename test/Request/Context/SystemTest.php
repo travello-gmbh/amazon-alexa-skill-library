@@ -31,7 +31,7 @@ class SystemTest extends TestCase
     {
         $application = new Application('applicationId');
         $user        = new User('userId');
-        $device      = new Device('deviceId');
+        $device      = new Device();
         $apiEndpoint = 'apiEndpoint';
 
         $system = new System($application, $user, $device, $apiEndpoint);

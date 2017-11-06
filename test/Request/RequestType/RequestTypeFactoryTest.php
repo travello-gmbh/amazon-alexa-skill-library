@@ -28,6 +28,7 @@ use TravelloAlexaLibrary\Request\RequestType\PlaybackControllerPreviousCommandIs
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeFactory;
 use TravelloAlexaLibrary\Request\RequestType\RequestTypeInterface;
 use TravelloAlexaLibrary\Request\RequestType\SessionEndedRequestType;
+use TravelloAlexaLibrary\Request\RequestType\SystemExceptionEncounteredType;
 
 /**
  * Class RequestTypeFactoryTest
@@ -956,6 +957,79 @@ class RequestTypeFactoryTest extends TestCase
     }
 
     /**
+     *
+     */
+    public function testFactoryForSystemExceptionEncounteredRequestType()
+    {
+        $data = [
+            'version' => '1.0',
+            'request' => [
+                'type'      => 'System.ExceptionEncountered',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+                'error'     => [
+                    'type'    => 'type',
+                    'message' => 'message',
+                ],
+                'cause'     => [
+                    'requestId' => 'requestId',
+                ],
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertContextData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            SystemExceptionEncounteredType::class
+        );
+    }
+
+    /**
+     *
+     */
+    public function testFactoryForSystemExceptionEncounteredRequestTypeWithOutErrorAndCause()
+    {
+        $data = [
+            'version' => '1.0',
+            'request' => [
+                'type'      => 'System.ExceptionEncountered',
+                'requestId' => 'requestId',
+                'timestamp' => '2017-01-27T20:29:59Z',
+                'locale'    => 'de-DE',
+            ],
+            'context' => [
+                'AudioPlayer' => [
+                    'playerActivity' => 'IDLE',
+                ]
+            ],
+        ];
+
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+
+        $this->assertEquals($data['version'], $alexaRequest->getVersion());
+
+        $this->assertContextData($alexaRequest, $data);
+
+        $this->assertRequestData(
+            $alexaRequest->getRequest(),
+            $data,
+            SystemExceptionEncounteredType::class
+        );
+    }
+
+    /**
      * @param AlexaRequest $alexaRequest
      * @param array        $data
      */
@@ -1188,6 +1262,37 @@ class RequestTypeFactoryTest extends TestCase
                 } else {
                     $this->assertNull(
                         $requestType->getCurrentPlaybackState()
+                    );
+                }
+
+                break;
+
+            case SystemExceptionEncounteredType::class:
+                /** @var SystemExceptionEncounteredType $requestType */
+                if (isset($data['request']['error'])) {
+                    $this->assertEquals(
+                        $data['request']['error']['type'],
+                        $requestType->getError()->getType()
+                    );
+
+                    $this->assertEquals(
+                        $data['request']['error']['message'],
+                        $requestType->getError()->getMessage()
+                    );
+                } else {
+                    $this->assertNull(
+                        $requestType->getError()
+                    );
+                }
+
+                if (isset($data['request']['cause'])) {
+                    $this->assertEquals(
+                        $data['request']['cause']['requestId'],
+                        $requestType->getCause()->getRequestId()
+                    );
+                } else {
+                    $this->assertNull(
+                        $requestType->getCause()
                     );
                 }
 

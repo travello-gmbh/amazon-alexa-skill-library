@@ -19,6 +19,7 @@ use TravelloAlexaLibrary\Request\Context\System\Application as ContextApplicatio
 use TravelloAlexaLibrary\Request\Context\System\Device;
 use TravelloAlexaLibrary\Request\Context\System\User as ContextUser;
 use TravelloAlexaLibrary\Request\RequestType\AudioPlayer\CurrentPlaybackState;
+use TravelloAlexaLibrary\Request\RequestType\Cause\Cause;
 use TravelloAlexaLibrary\Request\RequestType\Error\Error;
 use TravelloAlexaLibrary\Request\RequestType\Intent\Intent;
 use TravelloAlexaLibrary\Request\Session\Application as SessionApplication;
@@ -241,6 +242,34 @@ class RequestTypeFactory
                     $data['request']['timestamp'],
                     $data['request']['locale']
                 );
+                break;
+
+            case 'System.ExceptionEncountered':
+                if (isset($data['request']['error'])) {
+                    $error = new Error(
+                        $data['request']['error']['type'],
+                        $data['request']['error']['message']
+                    );
+                } else {
+                    $error = null;
+                }
+
+                if (isset($data['request']['cause'])) {
+                    $cause = new Cause(
+                        $data['request']['cause']['requestId']
+                    );
+                } else {
+                    $cause = null;
+                }
+
+                $request = new SystemExceptionEncounteredType(
+                    $data['request']['requestId'],
+                    $data['request']['timestamp'],
+                    $data['request']['locale'],
+                    $error,
+                    $cause
+                );
+
                 break;
 
             case 'IntentRequest':

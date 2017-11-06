@@ -99,6 +99,29 @@ class AlexaResponseTest extends TestCase
     /**
      *
      */
+    public function testIsEmptyWithAll()
+    {
+        $plainText        = new PlainText('text');
+        $simple           = new Simple('title', 'content');
+        $reprompt         = new PlainText('text');
+        $sessionContainer = new SessionContainer(['foo' => 'bar']);
+
+        $alexaResponse = new AlexaResponse();
+        $alexaResponse->setOutputSpeech($plainText);
+        $alexaResponse->setCard($simple);
+        $alexaResponse->setReprompt($reprompt);
+        $alexaResponse->setSessionContainer($sessionContainer);
+        $alexaResponse->endSession();
+        $alexaResponse->setIsEmpty(true);
+
+        $expected = [];
+
+        $this->assertEquals($expected, $alexaResponse->toArray());
+    }
+
+    /**
+     *
+     */
     public function testInstantiationWithSSMLAndStandardCard()
     {
         $ssml             = new SSML('ssml');

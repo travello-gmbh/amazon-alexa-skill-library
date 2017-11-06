@@ -62,6 +62,16 @@ interface AlexaResponseInterface
     public function endSession();
 
     /**
+     * @param bool $isEmpty
+     */
+    public function setIsEmpty(bool $isEmpty);
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool;
+
+    /**
      * @return SessionContainer
      */
     public function getSessionContainer(): SessionContainer;
