@@ -59,19 +59,23 @@ class RequestTypeFactory
         }
 
         if (isset($data['context'])) {
-            $audioPlayer = new AudioPlayer(
-                $data['context']['AudioPlayer']['playerActivity']
-            );
+            $context = new Context();
 
-            if (isset($data['context']['AudioPlayer']['token'])) {
-                $audioPlayer->setToken($data['context']['AudioPlayer']['token']);
+            if (isset($data['context']['AudioPlayer'])) {
+                $audioPlayer = new AudioPlayer(
+                    $data['context']['AudioPlayer']['playerActivity']
+                );
+
+                if (isset($data['context']['AudioPlayer']['token'])) {
+                    $audioPlayer->setToken($data['context']['AudioPlayer']['token']);
+                }
+
+                if (isset($data['context']['AudioPlayer']['offsetInMilliseconds'])) {
+                    $audioPlayer->setOffsetInMilliseconds($data['context']['AudioPlayer']['offsetInMilliseconds']);
+                }
+
+                $context->setAudioPlayer($audioPlayer);
             }
-
-            if (isset($data['context']['AudioPlayer']['offsetInMilliseconds'])) {
-                $audioPlayer->setOffsetInMilliseconds($data['context']['AudioPlayer']['offsetInMilliseconds']);
-            }
-
-            $context = new Context($audioPlayer);
 
             if (isset($data['context']['System'])) {
                 $contextUser = new ContextUser($data['context']['System']['user']['userId']);

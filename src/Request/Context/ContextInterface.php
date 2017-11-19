@@ -19,9 +19,14 @@ namespace TravelloAlexaLibrary\Request\Context;
 interface ContextInterface
 {
     /**
+     * @param AudioPlayerInterface $audioPlayer
+     */
+    public function setAudioPlayer(AudioPlayerInterface $audioPlayer);
+
+    /**
      * @return AudioPlayerInterface
      */
-    public function getAudioPlayer(): AudioPlayerInterface;
+    public function getAudioPlayer();
 
     /**
      * @param SystemInterface $system
