@@ -31,11 +31,9 @@ class ContextTest extends TestCase
      */
     public function testInstantiation()
     {
-        $audioPlayer = new AudioPlayer('IDLE');
+        $context = new Context();
 
-        $context = new Context($audioPlayer);
-
-        $this->assertEquals($audioPlayer, $context->getAudioPlayer());
+        $this->assertNull($context->getAudioPlayer());
         $this->assertNull($context->getSystem());
     }
 
@@ -46,14 +44,17 @@ class ContextTest extends TestCase
     {
         $audioPlayer = new AudioPlayer('IDLE');
 
+        $apiEndpoint = 'apiEndpoint';
+
         $application = new Application('applicationId');
         $user        = new User('userId');
-        $device      = new Device('deviceId');
-        $apiEndpoint = 'apiEndpoint';
+        $device      = new Device();
+        $device->setDeviceId('deviceId');
 
         $system = new System($application, $user, $device, $apiEndpoint);
 
-        $context = new Context($audioPlayer);
+        $context = new Context();
+        $context->setAudioPlayer($audioPlayer);
         $context->setSystem($system);
 
         $this->assertEquals($system, $context->getSystem());

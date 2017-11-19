@@ -110,7 +110,13 @@ class PlaybackNearlyFinishedIntentTest extends TestCase
         $intent = new PlaybackNearlyFinishedIntent($alexaRequest, $alexaResponse, $textHelper);
         $intent->handle($smallImageUrl, $largeImageUrl);
 
-        $expected = [];
+        $expected = [
+            'version'           => '1.0',
+            'sessionAttributes' => [],
+            'response'          => [
+                'shouldEndSession' => true,
+            ],
+        ];
 
         $this->assertEquals($expected, $alexaResponse->toArray());
     }

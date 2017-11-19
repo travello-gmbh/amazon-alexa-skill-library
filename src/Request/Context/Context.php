@@ -25,11 +25,9 @@ class Context implements ContextInterface
     private $system;
 
     /**
-     * Context constructor.
-     *
      * @param AudioPlayerInterface $audioPlayer
      */
-    public function __construct(AudioPlayerInterface $audioPlayer)
+    public function setAudioPlayer(AudioPlayerInterface $audioPlayer)
     {
         $this->audioPlayer = $audioPlayer;
     }
@@ -37,7 +35,7 @@ class Context implements ContextInterface
     /**
      * @return AudioPlayerInterface
      */
-    public function getAudioPlayer(): AudioPlayerInterface
+    public function getAudioPlayer()
     {
         return $this->audioPlayer;
     }
