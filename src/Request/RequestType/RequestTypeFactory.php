@@ -14,6 +14,7 @@ namespace TravelloAlexaLibrary\Request\RequestType;
 use TravelloAlexaLibrary\Request\AlexaRequest;
 use TravelloAlexaLibrary\Request\Context\AudioPlayer;
 use TravelloAlexaLibrary\Request\Context\Context;
+use TravelloAlexaLibrary\Request\Context\Display;
 use TravelloAlexaLibrary\Request\Context\System;
 use TravelloAlexaLibrary\Request\Context\System\Application as ContextApplication;
 use TravelloAlexaLibrary\Request\Context\System\Device;
@@ -75,6 +76,24 @@ class RequestTypeFactory
                 }
 
                 $context->setAudioPlayer($audioPlayer);
+            }
+
+            if (isset($data['context']['Display'])) {
+                $display = new Display();
+
+                if (isset($data['context']['Display']['token'])) {
+                    $display->setToken($data['context']['Display']['token']);
+                }
+
+                if (isset($data['context']['Display']['templateVersion'])) {
+                    $display->setTemplateVersion($data['context']['Display']['templateVersion']);
+                }
+
+                if (isset($data['context']['Display']['markupVersion'])) {
+                    $display->setMarkupVersion($data['context']['Display']['markupVersion']);
+                }
+
+                $context->setDisplay($display);
             }
 
             if (isset($data['context']['System'])) {
