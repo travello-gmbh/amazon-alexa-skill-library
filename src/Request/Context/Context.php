@@ -70,7 +70,7 @@ class Context implements ContextInterface
     /**
      * @return DisplayInterface
      */
-    public function getDisplay(): DisplayInterface
+    public function getDisplay()
     {
         return $this->display;
     }

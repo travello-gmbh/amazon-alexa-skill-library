@@ -46,5 +46,5 @@ interface ContextInterface
     /**
      * @return DisplayInterface
      */
-    public function getDisplay(): DisplayInterface;
+    public function getDisplay();
 }
