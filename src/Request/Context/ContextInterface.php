@@ -37,4 +37,14 @@ interface ContextInterface
      * @return SystemInterface|null
      */
     public function getSystem();
+
+    /**
+     * @param DisplayInterface $display
+     */
+    public function setDisplay(DisplayInterface $display);
+
+    /**
+     * @return DisplayInterface
+     */
+    public function getDisplay(): DisplayInterface;
 }

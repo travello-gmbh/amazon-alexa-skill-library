@@ -227,6 +227,11 @@ class RequestTypeFactoryTest extends TestCase
                     'token'                => '123456',
                     'offsetInMilliseconds' => 1000,
                 ],
+                'Display'     => [
+                    'token'           => '123456',
+                    'templateVersion' => '1.0',
+                    'markupVersion'   => '1.0',
+                ],
                 'System'      => [
                     'application' => [
                         'applicationId' => 'applicationId',
@@ -1088,6 +1093,29 @@ class RequestTypeFactoryTest extends TestCase
                 $data['context']['AudioPlayer']['offsetInMilliseconds'],
                 $context->getAudioPlayer()->getOffsetInMilliseconds()
             );
+        }
+
+        if (isset($data['context']['Display'])) {
+            if (isset($data['context']['Display']['token'])) {
+                $this->assertEquals(
+                    $data['context']['Display']['token'],
+                    $context->getDisplay()->getToken()
+                );
+            }
+
+            if (isset($data['context']['Display']['templateVersion'])) {
+                $this->assertEquals(
+                    $data['context']['Display']['templateVersion'],
+                    $context->getDisplay()->getTemplateVersion()
+                );
+            }
+
+            if (isset($data['context']['Display']['markupVersion'])) {
+                $this->assertEquals(
+                    $data['context']['Display']['markupVersion'],
+                    $context->getDisplay()->getMarkupVersion()
+                );
+            }
         }
 
         if (isset($data['context']['System'])) {

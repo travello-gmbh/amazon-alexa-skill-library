@@ -24,6 +24,9 @@ class Context implements ContextInterface
     /** @var SystemInterface */
     private $system;
 
+    /** @var DisplayInterface */
+    private $display;
+
     /**
      * @param AudioPlayerInterface $audioPlayer
      */
@@ -54,5 +57,21 @@ class Context implements ContextInterface
     public function getSystem()
     {
         return $this->system;
+    }
+
+    /**
+     * @param DisplayInterface $display
+     */
+    public function setDisplay(DisplayInterface $display)
+    {
+        $this->display = $display;
+    }
+
+    /**
+     * @return DisplayInterface
+     */
+    public function getDisplay(): DisplayInterface
+    {
+        return $this->display;
     }
 }
