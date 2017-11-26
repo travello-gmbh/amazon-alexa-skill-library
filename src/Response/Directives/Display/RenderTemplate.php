@@ -72,8 +72,9 @@ class RenderTemplate implements DirectivesInterface
     /**
      * RenderTemplate constructor.
      *
-     * @param string $type
-     * @param string $token
+     * @param string      $type
+     * @param string      $token
+     * @param TextContent $textContent
      */
     public function __construct(string $type, string $token, TextContent $textContent)
     {
