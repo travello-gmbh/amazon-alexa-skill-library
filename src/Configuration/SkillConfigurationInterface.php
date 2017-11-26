@@ -48,6 +48,16 @@ interface SkillConfigurationInterface
     /**
      * @return string
      */
+    public function getSkillTitle(): string;
+
+    /**
+     * @param string $skillTitle
+     */
+    public function setSkillTitle(string $skillTitle);
+
+    /**
+     * @return string
+     */
     public function getApplicationClass(): string;
 
     /**
@@ -114,4 +124,34 @@ interface SkillConfigurationInterface
      * @param string $largeImageUrl
      */
     public function setLargeImageUrl(string $largeImageUrl);
+
+    /**
+     * @return string
+     */
+    public function getBackgroundImageUrl(): string;
+
+    /**
+     * @param string $backgroundImageUrl
+     */
+    public function setBackgroundImageUrl(string $backgroundImageUrl);
+
+    /**
+     * @return string
+     */
+    public function getBackgroundImageTitle(): string;
+
+    /**
+     * @param string $backgroundImageTitle
+     */
+    public function setBackgroundImageTitle(string $backgroundImageTitle);
+
+    /**
+     * @return array
+     */
+    public function getCustomData(): array;
+
+    /**
+     * @param array $customData
+     */
+    public function setCustomData(array $customData);
 }

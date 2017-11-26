@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Configuration\SkillConfiguration;
 use TravelloAlexaLibrary\Intent\AbstractIntent;
 use TravelloAlexaLibrary\Intent\CancelIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
@@ -61,11 +62,12 @@ class CancelIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
-        $textHelper    = new TextHelper();
+        $alexaRequest       = RequestTypeFactory::createFromData(json_encode($data));
+        $alexaResponse      = new AlexaResponse();
+        $textHelper         = new TextHelper();
+        $skillConfiguration = new SkillConfiguration();
 
-        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper);
+        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
 
         $this->assertTrue($cancelIntent instanceof AbstractIntent);
         $this->assertTrue($cancelIntent instanceof IntentInterface);
@@ -107,16 +109,18 @@ class CancelIntentTest extends TestCase
 
         $sessionContainer = new SessionContainer(['foo' => 'bar']);
 
-        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $textHelper    = new TextHelper();
+        $alexaRequest = RequestTypeFactory::createFromData(json_encode($data));
+        $textHelper   = new TextHelper();
+
         $alexaResponse = new AlexaResponse();
         $alexaResponse->setSessionContainer($sessionContainer);
 
-        $smallImageUrl = 'https://image.server/small.png';
-        $largeImageUrl = 'https://image.server/large.png';
+        $skillConfiguration = new SkillConfiguration();
+        $skillConfiguration->setSmallImageUrl('https://image.server/small.png');
+        $skillConfiguration->setLargeImageUrl('https://image.server/large.png');
 
-        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper);
-        $cancelIntent->handle($smallImageUrl, $largeImageUrl);
+        $cancelIntent = new CancelIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
+        $cancelIntent->handle();
 
         $expected = [
             'version'           => '1.0',

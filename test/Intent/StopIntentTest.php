@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Configuration\SkillConfiguration;
 use TravelloAlexaLibrary\Intent\AbstractIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\StopIntent;
@@ -61,11 +62,12 @@ class StopIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
-        $textHelper    = new TextHelper();
+        $alexaRequest       = RequestTypeFactory::createFromData(json_encode($data));
+        $alexaResponse      = new AlexaResponse();
+        $textHelper         = new TextHelper();
+        $skillConfiguration = new SkillConfiguration();
 
-        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper);
+        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
 
         $this->assertTrue($stopIntent instanceof AbstractIntent);
         $this->assertTrue($stopIntent instanceof IntentInterface);
@@ -109,14 +111,16 @@ class StopIntentTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $textHelper    = new TextHelper();
+
         $alexaResponse = new AlexaResponse();
         $alexaResponse->setSessionContainer($sessionContainer);
 
-        $smallImageUrl = 'https://image.server/small.png';
-        $largeImageUrl = 'https://image.server/large.png';
+        $skillConfiguration = new SkillConfiguration();
+        $skillConfiguration->setSmallImageUrl('https://image.server/small.png');
+        $skillConfiguration->setLargeImageUrl('https://image.server/large.png');
 
-        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper);
-        $stopIntent->handle($smallImageUrl, $largeImageUrl);
+        $stopIntent = new StopIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
+        $stopIntent->handle();
 
         $expected = [
             'version'           => '1.0',

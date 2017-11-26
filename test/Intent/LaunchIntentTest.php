@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibraryTest\Intent;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Configuration\SkillConfiguration;
 use TravelloAlexaLibrary\Intent\AbstractIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Intent\LaunchIntent;
@@ -57,11 +58,12 @@ class LaunchIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
-        $textHelper    = new TextHelper();
+        $alexaRequest       = RequestTypeFactory::createFromData(json_encode($data));
+        $alexaResponse      = new AlexaResponse();
+        $textHelper         = new TextHelper();
+        $skillConfiguration = new SkillConfiguration();
 
-        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse, $textHelper);
+        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
 
         $this->assertTrue($launchIntent instanceof AbstractIntent);
         $this->assertTrue($launchIntent instanceof IntentInterface);
@@ -101,14 +103,16 @@ class LaunchIntentTest extends TestCase
 
         $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
         $textHelper    = new TextHelper();
+
         $alexaResponse = new AlexaResponse();
         $alexaResponse->setSessionContainer($sessionContainer);
 
-        $smallImageUrl = 'https://image.server/small.png';
-        $largeImageUrl = 'https://image.server/large.png';
+        $skillConfiguration = new SkillConfiguration();
+        $skillConfiguration->setSmallImageUrl('https://image.server/small.png');
+        $skillConfiguration->setLargeImageUrl('https://image.server/large.png');
 
-        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse, $textHelper);
-        $launchIntent->handle($smallImageUrl, $largeImageUrl);
+        $launchIntent = new LaunchIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
+        $launchIntent->handle();
 
         $expected = [
             'version'           => '1.0',

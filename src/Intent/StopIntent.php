@@ -25,13 +25,13 @@ class StopIntent extends AbstractIntent
     const NAME = 'AMAZON.StopIntent';
 
     /**
-     * @param string $smallImageUrl
-     * @param string $largeImageUrl
-     *
      * @return AlexaResponse
      */
-    public function handle(string $smallImageUrl, string $largeImageUrl): AlexaResponse
+    public function handle(): AlexaResponse
     {
+        $smallImageUrl = $this->getSkillConfiguration()->getSmallImageUrl();
+        $largeImageUrl = $this->getSkillConfiguration()->getLargeImageUrl();
+
         $title   = $this->getTextHelper()->getStopTitle();
         $message = $this->getTextHelper()->getStopMessage();
 
