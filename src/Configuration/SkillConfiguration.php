@@ -25,6 +25,9 @@ class SkillConfiguration implements SkillConfigurationInterface
     private $applicationId;
 
     /** @var string */
+    private $skillTitle;
+
+    /** @var string */
     private $applicationClass;
 
     /** @var string */
@@ -44,6 +47,15 @@ class SkillConfiguration implements SkillConfigurationInterface
 
     /** @var string */
     private $largeImageUrl;
+
+    /** @var string */
+    private $backgroundImageUrl;
+
+    /** @var string */
+    private $backgroundImageTitle;
+
+    /** @var array */
+    private $customData = [];
 
     /**
      * @param array $config
@@ -91,6 +103,22 @@ class SkillConfiguration implements SkillConfigurationInterface
     public function setApplicationId(string $applicationId)
     {
         $this->applicationId = $applicationId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSkillTitle(): string
+    {
+        return $this->skillTitle;
+    }
+
+    /**
+     * @param string $skillTitle
+     */
+    public function setSkillTitle(string $skillTitle)
+    {
+        $this->skillTitle = $skillTitle;
     }
 
     /**
@@ -203,5 +231,53 @@ class SkillConfiguration implements SkillConfigurationInterface
     public function setLargeImageUrl(string $largeImageUrl)
     {
         $this->largeImageUrl = $largeImageUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackgroundImageUrl(): string
+    {
+        return $this->backgroundImageUrl;
+    }
+
+    /**
+     * @param string $backgroundImageUrl
+     */
+    public function setBackgroundImageUrl(string $backgroundImageUrl)
+    {
+        $this->backgroundImageUrl = $backgroundImageUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBackgroundImageTitle(): string
+    {
+        return $this->backgroundImageTitle;
+    }
+
+    /**
+     * @param string $backgroundImageTitle
+     */
+    public function setBackgroundImageTitle(string $backgroundImageTitle)
+    {
+        $this->backgroundImageTitle = $backgroundImageTitle;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomData(): array
+    {
+        return $this->customData;
+    }
+
+    /**
+     * @param array $customData
+     */
+    public function setCustomData(array $customData)
+    {
+        $this->customData = $customData;
     }
 }

@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibraryTest\Intent\AudioPlayer;
 
 use PHPUnit\Framework\TestCase;
+use TravelloAlexaLibrary\Configuration\SkillConfiguration;
 use TravelloAlexaLibrary\Intent\AbstractIntent;
 use TravelloAlexaLibrary\Intent\AudioPlayer\PlaybackStoppedIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
@@ -58,11 +59,12 @@ class PlaybackStoppedIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $alexaResponse = new AlexaResponse();
-        $textHelper    = new TextHelper();
+        $alexaRequest       = RequestTypeFactory::createFromData(json_encode($data));
+        $alexaResponse      = new AlexaResponse();
+        $textHelper         = new TextHelper();
+        $skillConfiguration = new SkillConfiguration();
 
-        $intent = new PlaybackStoppedIntent($alexaRequest, $alexaResponse, $textHelper);
+        $intent = new PlaybackStoppedIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
 
         $this->assertTrue($intent instanceof AbstractIntent);
         $this->assertTrue($intent instanceof IntentInterface);
@@ -100,15 +102,13 @@ class PlaybackStoppedIntentTest extends TestCase
             ],
         ];
 
-        $alexaRequest  = RequestTypeFactory::createFromData(json_encode($data));
-        $textHelper    = new TextHelper();
-        $alexaResponse = new AlexaResponse();
+        $alexaRequest       = RequestTypeFactory::createFromData(json_encode($data));
+        $textHelper         = new TextHelper();
+        $alexaResponse      = new AlexaResponse();
+        $skillConfiguration = new SkillConfiguration();
 
-        $smallImageUrl = 'https://image.server/small.png';
-        $largeImageUrl = 'https://image.server/large.png';
-
-        $intent = new PlaybackStoppedIntent($alexaRequest, $alexaResponse, $textHelper);
-        $intent->handle($smallImageUrl, $largeImageUrl);
+        $intent = new PlaybackStoppedIntent($alexaRequest, $alexaResponse, $textHelper, $skillConfiguration);
+        $intent->handle();
 
         $expected = [
             'version'           => '1.0',

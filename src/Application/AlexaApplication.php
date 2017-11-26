@@ -12,7 +12,6 @@
 namespace TravelloAlexaLibrary\Application;
 
 use Psr\Container\ContainerInterface;
-use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\Intent\HelpIntent;
 use TravelloAlexaLibrary\Intent\IntentInterface;
 use TravelloAlexaLibrary\Request\AlexaRequestInterface;
@@ -36,27 +35,21 @@ class AlexaApplication implements AlexaApplicationInterface
     /** @var ContainerInterface */
     protected $intentManager;
 
-    /** @var SkillConfigurationInterface */
-    protected $skillConfiguration;
-
     /**
      * AlexaApplication constructor.
      *
-     * @param AlexaRequestInterface       $alexaRequest
-     * @param AlexaResponseInterface      $alexaResponse
-     * @param ContainerInterface          $intentManager
-     * @param SkillConfigurationInterface $skillConfiguration
+     * @param AlexaRequestInterface  $alexaRequest
+     * @param AlexaResponseInterface $alexaResponse
+     * @param ContainerInterface     $intentManager
      */
     public function __construct(
         AlexaRequestInterface $alexaRequest,
         AlexaResponseInterface $alexaResponse,
-        ContainerInterface $intentManager,
-        SkillConfigurationInterface $skillConfiguration
+        ContainerInterface $intentManager
     ) {
-        $this->alexaRequest       = $alexaRequest;
-        $this->alexaResponse      = $alexaResponse;
-        $this->intentManager      = $intentManager;
-        $this->skillConfiguration = $skillConfiguration;
+        $this->alexaRequest  = $alexaRequest;
+        $this->alexaResponse = $alexaResponse;
+        $this->intentManager = $intentManager;
     }
 
     /**
@@ -96,10 +89,7 @@ class AlexaApplication implements AlexaApplicationInterface
             $intent = $this->intentManager->get(HelpIntent::NAME);
         }
 
-        $intent->handle(
-            $this->skillConfiguration->getSmallImageUrl(),
-            $this->skillConfiguration->getLargeImageUrl()
-        );
+        $intent->handle();
 
         return true;
     }

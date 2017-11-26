@@ -11,6 +11,7 @@
 
 namespace TravelloAlexaLibrary\Intent;
 
+use TravelloAlexaLibrary\Configuration\SkillConfigurationInterface;
 use TravelloAlexaLibrary\TextHelper\TextHelperInterface;
 use TravelloAlexaLibrary\Request\AlexaRequest;
 use TravelloAlexaLibrary\Response\AlexaResponse;
@@ -31,21 +32,27 @@ abstract class AbstractIntent implements IntentInterface
     /** @var TextHelperInterface */
     private $textHelper;
 
+    /** @var SkillConfigurationInterface */
+    private $skillConfiguration;
+
     /**
      * AbstractIntent constructor.
      *
-     * @param AlexaRequest        $alexaRequest
-     * @param AlexaResponse       $alexaResponse
-     * @param TextHelperInterface $textHelper
+     * @param AlexaRequest                $alexaRequest
+     * @param AlexaResponse               $alexaResponse
+     * @param TextHelperInterface         $textHelper
+     * @param SkillConfigurationInterface $skillConfiguration
      */
     public function __construct(
         AlexaRequest $alexaRequest,
         AlexaResponse $alexaResponse,
-        TextHelperInterface $textHelper
+        TextHelperInterface $textHelper,
+        SkillConfigurationInterface $skillConfiguration
     ) {
         $this->setAlexaRequest($alexaRequest);
         $this->setAlexaResponse($alexaResponse);
         $this->setTextHelper($textHelper);
+        $this->setSkillConfiguration($skillConfiguration);
     }
 
     /**
@@ -94,5 +101,21 @@ abstract class AbstractIntent implements IntentInterface
     protected function getTextHelper(): TextHelperInterface
     {
         return $this->textHelper;
+    }
+
+    /**
+     * @param SkillConfigurationInterface $skillConfiguration
+     */
+    private function setSkillConfiguration(SkillConfigurationInterface $skillConfiguration)
+    {
+        $this->skillConfiguration = $skillConfiguration;
+    }
+
+    /**
+     * @return SkillConfigurationInterface
+     */
+    protected function getSkillConfiguration(): SkillConfigurationInterface
+    {
+        return $this->skillConfiguration;
     }
 }

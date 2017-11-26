@@ -25,12 +25,9 @@ class PlaybackStartedIntent extends AbstractIntent
     const NAME = 'AudioPlayer.PlaybackStarted';
 
     /**
-     * @param string $smallImageUrl
-     * @param string $largeImageUrl
-     *
      * @return AlexaResponse
      */
-    public function handle(string $smallImageUrl, string $largeImageUrl): AlexaResponse
+    public function handle(): AlexaResponse
     {
         $this->getAlexaResponse()->addDirective(
             new ClearQueue(ClearQueue::CLEAR_BEHAVIOR_CLEAR_ENQUEUED)

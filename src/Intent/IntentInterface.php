@@ -21,10 +21,7 @@ use TravelloAlexaLibrary\Response\AlexaResponse;
 interface IntentInterface
 {
     /**
-     * @param string $smallImageUrl
-     * @param string $largeImageUrl
-     *
      * @return AlexaResponse
      */
-    public function handle(string $smallImageUrl, string $largeImageUrl): AlexaResponse;
+    public function handle(): AlexaResponse;
 }
