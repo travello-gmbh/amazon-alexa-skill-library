@@ -1,7 +1,7 @@
 {
   "name": "travello-gmbh/amazon-alexa-skill-library",
   "description": "PHP Library for Amazon Alexa Skills ",
-  "license": "The MIT License (MIT)",
+  "license": "MIT",
   "type": "library",
   "homepage": "https://www.travello.audio",
   "config": {
