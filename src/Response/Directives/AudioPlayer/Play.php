@@ -12,6 +12,7 @@
 namespace TravelloAlexaLibrary\Response\Directives\AudioPlayer;
 
 use TravelloAlexaLibrary\Response\Directives\DirectivesInterface;
+use TravelloAlexaLibrary\Response\Directives\Display\Image;
 
 /**
  * Class Play
@@ -41,6 +42,18 @@ class Play implements DirectivesInterface
 
     /** @var int */
     protected $offsetInMilliseconds = 0;
+
+    /** @var string */
+    private $title;
+
+    /** @var string */
+    private $subTitle;
+
+    /** @var Image */
+    private $art;
+
+    /** @var Image */
+    private $backgroundImage;
 
     /**
      * Play constructor.
@@ -81,6 +94,35 @@ class Play implements DirectivesInterface
         return $this->type;
     }
 
+
+
+    /**
+     * @param string      $title
+     * @param string|null $subTitle
+     * @param Image|null  $art
+     * @param Image|null  $backgroundImage
+     */
+    public function setMetaData(
+        string $title,
+        string $subTitle = null,
+        Image $art = null,
+        Image $backgroundImage = null
+    ) {
+        $this->setTitle($title);
+
+        if ($subTitle) {
+            $this->setSubTitle($subTitle);
+        }
+
+        if ($art) {
+            $this->setArt($art);
+        }
+
+        if ($backgroundImage) {
+            $this->setBackgroundImage($backgroundImage);
+        }
+    }
+
     /**
      * Render the directives object to an array
      *
@@ -88,7 +130,7 @@ class Play implements DirectivesInterface
      */
     public function toArray(): array
     {
-        return [
+        $data = [
             'type'         => $this->type,
             'playBehavior' => $this->playBehavior,
             'audioItem'    => [
@@ -100,6 +142,26 @@ class Play implements DirectivesInterface
                 ],
             ],
         ];
+
+        if ($this->title) {
+            $data['audioItem']['metadata'] = [
+                'title' => $this->title,
+            ];
+
+            if ($this->subTitle) {
+                $data['audioItem']['metadata']['subtitle'] = $this->subTitle;
+            }
+
+            if ($this->art) {
+                $data['audioItem']['metadata']['art'] = $this->art->toArray();
+            }
+
+            if ($this->backgroundImage) {
+                $data['audioItem']['metadata']['backgroundImage'] = $this->backgroundImage->toArray();
+            }
+        }
+
+        return $data;
     }
 
     /**
@@ -149,5 +211,37 @@ class Play implements DirectivesInterface
     private function setOffsetInMilliseconds(int $offsetInMilliseconds)
     {
         $this->offsetInMilliseconds = $offsetInMilliseconds;
+    }
+
+    /**
+     * @param string $title
+     */
+    private function setTitle(string $title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string $subTitle
+     */
+    private function setSubTitle(string $subTitle)
+    {
+        $this->subTitle = $subTitle;
+    }
+
+    /**
+     * @param Image $art
+     */
+    private function setArt(Image $art)
+    {
+        $this->art = $art;
+    }
+
+    /**
+     * @param Image $backgroundImage
+     */
+    private function setBackgroundImage(Image $backgroundImage)
+    {
+        $this->backgroundImage = $backgroundImage;
     }
 }
